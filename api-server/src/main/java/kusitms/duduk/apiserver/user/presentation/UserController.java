@@ -15,6 +15,6 @@ public class UserController implements UserControllerDocs {
 
     @GetMapping("/oauth/{provider}")
     public ResponseEntity<OAuthResponse> oAuthLogin() {
-        return new ResponseEntity<>(new OAuthResponse(), HttpStatus.OK);
+        return new ResponseEntity<>(new OAuthResponse(null, null), HttpStatus.OK);
     }
 }
