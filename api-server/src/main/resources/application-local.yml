@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 springdoc:
   swagger-ui:
     # Swagger UI 페이지에 대한 경로
