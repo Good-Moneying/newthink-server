@@ -22,7 +22,7 @@ public class OAuthController implements OAuthControllerDocs {
     @GetMapping("/{provider}")
     public ResponseEntity<OAuthLoginResponse> oAuthLogin(
         @PathVariable final String provider,
-        @RequestHeader("Authorization") final String accessToken) {
+        @RequestHeader("OAuth") final String accessToken) {
         return new ResponseEntity<>(oAuthService.login(Provider.from(provider), accessToken),
             HttpStatus.OK);
     }

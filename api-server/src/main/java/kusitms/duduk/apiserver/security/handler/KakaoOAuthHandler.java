@@ -1,12 +1,15 @@
 package kusitms.duduk.apiserver.security.handler;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import kusitms.duduk.apiserver.security.presentation.dto.OAuthDetailResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
+@Slf4j
 @Component
 public class KakaoOAuthHandler implements OAuthHandler {
     private static final String KAKAO_BASE_URL = "https://kapi.kakao.com";
@@ -22,14 +25,15 @@ public class KakaoOAuthHandler implements OAuthHandler {
     @Override
     public OAuthDetailResponse retrieveOAuthDetail(String accessToken) {
 
-
-        return webClient.get()
+        return webClient.post()
             .uri(uriBuilder -> uriBuilder.path("/v2/user/me")
                 .queryParam("property_keys", "[\"kakao_account.email\"]")
                 .build())
             .header("Authorization", "Bearer " + accessToken)
             .retrieve()
-            .bodyToMono(OAuthDetailResponse.class)
+            .bodyToMono(JsonNode.class)
+            .doOnNext(jsonNode -> log.info("Received JsonNode: " + jsonNode)) // JsonNode 확인
+            .map(jsonNode -> new OAuthDetailResponse(jsonNode.get("kakao_account").get("email").asText()))
             .block();
     }
 }

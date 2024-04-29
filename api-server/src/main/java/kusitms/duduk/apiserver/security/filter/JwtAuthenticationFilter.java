@@ -16,7 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @RequiredArgsConstructor
-public class JwtAuthenticationFilter extends OncePerRequestFilter  {
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
@@ -24,6 +24,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter  {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
         FilterChain filterChain) throws ServletException, IOException {
+        /**
+         * OAuth 토큰을 추출합니다. 구별을 위해 OAuth prefix를 사용합니다.
+         */
+        String oAuthToken = jwtTokenProvider.extractOAuthToken(request)
+            .orElse(null);
+
+        /**
+         * OAuth Token이 null이 아니라면 로그인 요청이니 다음 필터로 바로 넘어갑니다.
+         */
+        if (oAuthToken != null) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         /**
          * 사용자 요청 헤더에서 RefreshToken을 추출합니다.
@@ -87,14 +100,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter  {
             .ifPresent(accessToken -> jwtTokenProvider.getSubject(accessToken)
 	.ifPresent(email -> userRepository.findByEmail(email)
 	    .ifPresent(this::saveAuthentication)));
-
-        filterChain.doFilter(request, response);
     }
 
     private void saveAuthentication(User user) {
         CustomUserDetails userDetails = new CustomUserDetails(user);
         Authentication authentication =
-            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            new UsernamePasswordAuthenticationToken(userDetails, null,
+	userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }

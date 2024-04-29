@@ -8,6 +8,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -74,7 +75,6 @@ public class JwtTokenProvider {
             .filter(refreshToken -> StringUtils.hasText(refreshToken))
             .filter(refreshToken -> refreshToken.startsWith(BEARER_PREFIX))
             .map(refreshToken -> refreshToken.substring(7));
-
     }
 
     public Optional<String> extractRefreshToken(HttpServletRequest request) {
@@ -82,6 +82,12 @@ public class JwtTokenProvider {
             .filter(refreshToken -> StringUtils.hasText(refreshToken))
             .filter(refreshToken -> refreshToken.startsWith(BEARER_PREFIX))
             .map(refreshToken -> refreshToken.substring(7));
+    }
+
+    public Optional<String> extractOAuthToken(HttpServletRequest request) {
+        return Optional.ofNullable(request.getHeader("OAuth"))
+            .filter(oAuthToken -> StringUtils.hasText(oAuthToken))
+            .map(oAuthToken -> oAuthToken.toLowerCase(Locale.ROOT));
     }
 
     public boolean isTokenValid(final String token) {
@@ -114,8 +120,8 @@ public class JwtTokenProvider {
         response.setHeader(accessTokenHeader, accessToken);
         response.setHeader(refreshTokenHeader, reIssuedRefreshToken);
     }
-
     // Subject는 토큰의 주체를 나타내는 중요한 정보로 사용자의 id나 email을 저장합니다.
+
     public Optional<String> getSubject(String accessToken) {
         return Optional.ofNullable(parseClaims(accessToken).getSubject());
     }
