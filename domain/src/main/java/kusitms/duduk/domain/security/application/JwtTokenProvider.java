@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Optional;
+import kusitms.duduk.domain.security.jwt.JwtTokenInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -124,5 +125,12 @@ public class JwtTokenProvider {
 
     public Optional<String> getSubject(String accessToken) {
         return Optional.ofNullable(parseClaims(accessToken).getSubject());
+    }
+
+    public JwtTokenInfo createTokenInfo(String email) {
+        return JwtTokenInfo.builder()
+            .accessToken(createAccessToken(email))
+            .refreshToken(createRefreshToken(email))
+            .build();
     }
 }

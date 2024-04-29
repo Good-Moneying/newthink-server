@@ -11,6 +11,6 @@ public class UserQueryService {
     private final UserRepository userRepository;
 
     public boolean isUserRegisteredByEmail(String email) {
-        return userRepository.findByEmail(email).isPresent();
+        return userRepository.isExistsByEmail(email);
     }
 }
