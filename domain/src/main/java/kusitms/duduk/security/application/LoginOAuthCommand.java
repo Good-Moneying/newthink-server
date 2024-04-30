@@ -23,7 +23,7 @@ public class LoginOAuthCommand implements LoginOAuthUseCase {
 
         JwtTokenResponse jwtTokenInfo = jwtTokenProvider.createTokenInfo(response.email());
 
-        boolean isRegistered = checkUserRegistration(response.email());
+        boolean isRegistered = retrieveUserQuery.isUserRegisteredByEmail(response.email());
         updateRefreshTokenIfRegistered(isRegistered, response.email(), jwtTokenInfo.refreshToken());
 
         return new OAuthLoginResponse(
@@ -31,10 +31,6 @@ public class LoginOAuthCommand implements LoginOAuthUseCase {
             jwtTokenInfo.refreshToken(),
             provider,
             isRegistered);
-    }
-
-    private boolean checkUserRegistration(String email) {
-        return retrieveUserQuery.isUserRegisteredByEmail(email);
     }
 
     private void updateRefreshTokenIfRegistered(boolean isRegistered, String email, String refreshToken) {
