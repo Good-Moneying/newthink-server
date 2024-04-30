@@ -1,7 +1,7 @@
 package kusitms.duduk.security.presentation;
 
-import kusitms.duduk.security.application.OAuthApplicationService;
-import kusitms.duduk.security.presentation.dto.OAuthLoginResponse;
+import kusitms.duduk.security.application.OAuthApiService;
+import kusitms.duduk.security.dto.response.OAuthLoginResponse;
 import kusitms.duduk.security.domain.Provider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping( "/api/oauth")
 public class OAuthController implements OAuthControllerDocs {
 
-    private final OAuthApplicationService oAuthService;
+    private final OAuthApiService oAuthService;
 
     @GetMapping("/{provider}")
     public ResponseEntity<OAuthLoginResponse> oAuthLogin(

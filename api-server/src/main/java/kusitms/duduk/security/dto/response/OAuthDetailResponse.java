@@ -1,4 +1,4 @@
-package kusitms.duduk.security.presentation.dto;
+package kusitms.duduk.security.dto.response;
 
 public record OAuthDetailResponse(String email) {
 

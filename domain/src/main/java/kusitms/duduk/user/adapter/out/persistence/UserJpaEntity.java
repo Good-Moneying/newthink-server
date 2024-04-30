@@ -13,6 +13,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class UserJpaEntity {
+
     private Long id;
     private String email;
     private String nickname;
@@ -28,5 +29,11 @@ public class UserJpaEntity {
     public void updateRefreshToken(String reIssuedRefreshToken) {
         Assert.notNull(reIssuedRefreshToken, "RefreshToken must not be null");
         this.refreshToken = reIssuedRefreshToken;
+    }
+
+    public UserJpaEntity(String email, String nickname, LocalDate birthday) {
+        this.email = email;
+        this.nickname = nickname;
+        this.birthday = birthday;
     }
 }

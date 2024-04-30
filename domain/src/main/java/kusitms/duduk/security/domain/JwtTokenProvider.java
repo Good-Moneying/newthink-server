@@ -1,4 +1,4 @@
-package kusitms.duduk.security.application;
+package kusitms.duduk.security.domain;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Optional;
-import kusitms.duduk.security.jwt.JwtTokenInfo;
+import kusitms.duduk.security.dto.response.JwtTokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -127,8 +127,8 @@ public class JwtTokenProvider {
         return Optional.ofNullable(parseClaims(accessToken).getSubject());
     }
 
-    public JwtTokenInfo createTokenInfo(String email) {
-        return JwtTokenInfo.builder()
+    public JwtTokenResponse createTokenInfo(String email) {
+        return JwtTokenResponse.builder()
             .accessToken(createAccessToken(email))
             .refreshToken(createRefreshToken(email))
             .build();

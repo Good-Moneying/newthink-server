@@ -6,9 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @ConfigurationPropertiesScan
 @SpringBootApplication(scanBasePackages = {
-        "kusitms.duduk.apiserver",
-        "kusitms.duduk.domain",
-        "kusitms.duduk.core"
+        "kusitms.duduk"
 })
 public class DudukApiServerApplication {
     public static void main(String[] args) {

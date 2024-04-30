@@ -1,6 +1,6 @@
 package kusitms.duduk.user.presentation;
 
-import kusitms.duduk.user.dto.CreateUserRequest;
+import kusitms.duduk.user.dto.request.CreateUserRequest;
 import kusitms.duduk.user.application.RegisterUserCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

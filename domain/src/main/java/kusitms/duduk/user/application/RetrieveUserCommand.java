@@ -12,6 +12,6 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
 
     @Override
     public boolean isUserRegisteredByEmail(String email) {
-        return userRepository.isExistsByEmail(email);
+        return userRepository.existsByEmail(email);
     }
 }

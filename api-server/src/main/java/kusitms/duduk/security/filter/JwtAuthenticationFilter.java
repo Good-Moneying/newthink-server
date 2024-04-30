@@ -5,7 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import kusitms.duduk.security.application.JwtTokenProvider;
+import kusitms.duduk.security.domain.JwtTokenProvider;
 import kusitms.duduk.security.domain.CustomUserDetails;
 import kusitms.duduk.user.domain.User;
 import kusitms.duduk.user.adapter.out.persistence.UserRepository;

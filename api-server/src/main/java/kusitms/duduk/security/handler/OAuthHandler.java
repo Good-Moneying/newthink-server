@@ -1,6 +1,6 @@
 package kusitms.duduk.security.handler;
 
-import kusitms.duduk.security.presentation.dto.OAuthDetailResponse;
+import kusitms.duduk.security.dto.response.OAuthDetailResponse;
 
 public interface OAuthHandler {
 

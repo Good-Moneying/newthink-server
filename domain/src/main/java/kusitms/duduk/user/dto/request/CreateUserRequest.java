@@ -1,4 +1,4 @@
-package kusitms.duduk.user.dto;
+package kusitms.duduk.user.dto.request;
 
 import java.time.LocalDate;
 

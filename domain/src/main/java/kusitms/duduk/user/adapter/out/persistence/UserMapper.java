@@ -4,10 +4,10 @@ import kusitms.duduk.user.domain.User;
 
 public class UserMapper {
     public User mapToDomainEntity(UserJpaEntity userJpaEntity) {
-        return new User(userJpaEntity.getId(), userJpaEntity.getName(), userJpaEntity.getEmail());
+        return User.create(userJpaEntity.getEmail(), userJpaEntity.getNickname(), userJpaEntity.getBirthday());
     }
 
     public UserJpaEntity mapToJpaEntity(User user) {
-        return new UserJpaEntity(user.getId(), user.getName(), user.getEmail());
+        return new UserJpaEntity(user.getEmail(), user.getNickname(), user.getBirthday());
     }
 }

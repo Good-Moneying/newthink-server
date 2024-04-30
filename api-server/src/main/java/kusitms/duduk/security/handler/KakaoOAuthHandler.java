@@ -1,7 +1,7 @@
 package kusitms.duduk.security.handler;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import kusitms.duduk.security.presentation.dto.OAuthDetailResponse;
+import kusitms.duduk.security.dto.response.OAuthDetailResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
