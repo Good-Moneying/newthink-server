@@ -4,11 +4,11 @@ import java.util.Map;
 import kusitms.duduk.apiserver.security.handler.OAuthHandler;
 import kusitms.duduk.apiserver.security.presentation.dto.OAuthDetailResponse;
 import kusitms.duduk.apiserver.security.presentation.dto.OAuthLoginResponse;
-import kusitms.duduk.apiserver.user.application.UserQueryService;
 import kusitms.duduk.domain.security.domain.Provider;
 import kusitms.duduk.domain.security.application.JwtTokenProvider;
 import kusitms.duduk.domain.security.jwt.JwtTokenInfo;
-import kusitms.duduk.domain.user.application.UserCommandService;
+import kusitms.duduk.domain.user.application.port.in.RetrieveUserQuery;
+import kusitms.duduk.domain.user.application.port.in.UpdateUserUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,11 +16,11 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class OAuthService {
+public class OAuthApplicationService {
 
     private final Map<Provider, OAuthHandler> oAuthHandlers;
-    private final UserQueryService userQueryService;
-    private final UserCommandService userCommandService;
+    private final RetrieveUserQuery retrieveUserQuery;
+    private final UpdateUserUseCase updateUserUseCase;
     private final JwtTokenProvider jwtTokenProvider;
 
     public OAuthLoginResponse login(Provider provider, String accessToken) {
@@ -44,12 +44,12 @@ public class OAuthService {
     }
 
     private boolean checkUserRegistration(String email) {
-        return userQueryService.isUserRegisteredByEmail(email);
+        return retrieveUserQuery.isUserRegisteredByEmail(email);
     }
 
     private void updateRefreshTokenIfNeeded(boolean isRegistered, String email, String refreshToken) {
         if (isRegistered) {
-            userCommandService.updateRefreshToken(email, refreshToken);
+            updateUserUseCase.updateRefreshToken(email, refreshToken);
         }
     }
 }

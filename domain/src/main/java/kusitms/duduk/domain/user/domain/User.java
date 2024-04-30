@@ -69,4 +69,14 @@ public class User extends BaseEntity {
         Assert.notNull(reIssuedRefreshToken, "RefreshToken must not be null");
         this.refreshToken = reIssuedRefreshToken;
     }
+
+    private User(String email, String nickname, LocalDate birthday) {
+        this.email = email;
+        this.nickname = nickname;
+        this.birthday = birthday;
+    }
+
+    public static User create(String email, String nickname, LocalDate birthday) {
+        return new User(email, nickname, birthday);
+    }
 }

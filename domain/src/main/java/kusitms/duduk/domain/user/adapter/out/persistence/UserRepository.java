@@ -1,4 +1,4 @@
-package kusitms.duduk.domain.user.domain.repository;
+package kusitms.duduk.domain.user.adapter.out.persistence;
 
 import java.util.Optional;
 import kusitms.duduk.domain.user.domain.User;

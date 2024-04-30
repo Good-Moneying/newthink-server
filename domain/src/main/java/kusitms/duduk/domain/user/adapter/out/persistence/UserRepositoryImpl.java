@@ -1,4 +1,4 @@
-package kusitms.duduk.domain.user.domain.repository;
+package kusitms.duduk.domain.user.adapter.out.persistence;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

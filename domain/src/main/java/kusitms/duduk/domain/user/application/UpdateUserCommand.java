@@ -1,12 +1,13 @@
 package kusitms.duduk.domain.user.application;
 
-import kusitms.duduk.domain.user.domain.repository.UserRepository;
+import kusitms.duduk.domain.user.application.port.in.UpdateUserUseCase;
+import kusitms.duduk.domain.user.adapter.out.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class UserCommandService {
+public class UpdateUserCommand implements UpdateUserUseCase {
 
     private final UserRepository userRepository;
 

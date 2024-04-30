@@ -3,7 +3,7 @@ package kusitms.duduk.apiserver.config;
 import kusitms.duduk.apiserver.security.filter.JwtAuthenticationFilter;
 import kusitms.duduk.apiserver.security.handler.LoginSuccessHandler;
 import kusitms.duduk.domain.security.application.JwtTokenProvider;
-import kusitms.duduk.domain.user.domain.repository.UserRepository;
+import kusitms.duduk.domain.user.adapter.out.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -4,10 +4,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kusitms.duduk.domain.security.application.JwtTokenProvider;
 import kusitms.duduk.domain.security.domain.CustomUserDetails;
-import kusitms.duduk.domain.user.domain.repository.UserRepository;
+import kusitms.duduk.domain.user.adapter.out.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 
