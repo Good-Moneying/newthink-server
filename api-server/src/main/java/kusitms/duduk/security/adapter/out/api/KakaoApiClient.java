@@ -1,33 +1,30 @@
-package kusitms.duduk.security.handler;
+package kusitms.duduk.security.adapter.out.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import kusitms.duduk.security.dto.response.OAuthDetailResponse;
+import kusitms.duduk.security.port.out.OAuthClientPort;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Slf4j
+@RequiredArgsConstructor
 @Component
-public class KakaoOAuthHandler implements OAuthHandler {
+public class KakaoApiClient implements OAuthClientPort {
     private static final String KAKAO_BASE_URL = "https://kapi.kakao.com";
-    private WebClient webClient;
 
-    public KakaoOAuthHandler() {
-        this.webClient = WebClient.builder()
-            .baseUrl(KAKAO_BASE_URL)
-            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-            .build();
-    }
+    @Qualifier("oAuthWebClient")
+    private final WebClient webClient;
 
-    @Override
     public OAuthDetailResponse retrieveOAuthDetail(String accessToken) {
-
         return webClient.post()
-            .uri(uriBuilder -> uriBuilder.path("/v2/user/me")
-                .queryParam("property_keys", "[\"kakao_account.email\"]")
-                .build())
+            .uri(uriBuilder -> uriBuilder
+	.path(KAKAO_BASE_URL)
+	.path("/v2/user/me")
+	.queryParam("property_keys", "[\"kakao_account.email\"]")
+	.build())
             .header("Authorization", "Bearer " + accessToken)
             .retrieve()
             .bodyToMono(JsonNode.class)

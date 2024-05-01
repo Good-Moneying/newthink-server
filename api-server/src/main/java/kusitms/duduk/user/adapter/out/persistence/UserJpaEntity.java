@@ -1,7 +1,6 @@
-package kusitms.duduk.user.domain;
+package kusitms.duduk.user.adapter.out.persistence;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.jsonwebtoken.lang.Assert;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -12,9 +11,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
-import kusitms.duduk.global.domain.BaseEntity;
-import kusitms.duduk.global.domain.Category;
-import kusitms.duduk.security.domain.Provider;
+import kusitms.duduk.global.BaseEntity;
+import kusitms.duduk.global.Category;
+import kusitms.duduk.user.Gender;
+import kusitms.duduk.user.Goal;
+import kusitms.duduk.user.Provider;
+import kusitms.duduk.user.Role;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity {
+public class UserJpaEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,17 +68,18 @@ public class User extends BaseEntity {
     private int acornCount;
 
     public void updateRefreshToken(String reIssuedRefreshToken) {
-        Assert.notNull(reIssuedRefreshToken, "RefreshToken must not be null");
+        io.jsonwebtoken.lang.Assert.notNull(reIssuedRefreshToken, "RefreshToken must not be null");
         this.refreshToken = reIssuedRefreshToken;
     }
 
-    private User(String email, String nickname, LocalDate birthday) {
+    private UserJpaEntity(String email, String nickname, LocalDate birthday) {
         this.email = email;
         this.nickname = nickname;
         this.birthday = birthday;
     }
 
-    public static User create(String email, String nickname, LocalDate birthday) {
-        return new User(email, nickname, birthday);
+    public static UserJpaEntity create(String email, String nickname,
+        LocalDate birthday) {
+        return new UserJpaEntity(email, nickname, birthday);
     }
 }

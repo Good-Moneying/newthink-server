@@ -1,18 +1,14 @@
-package kusitms.duduk.user.adapter.out.persistence;
+package kusitms.duduk.user;
 
-import io.jsonwebtoken.lang.Assert;
 import java.time.LocalDate;
-import kusitms.duduk.global.domain.Category;
-import kusitms.duduk.security.domain.Provider;
-import kusitms.duduk.user.domain.Gender;
-import kusitms.duduk.user.domain.Goal;
-import kusitms.duduk.user.domain.Role;
+import kusitms.duduk.global.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.util.Assert;
 
 @Getter
 @AllArgsConstructor
-public class UserJpaEntity {
+public class User {
 
     private Long id;
     private String email;
@@ -31,7 +27,7 @@ public class UserJpaEntity {
         this.refreshToken = reIssuedRefreshToken;
     }
 
-    public UserJpaEntity(String email, String nickname, LocalDate birthday) {
+    public User(String email, String nickname, LocalDate birthday) {
         this.email = email;
         this.nickname = nickname;
         this.birthday = birthday;
