@@ -1,7 +1,32 @@
 ## System Architecture
-![스크린샷 2024-04-30 오후 4.01.55.png](..%2F..%2F..%2F..%2F..%2Fvar%2Ffolders%2Ffs%2Fz64n4r4s12n6p8m5d_sw8fb00000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_B3hHzD%2F%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-04-30%20%EC%98%A4%ED%9B%84%204.01.55.png)
+![system_architecture.png](docs%2Fsystem_architecture.png)
 ## Multi Module
-![multi_module.png](docs%2Fmulti_module.png)
+![multi-module.png](docs%2Fmulti-module.png)
+
+### 모듈 별 가져야 하는 책임 
+#### api-server
+- 외부와의 통신을 담당하는 모듈로 헥사고날 아키텍쳐의 Adapter 역할을 수행합니다. 
+- 외부 요청을 받아 내부 서비스로 전달하고, 내부 서비스의 응답을 외부로 전달합니다.
+- 이 외에도 Infrasturcture와 관련된 코드를 포함하고 있습니다.
+
+#### batch
+- 주기적으로 실행되는 작업을 담당하는 모듈로, 스케줄러를 통해 주기적으로 실행되는 작업을 수행합니다.
+- 크롤링, 데이터 처리, 데이터 저장 등의 작업을 수행합니다.
+
+#### application
+- 내부 비즈니스 로직을 담당하고 있는 모듈로 헥사고날 아키텍쳐의 Port 역할을 수행합니다.
+- 외부 요청을 받아 비즈니스 로직을 수행하고, 결과를 반환합니다.
+
+#### domain
+- 오로지 POJO 객체만을 가지고 있는 모듈입니다.
+- 도메인 클래스와 도메인 서비스 클래스가 정의될 수 있습니다.
+- 도메인 서비스에는 ‘트랜잭션의 단위’를 정의하며, ‘요청 데이터를 검증’, ‘이벤트를 발생’하는 일 등의 도메인의 비지니스를 작성합니다.
+
+#### core
+- 공통적으로 사용되는 코드를 담당하는 모듈입니다.
+- 시스템 내 모든 모듈들이 의존할 수 있을만큼 얇은 의존성을 제공합니다.
+- 가능한 사용하지 않습니다.
+
 ## Tech Stack
 - **Spring Boot**
     - 스프링 프레임워크를 기반으로 자동 설정과 스타터 종속성을 제공하여 웹 애플리케이션 개발과 배포를 신속하게 수행할 수 있도록 돕습니다.
