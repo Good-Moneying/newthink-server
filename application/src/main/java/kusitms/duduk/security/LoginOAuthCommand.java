@@ -1,0 +1,45 @@
+package kusitms.duduk.security;
+
+import java.util.Map;
+import kusitms.duduk.security.dto.response.JwtTokenResponse;
+import kusitms.duduk.security.dto.response.OAuthDetailResponse;
+import kusitms.duduk.security.dto.response.OAuthLoginResponse;
+import kusitms.duduk.security.infrastructure.JwtTokenProvider;
+import kusitms.duduk.security.port.in.LoginOAuthUseCase;
+import kusitms.duduk.security.port.out.OAuthClientPort;
+import kusitms.duduk.user.Provider;
+import kusitms.duduk.user.port.in.RetrieveUserQuery;
+import kusitms.duduk.user.port.in.UpdateUserUseCase;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@RequiredArgsConstructor
+@Service
+public class LoginOAuthCommand implements LoginOAuthUseCase {
+
+    private final RetrieveUserQuery retrieveUserQuery;
+    private final UpdateUserUseCase updateUserUseCase;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final Map<Provider, OAuthClientPort> oAuthClientPortMap;
+
+    public OAuthLoginResponse process(Provider provider, String accessToken) {
+        OAuthDetailResponse response = oAuthClientPortMap.get(provider).retrieveOAuthDetail(accessToken);
+        JwtTokenResponse jwtTokenInfo = jwtTokenProvider.createTokenInfo(response.email());
+
+        boolean isRegistered = retrieveUserQuery.isUserRegisteredByEmail(response.email());
+        updateRefreshTokenIfRegistered(isRegistered, response.email(), jwtTokenInfo.refreshToken());
+
+        return new OAuthLoginResponse(
+            jwtTokenInfo.accessToken(),
+            jwtTokenInfo.refreshToken(),
+            provider,
+            isRegistered);
+    }
+
+    private void updateRefreshTokenIfRegistered(boolean isRegistered, String email,
+        String refreshToken) {
+        if (isRegistered) {
+            updateUserUseCase.updateRefreshToken(email, refreshToken);
+        }
+    }
+}

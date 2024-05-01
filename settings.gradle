@@ -4,4 +4,6 @@ include 'batch'
 include 'domain'
 include 'core'
 include 'api-server'
+include 'application'
+include 'application'
 

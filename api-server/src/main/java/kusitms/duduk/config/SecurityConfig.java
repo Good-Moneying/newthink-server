@@ -1,8 +1,8 @@
 package kusitms.duduk.config;
 
-import kusitms.duduk.security.filter.JwtAuthenticationFilter;
-import kusitms.duduk.security.domain.JwtTokenProvider;
-import kusitms.duduk.user.adapter.out.persistence.UserRepository;
+import kusitms.duduk.security.infrastructure.filter.JwtAuthenticationFilter;
+import kusitms.duduk.security.infrastructure.JwtTokenProvider;
+import kusitms.duduk.user.adapter.out.web.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -13,6 +13,7 @@ repositories {
 
 dependencies {
     implementation project(':domain')
+    implementation project(':application')
     implementation project(':core')
 
     // Lombok
@@ -33,12 +34,21 @@ dependencies {
     // Swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
 
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+    implementation 'org.json:json:20210307'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
+    runtimeOnly('io.jsonwebtoken:jjwt-orgjson:0.11.2')
+            { exclude group: 'org.json', module: 'json'}
+    implementation 'com.auth0:java-jwt:4.4.0'
+
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.rest-assured:rest-assured:5.3.0'
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation platform('org.junit:junit-bom:5.9.1')
 
+    // domain 모듈에 정의된 테스트 픽스처를 현재 모듈의 테스트 환경에서 사용할 수 있도록 하는 데 필요한 구성입니다
     testImplementation(testFixtures(project(":domain")))
 }
 
@@ -46,15 +56,15 @@ test {
     useJUnitPlatform()
 }
 
-String jarName = "api-server.jar";
+String jarName = "api-server.jar"
 
 tasks.named("bootJar") {
-    bootJar.getArchiveFileName().set(jarName);
+    bootJar.getArchiveFileName().set(jarName)
 
     bootJar.doLast(task -> {
         copy(copySpec -> {
-            copySpec.from("build/libs/" + jarName);
-            copySpec.into("../build/libs");
-        });
-    });
-};
+            copySpec.from("build/libs/" + jarName)
+            copySpec.into("../build/libs")
+        })
+    })
+}
