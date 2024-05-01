@@ -11,7 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
-import kusitms.duduk.global.BaseEntity;
+import java.time.LocalDateTime;
 import kusitms.duduk.global.Category;
 import kusitms.duduk.user.Gender;
 import kusitms.duduk.user.Goal;
@@ -20,12 +20,14 @@ import kusitms.duduk.user.Role;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 @Table(name = "users")
-public class UserJpaEntity extends BaseEntity {
+public class UserJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,6 +68,14 @@ public class UserJpaEntity extends BaseEntity {
 
     @Column
     private int acornCount;
+
+    @CreatedDate
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     public void updateRefreshToken(String reIssuedRefreshToken) {
         io.jsonwebtoken.lang.Assert.notNull(reIssuedRefreshToken, "RefreshToken must not be null");

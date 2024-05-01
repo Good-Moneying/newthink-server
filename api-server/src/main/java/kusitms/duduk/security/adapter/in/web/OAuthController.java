@@ -1,6 +1,5 @@
 package kusitms.duduk.security.adapter.in.web;
 
-import kusitms.duduk.security.application.OAuthApiService;
 import kusitms.duduk.security.dto.response.OAuthLoginResponse;
 import kusitms.duduk.user.Provider;
 import kusitms.duduk.security.port.in.LoginOAuthUseCase;
