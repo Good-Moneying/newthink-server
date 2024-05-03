@@ -1,6 +1,22 @@
 server:
   port: 8080
 
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+      #    url: jdbc:h2:tcp://localhost/~/database/kusitms
+      url: jdbc:h2:mem:test;MODE=MySQL
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop # create-drop, update, validate, none
+    properties:
+      hibernate:
+        format_sql: true # SQL 포맷팅
+        show_sql: true # SQL 출력
+
 springdoc:
   swagger-ui:
     # Swagger UI 페이지에 대한 경로
