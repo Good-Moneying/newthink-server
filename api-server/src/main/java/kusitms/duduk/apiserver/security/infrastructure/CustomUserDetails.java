@@ -2,7 +2,6 @@ package kusitms.duduk.apiserver.security.infrastructure;
 
 import java.util.Collection;
 import java.util.Collections;
-import kusitms.duduk.application.user.persistence.UserJpaEntity;
 import kusitms.duduk.domain.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,7 +19,7 @@ public class CustomUserDetails implements UserDetails {
     }
 
     public String getEmail() {
-        return user.getEmail();
+        return user.getEmail().getValue();
     }
 
     /**
@@ -40,7 +39,7 @@ public class CustomUserDetails implements UserDetails {
     // loadUserByUsername 메서드에서 사용자 정보를 조회합니다.
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return user.getEmail().getValue();
     }
 
     @Override

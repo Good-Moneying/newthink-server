@@ -1,4 +1,4 @@
-package kusitms.duduk.domain.user;
+package kusitms.duduk.domain.user.vo;
 
 import java.util.Arrays;
 

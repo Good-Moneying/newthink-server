@@ -2,7 +2,8 @@ package kusitms.duduk.core.user.port.input;
 
 
 import kusitms.duduk.core.user.dto.request.CreateUserRequest;
+import kusitms.duduk.core.user.dto.response.UserResponse;
 
 public interface RegisterUserUseCase {
-    void register(CreateUserRequest createUserRequest);
+    UserResponse register(CreateUserRequest createUserRequest);
 }

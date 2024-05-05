@@ -1,7 +1,7 @@
 package kusitms.duduk.application.security.config;
 
 import java.util.Map;
-import kusitms.duduk.domain.user.Provider;
+import kusitms.duduk.domain.user.vo.Provider;
 import kusitms.duduk.application.security.api.GoogleApiClient;
 import kusitms.duduk.application.security.api.KakaoApiClient;
 import kusitms.duduk.application.security.api.NaverApiClient;

@@ -2,7 +2,7 @@ package kusitms.duduk.apiserver.security.presentation;
 
 import kusitms.duduk.core.security.dto.response.OAuthLoginResponse;
 import kusitms.duduk.core.security.port.input.LoginOAuthUseCase;
-import kusitms.duduk.domain.user.Provider;
+import kusitms.duduk.domain.user.vo.Provider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

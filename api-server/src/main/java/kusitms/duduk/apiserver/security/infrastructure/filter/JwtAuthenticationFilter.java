@@ -88,13 +88,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             .ifPresent(user -> {
 	String reIssuedRefreshToken = reIssueRefreshToken(user);
 	sendAccessAndRefreshToken(response,
-	    jwtTokenProvider.createAccessToken(user.getEmail()),
+	    jwtTokenProvider.createAccessToken(user.getEmail().getValue()),
 	    reIssuedRefreshToken);
             });
     }
 
     private String reIssueRefreshToken(User user) {
-        String reIssuedRefreshToken = jwtTokenProvider.createRefreshToken(user.getEmail());
+        String reIssuedRefreshToken = jwtTokenProvider.createRefreshToken(user.getEmail().getValue());
         user.updateRefreshToken(reIssuedRefreshToken);
         saveUserPort.saveAndFlush(user);
         return reIssuedRefreshToken;

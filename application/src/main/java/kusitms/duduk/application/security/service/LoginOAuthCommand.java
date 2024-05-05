@@ -7,7 +7,7 @@ import kusitms.duduk.core.security.dto.response.OAuthDetailResponse;
 import kusitms.duduk.core.security.dto.response.OAuthLoginResponse;
 import kusitms.duduk.core.security.port.input.LoginOAuthUseCase;
 import kusitms.duduk.core.security.port.output.OAuthClientPort;
-import kusitms.duduk.domain.user.Provider;
+import kusitms.duduk.domain.user.vo.Provider;
 import kusitms.duduk.core.user.port.input.RetrieveUserQuery;
 import kusitms.duduk.core.user.port.input.UpdateUserUseCase;
 import lombok.RequiredArgsConstructor;

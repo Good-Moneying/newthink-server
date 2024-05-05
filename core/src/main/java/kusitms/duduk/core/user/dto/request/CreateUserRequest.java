@@ -6,8 +6,11 @@ import java.time.LocalDate;
 
 public record CreateUserRequest(@NotNull String email,
 		@NotNull String nickname,
+		@NotNull String refreshToken,
 		@NotNull String gender,
 		@JsonFormat(pattern = "yyyyMMdd") @NotNull LocalDate birthDay,
-		@NotNull String category) {
+		@NotNull String provider,
+		@NotNull String category,
+		@NotNull String goal) {
 
 }
