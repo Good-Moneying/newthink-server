@@ -1,11 +1,19 @@
+##  서비스명
+![duduk.png](docs%2Fduduk.png)
+
 ## 서비스 소개
 ### 경제 뉴스레터 서비스, 두둑 (Do-duk : *Do Develop Ur Knowledge!*)
 
 > 두둑(Do-Duk)은 여러분의 머리와 지갑을 두둑-히 채워주는 경제 뉴스레터 서비스입니다.
 
+![service_target.png](docs%2Fservice_target.png)
+
+## GUI
+![gui.png](docs%2Fgui.png)
+
 ## System Architecture
 ![system_architecture.png](docs%2Fsystem_architecture.png)
-## Multi Module
+## Hexagonal Multi Module
 ![multi-module.png](docs%2Fmulti-module.png)
 
 #### api-server
