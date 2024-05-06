@@ -1,21 +1,19 @@
 ##  서비스명
-![duduk.png](docs%2Fduduk.png)
-
+![duduk.png](docs%2Fimages%2Fduduk.png)
 ## 서비스 소개
 ### 경제 뉴스레터 서비스, 두둑 (Do-duk : *Do Develop Ur Knowledge!*)
 
 > 두둑(Do-Duk)은 여러분의 머리와 지갑을 두둑-히 채워주는 경제 뉴스레터 서비스입니다.
 
-![service_target.png](docs%2Fservice_target.png)
-
+![service_target.png](docs%2Fimages%2Fservice_target.png)
 ## GUI
-![gui.png](docs%2Fgui.png)
+![gui.png](docs%2Fimages%2Fgui.png)
 
 ## System Architecture
-![system_architecture.png](docs%2Fsystem_architecture.png)
-## Hexagonal Multi Module
-![multi-module.png](docs%2Fmulti-module.png)
+![system_architecture.png](docs%2Fimages%2Fsystem_architecture.png)
 
+## Hexagonal Multi Module
+![multi-module.png](docs%2Fimages%2Fmulti-module.png)
 #### api-server
 - 프론트와 통신을 담당하는 API 모듈입니다.
 - 외부 요청을 받아 내부 서비스로 전달하고, 내부 서비스의 응답을 외부로 전달합니다.
@@ -40,7 +38,7 @@
 - 가능한 사용하지 않습니다.
 
 ## 📜 ERD
-![ERD.png](docs%2FERD.png)
+![ERD.png](docs%2Fimages%2FERD.png)
 
 ## ⚒️ Tech Stack
 ### Front-end
@@ -179,4 +177,4 @@
 6. 최종 확인 후 Reviewer가 Merge를 진행합니다.
 
 ## 🐬 Git Flow
-![git_flow.png](docs%2Fgit_flow.png)
+![git_flow.png](docs%2Fimages%2Fgit_flow.png)

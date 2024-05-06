@@ -1,6 +1,8 @@
 package kusitms.duduk.apiserver.user.presentation;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import kusitms.duduk.core.user.dto.request.CreateUserRequest;
+import kusitms.duduk.core.user.dto.response.UserResponse;
 import kusitms.duduk.core.user.port.input.RegisterUserUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,8 +20,8 @@ public class UserController implements UserControllerDocs {
     private final RegisterUserUseCase registerUserUseCase;
 
     @PostMapping
-    public ResponseEntity<Void> register(@RequestBody CreateUserRequest createUserRequest) {
-        registerUserUseCase.register(createUserRequest);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<UserResponse> register(@RequestBody CreateUserRequest createUserRequest) {
+        return new ResponseEntity<>(registerUserUseCase.register(createUserRequest),
+            HttpStatus.CREATED);
     }
 }

@@ -6,12 +6,14 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import kusitms.duduk.core.security.dto.response.OAuthLoginResponse;
 import kusitms.duduk.core.exception.ErrorResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 
+@Tag(name = "OAuth", description = "OAuth API")
 public interface OAuthControllerDocs {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "OK"),
