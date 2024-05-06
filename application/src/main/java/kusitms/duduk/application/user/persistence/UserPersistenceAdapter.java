@@ -53,6 +53,11 @@ public class UserPersistenceAdapter implements UpdateUserPort, LoadUserPort, Sav
         return userRepository.existsByEmail(email);
     }
 
+    @Override
+    public boolean existsUserByNickname(String nickname) {
+        return userRepository.existsByNickname(nickname);
+    }
+
 
     @Override
     public Optional<User> update(User user) {

@@ -9,6 +9,7 @@ public interface LoadUserPort {
     Optional<User> findByEmail(String email);
 
     boolean existsUserByEmail(String email);
+    boolean existsUserByNickname(String nickname);
 
     Optional<User> findByRefreshToken(String refreshToken);
 }
