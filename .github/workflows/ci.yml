@@ -1,0 +1,35 @@
+name: Backend Server CI  
+  
+on:  
+  push:
+    branches:
+      - main
+      
+  pull_request:  
+    branches:  
+      - main  
+      - develop  
+
+	# opened (PR이 새로 생성될 때 이벤트가 트리거)
+	# synchronize (이미 열려 있는 PR에 새로운 커밋이 푸쉬되거나 기존 커밋이 수정될 때)
+    types: [opened, synchronize]  
+  
+jobs:  
+  build:  
+    runs-on: ubuntu-22.04  
+  
+    steps:  
+      - name: action checkout  
+        uses: actions/checkout@v3  
+  
+      - name: Set up JDK 17  
+        uses: actions/setup-java@v3  
+        with:  
+          java-version: '17'  
+          distribution: 'temurin'  
+  
+      - name: Grant execute permission for gradlew  
+        run: chmod +x gradlew  
+  
+      - name: Build with Gradle  
+        run: ./gradlew build  
