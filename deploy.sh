@@ -40,6 +40,12 @@ else
     OTHER_SERVICE="blue-api"
 fi
 
+echo "Grant permission to docker-compose.yml"
+sudo chmod 777 /home/ec2-user/docker-compose.yml
+
+echo "Docker Compose Down"
+docker-compose down --remove-orphans
+
 echo "$TARGET_SERVICE Deploy..."
 docker-compose -f /home/ec2-user/docker-compose.yml up -d $TARGET_SERVICE $BATCH_CONTAINER
 
