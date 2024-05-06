@@ -16,16 +16,15 @@ services:
   blue-api:
     container_name: blue-api
     image: goodmoneying/server
-    ports:
-      - 8080:8080
-
+    expose:
+      - "8080"
     restart: "always"
 
   green-api:
     container_name: green-api
     image: goodmoneying/server
-    ports:
-      - 8080:8080
+    expose:
+      - "8080"
     restart: "always"
 
   batch:
