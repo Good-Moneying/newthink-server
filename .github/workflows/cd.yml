@@ -1,0 +1,71 @@
+name: Backend Server CD
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Execute Gradle build
+        run: ./gradlew clean build
+
+      - name: List JAR Files
+        run: |
+          ls -la build/libs/
+
+      - name: Set up Docker Build
+        uses: docker/setup-buildx-action@v2
+
+      - name : Set up SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Docker build and push to Docker Hub and copy docker-compose.yml to server
+        run: |
+          sudo docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}  
+          
+          cd ./api-server
+          sudo docker buildx build --push --platform linux/amd64 -t ${{ secrets.DOCKER_USERNAME }}/server .
+          sudo docker push ${{ secrets.DOCKER_USERNAME }}/server
+                    
+          cd ../batch
+          sudo docker buildx build --push --platform linux/amd64 -t ${{ secrets.DOCKER_USERNAME }}/batch .
+          sudo docker push ${{ secrets.DOCKER_USERNAME }}/batch
+          
+          cd ..
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./docker-compose.yml ec2-user@15.165.161.107:${{ secrets.DOCKER_COMPOSE_PATH }}
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./deploy.sh ec2-user@15.165.161.107:${{ secrets.DOCKER_COMPOSE_PATH }}
+        shell: bash
+
+      - name: Deploy to Prod
+        uses: appleboy/ssh-action@master
+        with:
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          port: 22
+          script: |
+            sudo docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}  
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/server
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/batch
+            sudo bash ${{ secrets.DOCKER_COMPOSE_PATH }}/deploy.sh 
+            sudo docker image prune -f
