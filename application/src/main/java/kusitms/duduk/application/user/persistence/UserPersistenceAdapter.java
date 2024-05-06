@@ -26,7 +26,6 @@ public class UserPersistenceAdapter implements UpdateUserPort, LoadUserPort, Sav
         UserJpaEntity userJpaEntity = userJpaMapper.toJpaEntity(user);
         // 변환한 UserJpaEntity를 저장 (Id 값이 자동으로 생성)
         UserJpaEntity userSaved = userRepository.save(userJpaEntity);
-        // Id 값과 함께 반환
         return userJpaMapper.toDomain(userSaved);
     }
 

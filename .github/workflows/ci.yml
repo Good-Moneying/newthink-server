@@ -10,9 +10,7 @@ on:
       - main  
       - develop  
 
-	# opened (PR이 새로 생성될 때 이벤트가 트리거)
-	# synchronize (이미 열려 있는 PR에 새로운 커밋이 푸쉬되거나 기존 커밋이 수정될 때)
-    types: [opened, synchronize]  
+    types: [opened, synchronize]
   
 jobs:  
   build:  
@@ -32,4 +30,4 @@ jobs:
         run: chmod +x gradlew  
   
       - name: Build with Gradle  
-        run: ./gradlew build  
+        run: ./gradlew test
