@@ -39,6 +39,11 @@ jobs:
           echo "${{ secrets.EC2_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
+      - name : Copy docker-compose.yml and deploy.sh to EC2
+        run: |
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./docker-compose.yml ec2-user@15.165.161.107:${{ secrets.DOCKER_COMPOSE_PATH }}
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./deploy.sh ec2-user@15.165.161.107:${{ secrets.DOCKER_COMPOSE_PATH }}
+
       - name: Docker build and push to Docker Hub and copy docker-compose.yml to server
         run: |
           sudo docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}  
@@ -50,11 +55,6 @@ jobs:
           cd ../batch
           sudo docker buildx build --push --platform linux/amd64 -t ${{ secrets.DOCKER_USERNAME }}/batch .
           sudo docker push ${{ secrets.DOCKER_USERNAME }}/batch
-          
-          cd ..
-          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./docker-compose.yml ec2-user@15.165.161.107:${{ secrets.DOCKER_COMPOSE_PATH }}
-          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./deploy.sh ec2-user@15.165.161.107:${{ secrets.DOCKER_COMPOSE_PATH }}
-        shell: bash
 
       - name: Deploy to Prod
         uses: appleboy/ssh-action@master
