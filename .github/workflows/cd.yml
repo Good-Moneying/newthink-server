@@ -68,9 +68,13 @@ jobs:
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/server
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/batch
 
+      - name: Grant Permission to docker-compose.yml and deploy.sh
+        run: |
+          sudo chmod +x deploy.sh
+          sudo chmod +x docker-compose.yml
+
       - name: Execute Deploy Script
         run: |
-          chmod +x /home/ec2-user/deploy.sh
           sudo /home/ec2-user/deploy.sh
         shell: bash
 
