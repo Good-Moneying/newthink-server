@@ -11,6 +11,11 @@ public class HealthCheckController implements HealthCheckControllerDocs {
 
     private final Environment environment;
 
+    @GetMapping
+    public String welcome() {
+        return "Welcome to Good Moneying API Server!";
+    }
+
     @Override
     @GetMapping("/healthcheck")
     public String healthCheck() {
