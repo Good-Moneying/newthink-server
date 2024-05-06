@@ -35,7 +35,6 @@ public class UserDtoMapper {
 
     public UserResponse toDto(User save) {
         return UserResponse.builder()
-            .id(save.getId().getValue())
             .email(save.getEmail().getValue())
             .nickname(save.getNickname().getValue())
             .build();
