@@ -67,16 +67,7 @@ jobs:
             sudo docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}  
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/server
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/batch
-
-      - name: Grant Permission to docker-compose.yml and deploy.sh
-        run: |
-          sudo chmod +x deploy.sh
-          sudo chmod +x docker-compose.yml
-
-      - name: Execute Deploy Script
-        run: |
-          sudo ./deploy.sh
-        shell: bash
-
-      - name: Remove Docker Images
-        run : sudo docker image prune -f
+            sudo chmod +x deploy.sh
+            sudo chmod +x docker-compose.yml
+            sudo ./deploy.sh
+            sudo docker image prune -f
