@@ -35,17 +35,15 @@ BATCH_CONTAINER="batch"
 if [ -z "$RUNNING_CONTAINER" ]; then
     TARGET_SERVICE="blue-api"
     OTHER_SERVICE="green-api"
+    TARGET_PORT="8082"
+    OTHER_PORT="8081"
 else
     TARGET_SERVICE="green-api"
     OTHER_SERVICE="blue-api"
+    TARGET_PORT="8081"
+    OTHER_PORT="8082"
 fi
 
-#echo "Grant permission to docker-compose.yml"
-#echo "$pwd"
-#sudo chmod 777 ./docker-compose.yml
-
-#echo "Docker Compose Down"
-#docker-compose down --remove-orphans
 
 echo "$TARGET_SERVICE Deploy..."
 docker-compose -f /home/ec2-user/docker-compose.yml up -d $TARGET_SERVICE $BATCH_CONTAINER
@@ -54,12 +52,13 @@ docker-compose -f /home/ec2-user/docker-compose.yml up -d $TARGET_SERVICE $BATCH
 sleep 10
 
 if [ -z "$RUNNING_NGINX" ]; then
-    echo "Starting Nginx..."
+    echo "Starting Nginx... Changing port to $TARGET_PORT"
     docker-compose -f /home/ec2-user/docker-compose.yml up -d nginx
 fi
 
 # Update the nginx config and reload
 sed -i "s/$OTHER_SERVICE/$TARGET_SERVICE/" $NGINX_CONF
+sed -i "s/$OTHER_PORT/$TARGET_PORT/" $NGINX_CONF
 docker-compose -f /home/ec2-user/docker-compose.yml restart nginx
 
 # Stop the other service

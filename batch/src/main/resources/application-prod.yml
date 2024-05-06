@@ -1,0 +1,48 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+      #    url: jdbc:h2:tcp://localhost/~/database/kusitms
+      url: jdbc:h2:mem:test;MODE=MySQL
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop # create-drop, update, validate, none
+    properties:
+      hibernate:
+        format_sql: true # SQL 포맷팅
+        show_sql: true # SQL 출력
+
+springdoc:
+  swagger-ui:
+    # Swagger UI 페이지에 대한 경로
+    path: /swagger-ui.html
+    # Group 별 정렬 기준 (ASC 오름차순, DESC 내림차순)
+    groups-order: DESC
+    # API 목록 내 정렬 기준 (method, alpha)
+    operationsSorter: method
+    # Swagger UI가 로드될 때 기본적으로 제공하는 예제 URL 생략
+    disable-swagger-default-url: true
+    # API 요청 시 실행 시간을 표시
+    display-request-duration: true
+  api-docs:
+    path: /api-docs
+  show-actuator: true
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  paths-to-match:
+    - /api/**
+
+jwt:
+  secret-key: NiOeyFbN1Gqo10bPgUyTFsRMkJpGLXSvGP04eFqj5B30r5TcrtlSXfQ7TndvYjNvfkEKLqILn0j1SmKODO1Yw3JpBBgI3nVPEahqxeY8qbPSFGyzyEVxnl4AQcrnVneI
+  issuer: duduk.shop
+  access:
+    expiration: 3600000 # 1시간 (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
+    header: Authorization
+  refresh:
+    expiration: 1209600000 # 2주 (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루) * 14(2주))
+    header: Authorization-refresh

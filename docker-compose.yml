@@ -11,24 +11,21 @@ services:
       - ./data/nginx/log:/var/log/nginx
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
-    depends_on:
-      - blue-api
-      - green-api
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     restart: "always"
 
   blue-api:
     container_name: blue-api
     image: goodmoneying/server
-    expose:
-      - "8080"
+    ports:
+      - "8082:8080"
     restart: "always"
 
   green-api:
     container_name: green-api
     image: goodmoneying/server
-    expose:
-      - "8080"
+    ports:
+      - "8081:8080"
     restart: "always"
 
   batch:
