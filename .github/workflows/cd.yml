@@ -67,5 +67,9 @@ jobs:
             sudo docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}  
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/server
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/batch
-            sudo bash ${{ secrets.DOCKER_COMPOSE_PATH }}/deploy.sh 
-            sudo docker image prune -f
+      - name: Execute Deploy Script
+        run: sudo bash /home/ec2-user/deploy.sh
+        shell: bash
+
+      - name: Remove Docker Images
+        run : sudo docker image prune -f

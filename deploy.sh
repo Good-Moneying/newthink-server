@@ -32,7 +32,6 @@ NGINX_CONF="/home/ec2-user/data/nginx/app.conf"
 RUNNING_NGINX=$(docker ps | grep nginx)
 BATCH_CONTAINER="batch"
 
-
 if [ -z "$RUNNING_CONTAINER" ]; then
     TARGET_SERVICE="blue-api"
     OTHER_SERVICE="green-api"
