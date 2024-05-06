@@ -2,7 +2,7 @@ version: '3'
 services:
   nginx:
     container_name: nginx
-    image: nginx:1.15-alpine
+    image: nginx:latest
     ports:
       - 80:80
       - 443:443
@@ -11,7 +11,11 @@ services:
       - ./data/nginx/log:/var/log/nginx
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
+    depends_on:
+      - blue-api
+      - green-api
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    restart: "always"
 
   blue-api:
     container_name: blue-api
