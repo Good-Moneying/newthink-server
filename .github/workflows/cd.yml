@@ -75,7 +75,7 @@ jobs:
 
       - name: Execute Deploy Script
         run: |
-          sudo /home/ec2-user/deploy.sh
+          sudo ./deploy.sh
         shell: bash
 
       - name: Remove Docker Images
