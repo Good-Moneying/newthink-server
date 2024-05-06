@@ -31,8 +31,6 @@ services:
   batch:
     container_name: batch
     image: goodmoneying/batch
-    ports:
-      - 8081:8081
     restart: "always"
 
   certbot:
