@@ -41,7 +41,8 @@ else
 fi
 
 echo "Grant permission to docker-compose.yml"
-sudo chmod 777 /home/ec2-user/docker-compose.yml
+echo "$pwd"
+sudo chmod 777 ./docker-compose.yml
 
 echo "Docker Compose Down"
 docker-compose down --remove-orphans
