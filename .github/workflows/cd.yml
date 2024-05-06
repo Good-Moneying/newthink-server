@@ -41,8 +41,8 @@ jobs:
 
       - name : Copy docker-compose.yml and deploy.sh to EC2
         run: |
-          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./docker-compose.yml ec2-user@15.165.161.107:${{ secrets.DOCKER_COMPOSE_PATH }}
-          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./deploy.sh ec2-user@15.165.161.107:${{ secrets.DOCKER_COMPOSE_PATH }}
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./docker-compose.yml ec2-user@15.165.161.107:/home/ec2-user
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./deploy.sh ec2-user@15.165.161.107:/home/ec2-user
 
       - name: Docker build and push to Docker Hub and copy docker-compose.yml to server
         run: |
