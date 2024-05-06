@@ -32,9 +32,9 @@ public class SecurityConfig {
     private final SaveUserPort saveUserPort;
 
     private static final String[] RESOURCE_LIST = {
-        "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/admin/img/**", "/css/**",
+        "/healthcheck", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/admin/img/**", "/css/**",
         "/js/**",
-        "/favicon.ico", "/error/**", "/webjars/**", "/h2-console/**"
+        "/favicon.ico", "/error/**", "/webjars/**", "/h2-console/**", "/api-docs/**"
     };
     private static final String[] AUTH_WHITELIST = {
         "/api/oauth/**"

@@ -57,10 +57,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
          * 사용자 요청 헤더에 RefreshToken이 있는 경우는 AccessToken이 만료되었을 때입니다.
          * AccessToken이 만료되었다면 (403 ERROR) 후 클라이언트가 다시 요청합니다.
          */
-        String refreshToken = extractRefreshToken(request)
-            .filter(jwtTokenProvider::isTokenValid)
-            .orElse(null);
-
+        String refreshToken = null;
+        try {
+            refreshToken = extractRefreshToken(request)
+	.filter(jwtTokenProvider::isTokenValid)
+	.orElse(null);
+        } catch (Exception e) {
+//            filterChain.doFilter(request, response);
+            return;
+        }
         /**
          * RefreshToken이 헤더에 존재하고 유효하다면 403 에러 (AccessToken 만료) 가 발생한 것입니다.
          * User DB의 리프레시 토큰과 일치하는지 판단 후 일치 한다면 AccessToken을 재발급합니다.
@@ -94,7 +99,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private String reIssueRefreshToken(User user) {
-        String reIssuedRefreshToken = jwtTokenProvider.createRefreshToken(user.getEmail().getValue());
+        String reIssuedRefreshToken = jwtTokenProvider.createRefreshToken(
+            user.getEmail().getValue());
         user.updateRefreshToken(reIssuedRefreshToken);
         saveUserPort.saveAndFlush(user);
         return reIssuedRefreshToken;
@@ -129,15 +135,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private Optional<String> extractAccessToken(HttpServletRequest request) {
         return Optional.ofNullable(request.getHeader(accessTokenHeader))
             .filter(refreshToken -> StringUtils.hasText(refreshToken))
-            .filter(refreshToken -> refreshToken.startsWith(BEARER_PREFIX))
-            .map(refreshToken -> refreshToken.substring(7));
+            .filter(
+	refreshToken -> refreshToken.startsWith(BEARER_PREFIX))  // 토큰이 'Bearer '로 시작하는지 확인
+            .map(refreshToken -> refreshToken.substring(
+	BEARER_PREFIX.length()));  // 'Bearer ' 접두어 제거
     }
 
     private Optional<String> extractRefreshToken(HttpServletRequest request) {
         return Optional.ofNullable(request.getHeader(refreshTokenHeader))
-            .filter(refreshToken -> StringUtils.hasText(refreshToken))
-            .filter(refreshToken -> refreshToken.startsWith(BEARER_PREFIX))
-            .map(refreshToken -> refreshToken.substring(7));
+            .filter(StringUtils::hasText)  // StringUtils.hasText()를 이용하여 텍스트가 실제로 존재하는지 확인
+            .filter(
+	refreshToken -> refreshToken.startsWith(BEARER_PREFIX))  // 토큰이 'Bearer '로 시작하는지 확인
+            .map(refreshToken -> refreshToken.substring(
+	BEARER_PREFIX.length()));  // 'Bearer ' 접두어 제거
     }
 
     private Optional<String> extractOAuthToken(HttpServletRequest request) {
