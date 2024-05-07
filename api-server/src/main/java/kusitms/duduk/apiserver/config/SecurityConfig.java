@@ -32,7 +32,7 @@ public class SecurityConfig {
     private final SaveUserPort saveUserPort;
 
     private static final String[] RESOURCE_LIST = {
-        "/healthcheck", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/admin/img/**", "/css/**",
+        "/api/healthcheck", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/admin/img/**", "/css/**",
         "/js/**",
         "/favicon.ico", "/error/**", "/webjars/**", "/h2-console/**", "/api-docs/**"
     };
