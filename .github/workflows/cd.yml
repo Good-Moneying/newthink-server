@@ -65,10 +65,9 @@ jobs:
           port: 22
           script: |
             sudo docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}  
-            sudo docker-compose down
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/server
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/batch
             sudo chmod +x deploy.sh
             sudo chmod +x docker-compose.yml        
-            sudo nohup docker-compose up &
+            sudo ./deploy.sh
             sudo docker image prune -f

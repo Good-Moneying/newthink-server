@@ -28,9 +28,10 @@ else
 fi
 
 #RUNNING_CONTAINER=$(docker ps | grep blue)
-#NGINX_CONF="/home/ec2-user/data/nginx/app.conf"
+NGINX_CONF="/home/ec2-user/data/nginx/app.conf"
 RUNNING_NGINX=$(docker ps | grep nginx)
 BATCH_CONTAINER="batch"
+TARGET_SERVICE = "server"
 
 #if [ -z "$RUNNING_CONTAINER" ]; then
 #    TARGET_SERVICE="blue-api"
@@ -44,25 +45,25 @@ BATCH_CONTAINER="batch"
 #    OTHER_PORT="8082"
 #fi
 
-
 #echo "$TARGET_SERVICE Deploy..."
-#docker-compose -f /home/ec2-user/docker-compose.yml up -d $TARGET_SERVICE $BATCH_CONTAINER
+docker-compose -f /home/ec2-user/docker-compose.yml up -d $TARGET_SERVICE $BATCH_CONTAINER
 
 # Wait for the target service to be healthy before proceeding
 sleep 10
 
-#if [ -z "$RUNNING_NGINX" ]; then
-#    echo "Starting Nginx... Changing port to $TARGET_PORT"
-#    docker-compose -f /home/ec2-user/docker-compose.yml up -d nginx
-#fi
+if [ -z "$RUNNING_NGINX" ]; then
+    echo "Starting Nginx... Changing port to $TARGET_PORT"
+    docker-compose -f /home/ec2-user/docker-compose.yml up -d nginx
+fi
+
 #
-## Update the nginx config and reload
+# Update the nginx config and reload
 #sed -i "s/$OTHER_SERVICE/$TARGET_SERVICE/" $NGINX_CONF
 #sed -i "s/$OTHER_PORT/$TARGET_PORT/" $NGINX_CONF
-#docker-compose -f /home/ec2-user/docker-compose.yml restart nginx
-#
-## Stop the other service
-#docker-compose -f /home/ec2-user/docker-compose.yml stop $OTHER_SERVICE
+docker-compose -f /home/ec2-user/docker-compose.yml restart nginx
+
+# Stop the other service
+docker-compose -f /home/ec2-user/docker-compose.yml stop $OTHER_SERVICE
 
 # docker-compose down & up
 #nohup docker-compose -f /home/ec2-user/docker-compose.yml down > /dev/null 2>&1 &
