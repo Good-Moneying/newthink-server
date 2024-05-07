@@ -31,7 +31,7 @@ fi
 NGINX_CONF="/home/ec2-user/data/nginx/app.conf"
 RUNNING_NGINX=$(docker ps | grep nginx)
 BATCH_CONTAINER="batch"
-SERVER_CONTAINER = "server"
+SERVER_CONTAINER="server"
 
 #if [ -z "$RUNNING_CONTAINER" ]; then
 #    TARGET_SERVICE="blue-api"
