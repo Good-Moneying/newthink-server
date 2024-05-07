@@ -18,8 +18,8 @@ public enum Category {
 
     public static Category from(String description) {
         return Arrays.stream(Category.values())
-            .filter(c -> c.name().equalsIgnoreCase(description))
+            .filter(d -> d.description.equals(description))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("지원하지 않는 OAuth 제공자입니다."));
+            .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 카테고리입니다."));
     }
 }

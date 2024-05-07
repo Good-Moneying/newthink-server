@@ -7,8 +7,10 @@ import kusitms.duduk.domain.user.vo.Email;
 import kusitms.duduk.domain.user.vo.Gender;
 import kusitms.duduk.domain.user.vo.Nickname;
 import kusitms.duduk.domain.user.vo.RefreshToken;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("User 테스트")
 public class UserTest {
 
     @Test
