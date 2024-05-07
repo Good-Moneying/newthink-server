@@ -31,7 +31,7 @@ fi
 NGINX_CONF="/home/ec2-user/data/nginx/app.conf"
 RUNNING_NGINX=$(docker ps | grep nginx)
 BATCH_CONTAINER="batch"
-TARGET_SERVICE = "server"
+SERVER_CONTAINER = "server"
 
 #if [ -z "$RUNNING_CONTAINER" ]; then
 #    TARGET_SERVICE="blue-api"
@@ -46,7 +46,7 @@ TARGET_SERVICE = "server"
 #fi
 
 #echo "$TARGET_SERVICE Deploy..."
-docker-compose -f /home/ec2-user/docker-compose.yml up -d $TARGET_SERVICE $BATCH_CONTAINER
+docker-compose -f /home/ec2-user/docker-compose.yml up -d $SERVER_CONTAINER $BATCH_CONTAINER
 
 # Wait for the target service to be healthy before proceeding
 sleep 10
@@ -63,7 +63,7 @@ fi
 docker-compose -f /home/ec2-user/docker-compose.yml restart nginx
 
 # Stop the other service
-docker-compose -f /home/ec2-user/docker-compose.yml stop $OTHER_SERVICE
+#docker-compose -f /home/ec2-user/docker-compose.yml stop $OTHER_SERVICE
 
 # docker-compose down & up
 #nohup docker-compose -f /home/ec2-user/docker-compose.yml down > /dev/null 2>&1 &
