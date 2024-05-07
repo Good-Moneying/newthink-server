@@ -32,9 +32,9 @@ public class SecurityConfig {
     private final SaveUserPort saveUserPort;
 
     private static final String[] RESOURCE_LIST = {
-        "/api/healthcheck", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/admin/img/**", "/css/**",
+        "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/admin/img/**", "/css/**",
         "/js/**",
-        "/favicon.ico", "/error/**", "/webjars/**", "/h2-console/**", "/api-docs/**"
+        "/favicon.ico", "/error/**", "/webjars/**", "/h2-console/**", "/api-docs/**", "/api/healthcheck"
     };
     private static final String[] AUTH_WHITELIST = {
         "/api/oauth/**"
@@ -45,6 +45,7 @@ public class SecurityConfig {
         http
             // csrf를 비활성화합니다.
             .csrf(AbstractHttpConfigurer::disable)
+            .cors(cors -> cors.disable())
             .headers(headers -> headers.disable())
             // Spring Security에서 제공하는 기본 로그인 페이지를 비활성화 합니다.
             // Request 헤더에 id, password를 담아서 요청하는 방식을 사용하는 방식은 보안적으로 취약합니다.

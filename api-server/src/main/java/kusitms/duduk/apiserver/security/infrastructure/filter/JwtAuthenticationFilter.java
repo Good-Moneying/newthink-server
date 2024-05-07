@@ -13,6 +13,7 @@ import kusitms.duduk.core.user.port.output.LoadUserPort;
 import kusitms.duduk.core.user.port.output.SaveUserPort;
 import kusitms.duduk.domain.user.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+@Slf4j
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -62,26 +64,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             refreshToken = extractRefreshToken(request)
 	.filter(jwtTokenProvider::isTokenValid)
 	.orElse(null);
+            /**
+             * RefreshToken이 헤더에 존재하고 유효하다면 403 에러 (AccessToken 만료) 가 발생한 것입니다.
+             * User DB의 리프레시 토큰과 일치하는지 판단 후 일치 한다면 AccessToken을 재발급합니다.
+             */
+            if (refreshToken != null) {
+	verifyRefreshTokenAndReIssueAccessToken(response, refreshToken);
+	return;
+            }
+            /**
+             * RefreshToken이 없거나 유효하지 않은 경우 AccessToken을 추출합니다.
+             * AccessToken 마저 없다면 403 에러를 반환합니다.
+             */
+            if (refreshToken == null) {
+	verifyAccessTokenAndSaveAuthentication(request, response, filterChain);
+	return;
+            }
         } catch (Exception e) {
-//            filterChain.doFilter(request, response);
-            return;
-        }
-        /**
-         * RefreshToken이 헤더에 존재하고 유효하다면 403 에러 (AccessToken 만료) 가 발생한 것입니다.
-         * User DB의 리프레시 토큰과 일치하는지 판단 후 일치 한다면 AccessToken을 재발급합니다.
-         */
-        if (refreshToken != null) {
-            verifyRefreshTokenAndReIssueAccessToken(response, refreshToken);
-            return;
-        }
-
-        /**
-         * RefreshToken이 없거나 유효하지 않은 경우 AccessToken을 추출합니다.
-         * AccessToken 마저 없다면 403 에러를 반환합니다.
-         */
-        if (refreshToken == null) {
-            verifyAccessTokenAndSaveAuthentication(request, response, filterChain);
-            return;
+            log.info("RefreshToken is not valid");
         }
 
         filterChain.doFilter(request, response);
