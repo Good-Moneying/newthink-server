@@ -1,5 +1,6 @@
 package kusitms.duduk.application.newsletter.persistence;
 
+import java.util.List;
 import java.util.Optional;
 import kusitms.duduk.application.newsletter.persistence.entity.NewsLetterJpaEntity;
 import kusitms.duduk.core.annotation.Adapter;
@@ -27,13 +28,23 @@ public class NewsLetterPersistenceAdapter implements LoadNewsLetterPort, DeleteN
     }
 
     @Override
-    public Optional<NewsLetter> findById(Id id) {
-        return newsLetterRepository.findById(id.getValue())
+    public Optional<NewsLetter> findById(Long id) {
+        return newsLetterRepository.findById(id)
             .map(newsLetterJpaMapper::toDomain);
     }
 
     @Override
-    public void deleteById(Id id) {
-        newsLetterRepository.deleteById(id.getValue());
+    public List<NewsLetter> findAll() {
+        return newsLetterJpaMapper.toDomainList(newsLetterRepository.findAll());
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        newsLetterRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAll() {
+        newsLetterRepository.deleteAll();
     }
 }

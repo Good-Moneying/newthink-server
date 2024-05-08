@@ -30,4 +30,8 @@ public class NewsLetter {
     private Summary summary;
     private Count viewCount;
     private Count scrapCount;
+
+    public boolean isWrittenBy(Id id) {
+        return editorId.equals(id);
+    }
 }

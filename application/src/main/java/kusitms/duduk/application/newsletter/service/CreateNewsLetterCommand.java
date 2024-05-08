@@ -31,15 +31,19 @@ class CreateNewsLetterCommand implements CreateNewsLetterUseCase {
 
     @Override
     public NewsLetterResponse create(CreateNewsLetterRequest request, String email) {
-        NewsLetter newsLetter = newsLetterDtoMapper.toDomain(request);
-        log.info("Create NewsLetter By Editor\n request: {}", request.toString());
-
         User user = loadUserPort.findByEmail(email)
             .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         if (!user.isWritable()) {
             throw new IllegalArgumentException("User is not editor");
         }
+
+        // todo 유저 아이디 값을 여기서 세팅
+        NewsLetter newsLetter = newsLetterDtoMapper.toDomain(request, user.getId());
+        log.info("Create NewsLetter By Editor\n request: {}", request.toString());
+
+        // todo
+        // newsLetter.writeBy(user); 해서 여기서 처리?
         return newsLetterDtoMapper.toDto(saveNewsLetterPort.save(newsLetter));
     }
 }

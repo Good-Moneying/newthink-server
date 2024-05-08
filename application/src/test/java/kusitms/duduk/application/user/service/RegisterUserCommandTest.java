@@ -8,6 +8,7 @@ import kusitms.duduk.core.user.dto.response.UserResponse;
 import kusitms.duduk.core.user.port.input.RegisterUserUseCase;
 import kusitms.duduk.core.user.port.output.DeleteUserPort;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,8 +28,8 @@ class RegisterUserCommandTest {
     @Autowired
     private DeleteUserPort deleteUserPort;
 
-    @BeforeEach
-    void setUp() {
+    @AfterEach
+    void cleanUp() {
         deleteUserPort.deleteAll();
     }
 

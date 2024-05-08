@@ -4,5 +4,7 @@ import kusitms.duduk.domain.global.Id;
 
 public interface DeleteNewsLetterPort {
 
-    void deleteById(Id id);
+    void deleteById(Long id);
+
+    void deleteAll();
 }

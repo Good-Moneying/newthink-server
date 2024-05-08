@@ -1,5 +1,6 @@
 package kusitms.duduk.application.newsletter.persistence;
 
+import java.util.List;
 import kusitms.duduk.application.newsletter.persistence.entity.NewsLetterJpaEntity;
 import kusitms.duduk.core.annotation.Mapper;
 import kusitms.duduk.domain.global.Count;
@@ -73,5 +74,11 @@ public class NewsLetterJpaMapper {
             .viewCount(Count.from(jpaEntity.getViewCount()))
             .scrapCount(Count.from(jpaEntity.getScrapCount()))
             .build();
+    }
+
+    public List<NewsLetter> toDomainList(List<NewsLetterJpaEntity> newsLetters) {
+        return newsLetters.stream()
+            .map(this::toDomain)
+            .toList();
     }
 }
