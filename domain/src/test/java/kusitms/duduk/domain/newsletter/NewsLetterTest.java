@@ -22,7 +22,7 @@ class NewsLetterTest {
         String content = "content";
         String thumbnail = "thumbnail";
         String keywords = "keyword1,keyword2,keyword3";
-        String stock = "주식";
+        String stock = "stock";
         String summary = "summary\nsummary\nsummary";
 
         // when

@@ -80,4 +80,23 @@ public class UserJpaEntity {
 //    @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Override
+    public String toString() {
+        return "UserJpaEntity{" +
+            "id=" + id +
+            ", email='" + email + '\'' +
+            ", nickname='" + nickname + '\'' +
+            ", refreshToken='" + refreshToken + '\'' +
+            ", gender=" + gender +
+            ", birthday=" + birthday +
+            ", role=" + role +
+            ", provider=" + provider +
+            ", category=" + category +
+            ", goal=" + goal +
+            ", acornCount=" + acornCount +
+            ", createdAt=" + createdAt +
+            ", updatedAt=" + updatedAt +
+            '}';
+    }
 }
