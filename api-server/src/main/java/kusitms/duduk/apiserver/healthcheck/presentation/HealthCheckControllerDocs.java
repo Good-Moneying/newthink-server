@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 public interface HealthCheckControllerDocs {
 
-    @GetMapping("/healthcheck")
+    @GetMapping("/api/healthcheck")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "서버 상태 정상"),
         @ApiResponse(responseCode = "400", description = "서버 상태 비정상",

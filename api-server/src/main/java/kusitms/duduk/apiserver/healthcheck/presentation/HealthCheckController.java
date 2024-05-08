@@ -12,7 +12,6 @@ public class HealthCheckController implements HealthCheckControllerDocs {
     private final Environment environment;
 
     @Override
-    @GetMapping("/api/healthcheck")
     public String healthCheck() {
         return environment.getProperty("spring.application.name") + " is running on port: "
             + environment.getProperty("local.server.port");

@@ -1,4 +1,4 @@
-##  서비스명
+##  서비스명 
 ![duduk.png](docs%2Fimages%2Fduduk.png)
 ## 서비스 소개
 ### 경제 뉴스레터 서비스, 두둑 (Do-duk : *Do Develop Ur Knowledge!*)
