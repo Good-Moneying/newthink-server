@@ -7,6 +7,7 @@ import kusitms.duduk.core.user.port.output.SaveUserPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -34,7 +35,8 @@ public class SecurityConfig {
     private static final String[] RESOURCE_LIST = {
         "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/admin/img/**", "/css/**",
         "/js/**",
-        "/favicon.ico", "/error/**", "/webjars/**", "/h2-console/**", "/api-docs/**", "/api/healthcheck"
+        "/favicon.ico", "/error/**", "/webjars/**", "/h2-console/**", "/api-docs/**",
+        "/api/healthcheck"
     };
     private static final String[] AUTH_WHITELIST = {
         "/api/oauth/**"
@@ -57,6 +59,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
 	.requestMatchers(RESOURCE_LIST).permitAll()
 	.requestMatchers(AUTH_WHITELIST).permitAll()
+	// 회원가입 API는 인증 없이 접근 가능합니다.
+	.requestMatchers(HttpMethod.POST, "/api/users").permitAll()
 	.anyRequest().authenticated())
             .addFilterBefore(
 	new JwtAuthenticationFilter(jwtTokenProvider, loadUserPort, saveUserPort),
