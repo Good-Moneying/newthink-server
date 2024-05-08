@@ -15,7 +15,8 @@ public class UserJpaMapper {
 
     public UserJpaEntity toJpaEntity(User user) {
         return UserJpaEntity.builder()
-//            .id(user.getId().getValue())
+            // 새로 생성하는 경우에는 ID가 없을 수 있음
+            .id(user.getId() != null ? user.getId().getValue() : null)
             .email(user.getEmail().getValue())
             .nickname(user.getNickname().getValue())
             .refreshToken(user.getRefreshToken().getValue())

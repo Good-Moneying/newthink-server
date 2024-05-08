@@ -76,4 +76,9 @@ public class UserPersistenceAdapter implements UpdateUserPort, LoadUserPort, Sav
     public void deleteById(Id userId) {
         userRepository.deleteById(userId.getValue());
     }
+
+    @Override
+    public void deleteAll() {
+        userRepository.deleteAll();
+    }
 }

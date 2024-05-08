@@ -6,12 +6,17 @@ import static org.assertj.core.api.Assertions.*;
 import kusitms.duduk.core.user.dto.request.CreateUserRequest;
 import kusitms.duduk.core.user.dto.response.UserResponse;
 import kusitms.duduk.core.user.port.input.RegisterUserUseCase;
+import kusitms.duduk.core.user.port.output.DeleteUserPort;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
+@DisplayName("RegisterUserCommand 테스트")
 class RegisterUserCommandTest {
 
     @Autowired
@@ -19,6 +24,14 @@ class RegisterUserCommandTest {
 
     @Autowired
     private LoadUserPort loadUserPort;
+
+    @Autowired
+    private DeleteUserPort deleteUserPort;
+
+    @AfterEach
+    void cleanUp() {
+        deleteUserPort.deleteAll();
+    }
 
     @Test
     void 회원가입을_한다() {

@@ -36,4 +36,8 @@ public class User {
     public void updateRefreshToken(String reIssuedRefreshToken) {
         this.refreshToken.update(reIssuedRefreshToken);
     }
+
+    public boolean isWritable() {
+        return this.role.equals(Role.EDITOR) || this.role.equals(Role.ADMIN);
+    }
 }

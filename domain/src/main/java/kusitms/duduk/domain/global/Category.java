@@ -11,8 +11,8 @@ public enum Category {
     STOCK("stock"),
     CRYPTO("crypto"),
     ESTATE("estate"),
-    FUND("fund"),
-    ETC("etc");
+    INTEREST_RATE("rate"),
+    ETC("extra");
 
     private final String description;
 

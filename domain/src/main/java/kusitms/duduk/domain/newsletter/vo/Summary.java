@@ -21,6 +21,10 @@ public class Summary {
         return new Summary(list);
     }
 
+    public String toSentence() {
+        return String.join("\n", sentences);
+    }
+
     public void revise(int index, String sentence) {
         // todo : 이렇게 하면 덮어쓰나?
         sentences.set(index, sentence);
