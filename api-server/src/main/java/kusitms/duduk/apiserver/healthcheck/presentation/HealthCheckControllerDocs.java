@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import kusitms.duduk.core.exception.ErrorResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
 public interface HealthCheckControllerDocs {
@@ -19,5 +20,5 @@ public interface HealthCheckControllerDocs {
             content = {@Content(schema = @Schema(implementation = ErrorResponse.class))})
     })
     @Operation(summary = "헬스 체크", description = "서버 상태 확인")
-    String healthCheck();
+    ResponseEntity<Void> healthCheck();
 }

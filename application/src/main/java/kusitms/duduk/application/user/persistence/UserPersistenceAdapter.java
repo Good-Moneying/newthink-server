@@ -11,7 +11,9 @@ import kusitms.duduk.core.user.port.output.UpdateUserPort;
 import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.user.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Adapter
 public class UserPersistenceAdapter implements UpdateUserPort, LoadUserPort, SaveUserPort,
@@ -26,6 +28,8 @@ public class UserPersistenceAdapter implements UpdateUserPort, LoadUserPort, Sav
         UserJpaEntity userJpaEntity = userJpaMapper.toJpaEntity(user);
         // 변환한 UserJpaEntity를 저장 (Id 값이 자동으로 생성)
         UserJpaEntity userSaved = userRepository.save(userJpaEntity);
+
+        log.info("userSaved: {}\n", userSaved.toString());
         return userJpaMapper.toDomain(userSaved);
     }
 

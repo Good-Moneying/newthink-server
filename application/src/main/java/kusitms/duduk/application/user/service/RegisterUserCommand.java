@@ -8,8 +8,10 @@ import kusitms.duduk.core.user.port.output.LoadUserPort;
 import kusitms.duduk.core.user.port.output.SaveUserPort;
 import kusitms.duduk.domain.user.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class RegisterUserCommand implements RegisterUserUseCase {
@@ -20,6 +22,7 @@ public class RegisterUserCommand implements RegisterUserUseCase {
 
     @Override
     public UserResponse register(CreateUserRequest request) {
+        log.info("register() start\n");
         User user = userDtoMapper.toDomain(request);
 
         if (loadUserPort.existsUserByEmail(user.getEmail().getValue())) {
