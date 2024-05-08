@@ -22,9 +22,17 @@ class CreateNewsLetterCommand implements CreateNewsLetterUseCase {
     private final LoadUserPort loadUserPort;
 
     @Override
+    public NewsLetterResponse create(CreateNewsLetterRequest request) {
+        NewsLetter newsLetter = newsLetterDtoMapper.toDomain(request);
+        log.info("Create NewsLetter By AI\n request: {}", request.toString());
+
+        return newsLetterDtoMapper.toDto(saveNewsLetterPort.save(newsLetter));
+    }
+
+    @Override
     public NewsLetterResponse create(CreateNewsLetterRequest request, String email) {
         NewsLetter newsLetter = newsLetterDtoMapper.toDomain(request);
-        log.info("CreateNewsLetterCommand.create() request: {}", request.toString());
+        log.info("Create NewsLetter By Editor\n request: {}", request.toString());
 
         User user = loadUserPort.findByEmail(email)
             .orElseThrow(() -> new IllegalArgumentException("User not found"));

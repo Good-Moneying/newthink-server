@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import kusitms.duduk.core.newsletter.dto.request.CreateNewsLetterRequest;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterResponse;
 import kusitms.duduk.core.newsletter.port.input.CreateNewsLetterUseCase;
+import kusitms.duduk.core.user.port.output.DeleteUserPort;
 import kusitms.duduk.core.user.port.output.SaveUserPort;
 import kusitms.duduk.domain.user.User;
 import kusitms.duduk.domain.user.vo.Acorn;
@@ -17,6 +18,7 @@ import kusitms.duduk.domain.user.vo.Nickname;
 import kusitms.duduk.domain.user.vo.Provider;
 import kusitms.duduk.domain.user.vo.RefreshToken;
 import kusitms.duduk.domain.user.vo.Role;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,14 @@ public class CreateNewsLetterCommandTest {
 
     @Autowired
     private SaveUserPort saveUserPort;
+
+    @Autowired
+    private DeleteUserPort deleteUserPort;
+
+    @BeforeEach
+    void setUp() {
+        deleteUserPort.deleteAll();
+    }
 
     @Test
     void 뉴스_레터를_생성한다() {
