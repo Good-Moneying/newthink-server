@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class OAuthController implements OAuthControllerDocs {
 
     @GetMapping("/{provider}")
     public ResponseEntity<OAuthLoginResponse> oAuthLogin(
-        @PathVariable final String provider,
+        @RequestParam(name = "prodiver") final String provider,
         @RequestHeader("OAuth") final String accessToken) {
         return new ResponseEntity<>(loginOAuthUseCase.process(Provider.from(provider), accessToken),
             HttpStatus.OK);

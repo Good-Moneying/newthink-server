@@ -27,8 +27,8 @@ public class UserDtoMapper {
             .birthday(request.birthDay())
             .role(Role.USER)
             .provider(Provider.from(request.provider()))
-            .category(Category.valueOf(request.category()))
-            .goal(Goal.valueOf(request.goal()))
+            .category(Category.from(request.category()))
+            .goal(Goal.from(request.goal()))
             .acorn(Acorn.initial())
             .build();
     }

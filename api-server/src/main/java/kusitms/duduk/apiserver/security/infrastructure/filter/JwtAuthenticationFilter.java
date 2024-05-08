@@ -59,9 +59,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
          * 사용자 요청 헤더에 RefreshToken이 있는 경우는 AccessToken이 만료되었을 때입니다.
          * AccessToken이 만료되었다면 (403 ERROR) 후 클라이언트가 다시 요청합니다.
          */
-        String refreshToken = null;
         try {
-            refreshToken = extractRefreshToken(request)
+            String refreshToken = extractRefreshToken(request)
 	.filter(jwtTokenProvider::isTokenValid)
 	.orElse(null);
             /**
@@ -109,17 +108,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private void verifyAccessTokenAndSaveAuthentication(HttpServletRequest request,
         HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
+        Optional<String> accessToken = extractAccessToken(request);
+
+        if(accessToken.isEmpty()){
+            filterChain.doFilter(request, response);
+            return;
+        }
         /**
          * Authentication 객체는 해당 클래스에서 혹은 JwtTokenProvider에서 처리해도 무방합니다.
          * 다만, getSubject()를 통해 email을 추출하고 email을 통해 User 정보를 가져올 수 있으니
          * 해당 정보를 사용해서 UserDetails 혹은 OAuth2User를 만든다면 위 클래스에서 진행하는 것이 나을 수 있습니다.
          * 현재 경우에는 accessToken에 담겨 있는 email, Authorities 정보로 Authentication 객체를 생성합니다.
          */
-        extractAccessToken(request)
-            .filter(jwtTokenProvider::isTokenValid)
-            .ifPresent(accessToken -> jwtTokenProvider.getSubject(accessToken)
+        if(jwtTokenProvider.isTokenValid(accessToken.get())){
+            jwtTokenProvider.getSubject(accessToken.get())
 	.ifPresent(email -> loadUserPort.findByEmail(email)
-	    .ifPresent(this::saveAuthentication)));
+	    .ifPresent(this::saveAuthentication));
+        }
 
         filterChain.doFilter(request, response);
     }
