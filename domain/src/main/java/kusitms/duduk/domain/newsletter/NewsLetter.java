@@ -9,6 +9,7 @@ import kusitms.duduk.domain.newsletter.vo.Keywords;
 import kusitms.duduk.domain.newsletter.vo.Summary;
 import kusitms.duduk.domain.newsletter.vo.Thumbnail;
 import kusitms.duduk.domain.newsletter.vo.Title;
+import kusitms.duduk.domain.newsletter.vo.Type;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +27,7 @@ public class NewsLetter {
     private Content content;
     private Keywords keywords;
     private Category category;
+    private Type type;
     private Summary summary;
     private Count viewCount;
     private Count scrapCount;

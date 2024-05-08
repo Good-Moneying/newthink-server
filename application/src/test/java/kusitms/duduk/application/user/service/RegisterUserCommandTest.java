@@ -7,11 +7,13 @@ import kusitms.duduk.core.user.dto.request.CreateUserRequest;
 import kusitms.duduk.core.user.dto.response.UserResponse;
 import kusitms.duduk.core.user.port.input.RegisterUserUseCase;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
+@DisplayName("RegisterUserCommand 테스트")
 class RegisterUserCommandTest {
 
     @Autowired
