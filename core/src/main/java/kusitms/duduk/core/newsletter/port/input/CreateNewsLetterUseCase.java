@@ -1,9 +1,9 @@
 package kusitms.duduk.core.newsletter.port.input;
 
-import kusitms.duduk.core.newsletter.dto.request.CreateAiNewsLetterRequest;
-import kusitms.duduk.domain.newsletter.NewsLetter;
+import kusitms.duduk.core.newsletter.dto.request.CreateNewsLetterRequest;
+import kusitms.duduk.core.newsletter.dto.response.NewsLetterResponse;
 
 public interface CreateNewsLetterUseCase {
 
-    NewsLetter create(CreateAiNewsLetterRequest request);
+    NewsLetterResponse create(CreateNewsLetterRequest request, String email);
 }

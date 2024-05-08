@@ -1,6 +1,5 @@
 package kusitms.duduk.domain.newsletter;
 
-import java.util.List;
 import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.global.Count;
 import kusitms.duduk.domain.global.Id;

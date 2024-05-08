@@ -21,6 +21,10 @@ public class Keywords {
         return new Keywords(list);
     }
 
+    public String toSentence() {
+        return String.join(",", words);
+    }
+
     public void add(String keyword) {
         words.add(keyword);
     }
