@@ -24,9 +24,16 @@ public interface UserControllerDocs {
         @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR",
             content = {@Content(schema = @Schema(implementation = ErrorResponse.class))})
     })
-    @Operation(summary = "회원 가입", description = "회원 가입을 진행합니다.")
+    @Operation(summary = "회원 가입", description = "회원 가입을 진행합니다.",
+        requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "회원 가입을 위한 필수 정보를 담고 있는 DTO 클래스",
+            required = true,
+            content = @Content(
+                schema = @Schema(implementation = CreateUserRequest.class)
+            )
+        )
+    )
     ResponseEntity<UserResponse> register(
-        @Parameter(description = "유저 생성 DTO ", required = true)
         @RequestBody final CreateUserRequest request
     );
 

@@ -38,8 +38,9 @@ public class SecurityConfig {
         "/favicon.ico", "/error/**", "/webjars/**", "/h2-console/**", "/api-docs/**",
         "/api/healthcheck"
     };
+
     private static final String[] AUTH_WHITELIST = {
-        "/api/oauth/**"
+        "/api/oauth/**", "/api/users/validate/**"
     };
 
     @Bean
