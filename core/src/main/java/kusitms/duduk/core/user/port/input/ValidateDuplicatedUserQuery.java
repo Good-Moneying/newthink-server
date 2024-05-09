@@ -1,8 +1,11 @@
 package kusitms.duduk.core.user.port.input;
 
+import kusitms.duduk.core.user.dto.request.ValidateUserEmailRequest;
+import kusitms.duduk.core.user.dto.request.ValidateUserNicknameRequest;
+
 public interface ValidateDuplicatedUserQuery {
 
-    void validateDuplicatedNickname(String nickname);
+    void validateDuplicatedNickname(ValidateUserNicknameRequest nickname);
 
-    void validateDuplicatedEmail(String email);
+    void validateDuplicatedEmail(ValidateUserEmailRequest email);
 }
