@@ -77,12 +77,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
              */
             if (refreshToken == null) {
 	verifyAccessTokenAndSaveAuthentication(request, response, filterChain);
-	return;
+                return;
             }
         } catch (Exception e) {
             log.info("RefreshToken is not valid");
         }
-
         filterChain.doFilter(request, response);
     }
 

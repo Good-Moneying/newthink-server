@@ -46,7 +46,6 @@ public interface UserControllerDocs {
     })
     @Operation(summary = "유저 검증", description = "해당 이메일로 가입한 유저가 있는지 검증합니다.")
     ResponseEntity<Void> validateEmail(
-        @Parameter(description = "유저 검증 DTO ", required = true)
         @RequestBody final ValidateUserEmailRequest request
     );
 
@@ -59,7 +58,6 @@ public interface UserControllerDocs {
     })
     @Operation(summary = "유저 검증", description = "해당 닉네임으로 가입한 유저가 있는지 검증합니다.")
     ResponseEntity<Void> validateNickname(
-        @Parameter(description = "유저 검증 DTO ", required = true)
         @RequestBody final ValidateUserNicknameRequest request
     );
 }

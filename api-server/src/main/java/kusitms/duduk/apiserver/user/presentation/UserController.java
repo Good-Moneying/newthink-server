@@ -9,7 +9,6 @@ import kusitms.duduk.core.user.port.input.ValidateDuplicatedUserQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,13 +28,13 @@ public class UserController implements UserControllerDocs {
             HttpStatus.CREATED);
     }
 
-    @GetMapping("/validate/email")
+    @PostMapping("/validate/email")
     public ResponseEntity<Void> validateEmail(@RequestBody ValidateUserEmailRequest request) {
         validateDuplicatedUserQuery.validateDuplicatedEmail(request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/validate/nickname")
+    @PostMapping("/validate/nickname")
     public ResponseEntity<Void> validateNickname(@RequestBody ValidateUserNicknameRequest request) {
         validateDuplicatedUserQuery.validateDuplicatedNickname(request);
         return new ResponseEntity<>(HttpStatus.OK);

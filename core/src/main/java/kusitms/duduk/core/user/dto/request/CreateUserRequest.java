@@ -28,7 +28,7 @@ public record CreateUserRequest(
     @Schema(description = "사용자 관심사 ex) stock, fund, crypto, estate", example = "stock", required = true)
     @NotNull String category,
 
-    @Schema(description = "사용자의 앱 사용 목표 ex) everyday, one_to_two, three_to_four", example = "목표 달성을 위한 등록", required = true)
+    @Schema(description = "사용자의 앱 사용 목표 ex) everyday, one_to_two, three_to_four", example = "everyday", required = true)
     @NotNull String goal
 ) {
 }
