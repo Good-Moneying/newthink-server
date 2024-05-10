@@ -7,6 +7,7 @@ import kusitms.duduk.domain.user.vo.Goal;
 import kusitms.duduk.domain.user.vo.Provider;
 import kusitms.duduk.domain.user.vo.Role;
 
+// todo : 다른 패키지로 리팩토링 혹은 삭제 예정
 public class TestProperties {
 
     // Create User Request
