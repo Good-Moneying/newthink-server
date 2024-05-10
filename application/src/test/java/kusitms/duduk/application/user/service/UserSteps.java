@@ -17,8 +17,8 @@ public class UserSteps {
 
         User user = User.builder()
             .id(Id.of(1L))
-            .email(Email.of(email))
-            .nickname(Nickname.of("tester"))
+            .email(Email.from(email))
+            .nickname(Nickname.from("tester"))
             .refreshToken(RefreshToken.of("12345"))
             .goal(Goal.EVERYDAY)
             .gender(Gender.MALE)
@@ -34,8 +34,8 @@ public class UserSteps {
         String email = "test1@test.com";
 
         User user = User.builder()
-            .email(Email.of(email))
-            .nickname(Nickname.of("tester1"))
+            .email(Email.from(email))
+            .nickname(Nickname.from("tester1"))
             .refreshToken(RefreshToken.of("123456"))
             .goal(Goal.EVERYDAY)
             .gender(Gender.MALE)

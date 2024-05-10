@@ -17,8 +17,8 @@ public class UserTest {
     void 유저_객체를_생성한다() {
         // when
         User user = User.builder()
-            .email(Email.of(EMAIL))
-            .nickname(Nickname.of(NICKNAME))
+            .email(Email.from(EMAIL))
+            .nickname(Nickname.from(NICKNAME))
             .refreshToken(RefreshToken.of(REFRESH_TOKEN))
             .gender(Gender.from(GENDER_TEXT))
             .birthday(BIRTHDAY)

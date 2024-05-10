@@ -1,6 +1,5 @@
 package kusitms.duduk.application.user.persistence;
 
-import java.time.LocalDateTime;
 import kusitms.duduk.application.user.persistence.entity.UserJpaEntity;
 import kusitms.duduk.common.annotation.Mapper;
 import kusitms.duduk.domain.global.Id;
@@ -42,8 +41,8 @@ public class UserJpaMapper {
     public User toDomain(UserJpaEntity userJpaEntity) {
         return User.builder()
             .id(Id.of(userJpaEntity.getId()))
-            .email(Email.of(userJpaEntity.getEmail()))
-            .nickname(Nickname.of(userJpaEntity.getNickname()))
+            .email(Email.from(userJpaEntity.getEmail()))
+            .nickname(Nickname.from(userJpaEntity.getNickname()))
             .refreshToken(RefreshToken.of(userJpaEntity.getRefreshToken()))
             .gender(userJpaEntity.getGender())
             .birthday(userJpaEntity.getBirthday())

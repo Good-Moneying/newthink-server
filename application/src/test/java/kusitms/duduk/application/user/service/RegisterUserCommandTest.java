@@ -43,7 +43,7 @@ class RegisterUserCommandTest {
             GENDER_TEXT,
             BIRTHDAY,
             PROVIDER.name(),
-            CATEGORY_STOCK.name(),
+            CATEGORY_FINANCE.name(),
             GOAL_EVERYDAY.name()
         );
 

@@ -18,8 +18,8 @@ public class UserDtoMapper {
 
     public User toDomain(CreateUserRequest request) {
         return User.builder()
-            .email(Email.of(request.email()))
-            .nickname(Nickname.of(request.nickname()))
+            .email(Email.from(request.email()))
+            .nickname(Nickname.from(request.nickname()))
             .refreshToken(RefreshToken.of(request.refreshToken()))
             .gender(Gender.from(request.gender()))
             .birthday(request.birthDay())

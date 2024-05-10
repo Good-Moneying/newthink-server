@@ -14,11 +14,11 @@ public class Nickname {
         this.value = nickname;
     }
 
-    public static Nickname of(String nickname) {
+    public static Nickname from(String nickname) {
         return new Nickname(nickname);
     }
 
-    public void changeNickname(String nickname) {
+    public void change(String nickname) {
         this.value = nickname;
     }
 
@@ -38,5 +38,4 @@ public class Nickname {
         Nickname other = (Nickname) obj;
         return Objects.equals(this.value, other.value);
     }
-
 }
