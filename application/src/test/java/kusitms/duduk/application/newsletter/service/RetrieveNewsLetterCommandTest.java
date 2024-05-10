@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import io.jsonwebtoken.lang.Assert;
 import kusitms.duduk.core.newsletter.dto.NewsLetterDtoMapper;
+import kusitms.duduk.core.newsletter.dto.request.RetrieveNewsLetterRequest;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterResponse;
 import kusitms.duduk.core.newsletter.port.output.LoadNewsLetterPort;
 import kusitms.duduk.core.newsletter.port.output.SaveNewsLetterPort;
@@ -51,22 +52,5 @@ public class RetrieveNewsLetterCommandTest {
         // then
         assertThat(response.title()).isEqualTo(savedNewsLetter.getTitle().getTitle());
         assertThat(response.content()).isEqualTo(savedNewsLetter.getContent().getContent());
-    }
-
-    private record RetrieveNewsLetterRequest(Long id) {
-
-        private RetrieveNewsLetterRequest {
-            Assert.notNull(id, "뉴스레터 아이디는 필수입니다.");
-        }
-    }
-
-    private record RetrieveNewsLetterCommand(LoadNewsLetterPort loadNewsLetterPort,
-		             NewsLetterDtoMapper newsLetterDtoMapper) {
-
-        public NewsLetterResponse retrieve(RetrieveNewsLetterRequest request) {
-            NewsLetter newsLetter = loadNewsLetterPort.findById(request.id())
-	.orElseThrow(() -> new IllegalArgumentException("해당 뉴스레터를 찾을 수 없습니다."));
-            return newsLetterDtoMapper.toDto(newsLetter);
-        }
     }
 }
