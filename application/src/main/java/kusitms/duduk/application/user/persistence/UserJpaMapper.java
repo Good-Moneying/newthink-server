@@ -25,8 +25,6 @@ public class UserJpaMapper {
             .provider(user.getProvider())
             .category(user.getCategory())
             .goal(user.getGoal())
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
             .build();
     }
 
@@ -38,7 +36,6 @@ public class UserJpaMapper {
             .nickname(user.getNickname().getValue())
             .refreshToken(user.getRefreshToken().getValue())
             .birthday(user.getBirthday())
-            .updatedAt(LocalDateTime.now())
             .build();
     }
 

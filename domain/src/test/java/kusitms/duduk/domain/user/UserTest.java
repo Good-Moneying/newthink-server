@@ -24,7 +24,7 @@ public class UserTest {
             .birthday(BIRTHDAY)
             .role(ROLE)
             .provider(PROVIDER)
-            .category(CATEGORY_STOCK)
+            .category(CATEGORY_FINANCE)
             .goal(GOAL_EVERYDAY)
             .build();
 
