@@ -1,6 +1,7 @@
 package kusitms.duduk.common.exception;
 
 import kusitms.duduk.common.exception.custom.AlreadyExistsException;
+import kusitms.duduk.common.exception.custom.ConvertException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             .body(new ErrorResponse(HttpStatus.CONFLICT.value(), exception.getMessage()));
     }
 
+    @ExceptionHandler(ConvertException.class)
+    public ResponseEntity<ErrorResponse> handleConvertException(
+        final ConvertException exception) {
+        log.error("Convert Exception: {}", exception.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ErrorResponse(HttpStatus.BAD_REQUEST.value(), exception.getMessage()));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleException(Exception e) {
-        return new ResponseEntity<>(new Exception("Internal Server Error"), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new Exception("Internal Server Error"),
+            HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
