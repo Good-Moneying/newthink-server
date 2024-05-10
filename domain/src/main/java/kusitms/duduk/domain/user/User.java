@@ -3,7 +3,6 @@ package kusitms.duduk.domain.user;
 import java.time.LocalDate;
 import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.global.Id;
-import kusitms.duduk.domain.user.vo.Acorn;
 import kusitms.duduk.domain.user.vo.Email;
 import kusitms.duduk.domain.user.vo.Gender;
 import kusitms.duduk.domain.user.vo.Goal;
@@ -31,7 +30,6 @@ public class User {
     private Provider provider;
     private Category category;
     private Goal goal;
-    private Acorn acorn;
 
     public void updateRefreshToken(String reIssuedRefreshToken) {
         this.refreshToken.update(reIssuedRefreshToken);

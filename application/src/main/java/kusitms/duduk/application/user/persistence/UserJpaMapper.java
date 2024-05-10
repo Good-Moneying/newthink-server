@@ -2,10 +2,9 @@ package kusitms.duduk.application.user.persistence;
 
 import java.time.LocalDateTime;
 import kusitms.duduk.application.user.persistence.entity.UserJpaEntity;
-import kusitms.duduk.core.annotation.Mapper;
+import kusitms.duduk.common.annotation.Mapper;
 import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.user.User;
-import kusitms.duduk.domain.user.vo.Acorn;
 import kusitms.duduk.domain.user.vo.Email;
 import kusitms.duduk.domain.user.vo.Nickname;
 import kusitms.duduk.domain.user.vo.RefreshToken;
@@ -26,7 +25,6 @@ public class UserJpaMapper {
             .provider(user.getProvider())
             .category(user.getCategory())
             .goal(user.getGoal())
-            .acornCount(user.getAcorn().getCount())
             .createdAt(LocalDateTime.now())
             .updatedAt(LocalDateTime.now())
             .build();
@@ -40,7 +38,6 @@ public class UserJpaMapper {
             .nickname(user.getNickname().getValue())
             .refreshToken(user.getRefreshToken().getValue())
             .birthday(user.getBirthday())
-            .acornCount(user.getAcorn().getCount())
             .updatedAt(LocalDateTime.now())
             .build();
     }
@@ -57,7 +54,6 @@ public class UserJpaMapper {
             .provider(userJpaEntity.getProvider())
             .category(userJpaEntity.getCategory())
             .goal(userJpaEntity.getGoal())
-            .acorn(Acorn.of(userJpaEntity.getAcornCount()))
             .build();
     }
 }

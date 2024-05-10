@@ -3,7 +3,7 @@ package kusitms.duduk.application.user.persistence;
 import java.util.Optional;
 
 import kusitms.duduk.application.user.persistence.entity.UserJpaEntity;
-import kusitms.duduk.core.annotation.Adapter;
+import kusitms.duduk.common.annotation.Adapter;
 import kusitms.duduk.core.user.port.output.DeleteUserPort;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
 import kusitms.duduk.core.user.port.output.SaveUserPort;

@@ -26,7 +26,6 @@ public class UserTest {
             .provider(PROVIDER)
             .category(CATEGORY_STOCK)
             .goal(GOAL_EVERYDAY)
-            .acorn(ACORN_INITIAL)
             .build();
 
         // then
@@ -37,6 +36,5 @@ public class UserTest {
         assertThat(user.getBirthday()).isEqualTo(BIRTHDAY);
         assertThat(user.getRole()).isEqualTo(ROLE);
         assertThat(user.getProvider()).isEqualTo(PROVIDER);
-        assertThat(user.getAcorn()).isEqualTo(ACORN_INITIAL);
     }
 }

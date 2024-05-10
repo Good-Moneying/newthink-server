@@ -1,13 +1,12 @@
 package kusitms.duduk.apiserver.user.presentation;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kusitms.duduk.core.exception.ErrorResponse;
+import kusitms.duduk.common.exception.ErrorResponse;
 import kusitms.duduk.core.user.dto.request.CreateUserRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserEmailRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserNicknameRequest;

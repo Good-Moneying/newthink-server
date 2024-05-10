@@ -1,6 +1,6 @@
-package kusitms.duduk.core.exception;
+package kusitms.duduk.common.exception;
 
-import kusitms.duduk.core.exception.custom.AlreadyExistsException;
+import kusitms.duduk.common.exception.custom.AlreadyExistsException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

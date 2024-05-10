@@ -3,7 +3,6 @@ package kusitms.duduk.application.user.service;
 import java.time.LocalDate;
 import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.user.User;
-import kusitms.duduk.domain.user.vo.Acorn;
 import kusitms.duduk.domain.user.vo.Email;
 import kusitms.duduk.domain.user.vo.Gender;
 import kusitms.duduk.domain.user.vo.Goal;
@@ -22,7 +21,6 @@ public class UserSteps {
             .nickname(Nickname.of("tester"))
             .refreshToken(RefreshToken.of("12345"))
             .goal(Goal.EVERYDAY)
-            .acorn(Acorn.initial())
             .gender(Gender.MALE)
             .birthday(LocalDate.of(1990, 1, 1))
             .provider(Provider.KAKAO)
@@ -40,7 +38,6 @@ public class UserSteps {
             .nickname(Nickname.of("tester1"))
             .refreshToken(RefreshToken.of("123456"))
             .goal(Goal.EVERYDAY)
-            .acorn(Acorn.initial())
             .gender(Gender.MALE)
             .birthday(LocalDate.of(1990, 1, 1))
             .provider(Provider.KAKAO)

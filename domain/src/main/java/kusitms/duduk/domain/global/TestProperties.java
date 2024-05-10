@@ -1,7 +1,6 @@
 package kusitms.duduk.domain.global;
 
 import java.time.LocalDate;
-import kusitms.duduk.domain.user.vo.Acorn;
 import kusitms.duduk.domain.user.vo.Gender;
 import kusitms.duduk.domain.user.vo.Goal;
 import kusitms.duduk.domain.user.vo.Provider;
@@ -19,7 +18,6 @@ public class TestProperties {
     public final static LocalDate BIRTHDAY = LocalDate.of(1999, 3, 27);
     public final static Role ROLE = Role.USER;
     public final static Provider PROVIDER = Provider.from("KAKAO");
-    public final static Acorn ACORN_INITIAL = Acorn.initial();
     public final static Category CATEGORY_STOCK = Category.STOCK;
     public final static Goal GOAL_EVERYDAY = Goal.EVERYDAY;
 

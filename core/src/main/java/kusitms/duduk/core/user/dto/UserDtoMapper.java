@@ -1,11 +1,10 @@
 package kusitms.duduk.core.user.dto;
 
-import kusitms.duduk.core.annotation.Mapper;
+import kusitms.duduk.common.annotation.Mapper;
 import kusitms.duduk.core.user.dto.request.CreateUserRequest;
 import kusitms.duduk.core.user.dto.response.UserResponse;
 import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.user.User;
-import kusitms.duduk.domain.user.vo.Acorn;
 import kusitms.duduk.domain.user.vo.Email;
 import kusitms.duduk.domain.user.vo.Gender;
 import kusitms.duduk.domain.user.vo.Goal;
@@ -16,7 +15,6 @@ import kusitms.duduk.domain.user.vo.Role;
 
 @Mapper
 public class UserDtoMapper {
-
 
     public User toDomain(CreateUserRequest request) {
         return User.builder()
@@ -29,7 +27,6 @@ public class UserDtoMapper {
             .provider(Provider.from(request.provider()))
             .category(Category.from(request.category()))
             .goal(Goal.from(request.goal()))
-            .acorn(Acorn.initial())
             .build();
     }
 

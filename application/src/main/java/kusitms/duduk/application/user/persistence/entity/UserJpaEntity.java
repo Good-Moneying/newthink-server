@@ -70,9 +70,6 @@ public class UserJpaEntity {
     @Enumerated(EnumType.STRING)
     private Goal goal;
 
-    @Column
-    private int acornCount;
-
 //    @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -94,7 +91,6 @@ public class UserJpaEntity {
             ", provider=" + provider +
             ", category=" + category +
             ", goal=" + goal +
-            ", acornCount=" + acornCount +
             ", createdAt=" + createdAt +
             ", updatedAt=" + updatedAt +
             '}';

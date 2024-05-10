@@ -1,4 +1,4 @@
-package kusitms.duduk.core.exception.custom;
+package kusitms.duduk.common.exception.custom;
 
 public class BaseException extends RuntimeException {
     private final String message;

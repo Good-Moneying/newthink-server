@@ -1,4 +1,4 @@
-package kusitms.duduk.core.annotation;
+package kusitms.duduk.common.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

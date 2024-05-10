@@ -1,6 +1,6 @@
 package kusitms.duduk.core.newsletter.dto;
 
-import kusitms.duduk.core.annotation.Mapper;
+import kusitms.duduk.common.annotation.Mapper;
 import kusitms.duduk.core.newsletter.dto.request.CreateNewsLetterRequest;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterResponse;
 import kusitms.duduk.domain.global.Category;
