@@ -1,4 +1,4 @@
-package kusitms.duduk.application.attendence.service;
+package kusitms.duduk.application.attendant.service;
 
 import java.time.LocalDate;
 import kusitms.duduk.core.attendant.port.output.LoadAttendantPort;

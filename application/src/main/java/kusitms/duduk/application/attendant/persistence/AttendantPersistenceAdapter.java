@@ -1,7 +1,7 @@
-package kusitms.duduk.application.attendence.persistence;
+package kusitms.duduk.application.attendant.persistence;
 
 import java.time.LocalDate;
-import kusitms.duduk.application.attendence.persistence.entity.AttendantJpaEntity;
+import kusitms.duduk.application.attendant.persistence.entity.AttendantJpaEntity;
 import kusitms.duduk.core.annotation.Adapter;
 import kusitms.duduk.core.attendant.port.output.LoadAttendantPort;
 import kusitms.duduk.core.attendant.port.output.SaveAttendantPort;

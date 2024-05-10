@@ -1,4 +1,4 @@
-package kusitms.duduk.application.attendence.persistence.entity;
+package kusitms.duduk.application.attendant.persistence.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
-@Table(name = "attendences", uniqueConstraints = {
+@Table(name = "attendants", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"date", "email"})
 })
 @Builder(toBuilder = true)
@@ -24,7 +24,7 @@ public class AttendantJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "attendence_id")
+    @Column(name = "attendant_id")
     private Long id;
     private LocalDate date;
     private String email;

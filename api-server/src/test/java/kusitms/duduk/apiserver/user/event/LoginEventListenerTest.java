@@ -2,8 +2,6 @@ package kusitms.duduk.apiserver.user.event;
 
 import static org.codehaus.groovy.runtime.DefaultGroovyMethods.any;
 
-import kusitms.duduk.application.attendence.persistence.AttendantRepository;
-import kusitms.duduk.application.attendence.persistence.entity.AttendantJpaEntity;
 import kusitms.duduk.application.user.event.LoginUserEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
