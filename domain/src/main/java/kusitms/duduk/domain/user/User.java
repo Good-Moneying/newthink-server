@@ -1,6 +1,8 @@
 package kusitms.duduk.domain.user;
 
 import java.time.LocalDate;
+import java.util.List;
+import kusitms.duduk.domain.archive.Archive;
 import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.user.vo.Email;
@@ -30,6 +32,7 @@ public class User {
     private Provider provider;
     private Category category;
     private Goal goal;
+    private List<Archive> archives;
 
     public void updateRefreshToken(String reIssuedRefreshToken) {
         this.refreshToken.update(reIssuedRefreshToken);

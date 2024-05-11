@@ -9,7 +9,8 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
     "kusitms.duduk.apiserver",
     "kusitms.duduk.application",
     "kusitms.duduk.domain",
-    "kusitms.duduk.core"})
+    "kusitms.duduk.core",
+    "kusitms.duduk.common"})
 public class DudukApiServerApplication {
 
     public static void main(String[] args) {

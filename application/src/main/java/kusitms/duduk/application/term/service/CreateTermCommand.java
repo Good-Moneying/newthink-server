@@ -21,6 +21,8 @@ public class CreateTermCommand implements CreateTermUseCase {
     @Override
     public RetrieveTermResponse create(CreateTermRequest request) {
         Term term = termDtoMapper.toDomain(request);
+
+        // todo : 추후에 관리자만 생성할 수 있도록 추가
         return termDtoMapper.toDto(createTermPort.save(term));
     }
 }

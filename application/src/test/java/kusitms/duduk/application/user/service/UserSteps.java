@@ -1,6 +1,7 @@
 package kusitms.duduk.application.user.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.user.User;
 import kusitms.duduk.domain.user.vo.Email;
@@ -12,6 +13,7 @@ import kusitms.duduk.domain.user.vo.RefreshToken;
 import kusitms.duduk.domain.user.vo.Role;
 
 public class UserSteps {
+
     public static User ROLE_EDITOR_생성_요청() {
         String email = "test@test.com";
 
@@ -25,6 +27,7 @@ public class UserSteps {
             .birthday(LocalDate.of(1990, 1, 1))
             .provider(Provider.KAKAO)
             .role(Role.EDITOR)
+            .archives(new ArrayList<>())
             .build();
 
         return user;
@@ -42,6 +45,7 @@ public class UserSteps {
             .birthday(LocalDate.of(1990, 1, 1))
             .provider(Provider.KAKAO)
             .role(Role.USER)
+            .archives(new ArrayList<>())
             .build();
 
         return user;

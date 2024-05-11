@@ -42,9 +42,6 @@ class DeleteNewsLetterCommandTest {
     private DeleteUserPort deleteUserPort;
 
     @Autowired
-    private LoadUserPort loadUserPort;
-
-    @Autowired
     private SaveUserPort saveUserPort;
 
     @Autowired

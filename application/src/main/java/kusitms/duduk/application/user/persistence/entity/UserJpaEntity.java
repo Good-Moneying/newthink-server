@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -79,15 +80,6 @@ public class UserJpaEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Goal goal;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     public List<ArchiveJpaEntity> archives = new ArrayList<>();
-
-    public static UserJpaEntity createWithDefaultArchives() {
-        UserJpaEntity user = new UserJpaEntity();
-        user.archives.add(ArchiveJpaEntity.create(Category.FINANCE, user));
-        user.archives.add(ArchiveJpaEntity.create(Category.SECURITIES, user));
-        user.archives.add(ArchiveJpaEntity.create(Category.POLICY, user));
-        user.archives.add(ArchiveJpaEntity.create(Category.REAL_ESTATE, user));
-        return user;
-    }
 }

@@ -12,6 +12,7 @@ public enum Category {
     SECURITIES("증권"),
     REAL_ESTATE("부동산"),
     POLICY("정책"),
+    WORD("단어장"),
     NONE("없음");
 
     private final String description;

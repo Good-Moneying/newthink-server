@@ -1,16 +1,19 @@
 package kusitms.duduk.application.global.converter;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;
 import java.util.List;
 import kusitms.duduk.common.exception.custom.ConvertException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
-@RequiredArgsConstructor
 public class ListLongToStringConverter implements AttributeConverter<List<Long>, String> {
 
-    private ObjectMapper objectMapper;
+    private static final ObjectMapper objectMapper = new ObjectMapper()
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        .configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, false);
 
     @Override
     public String convertToDatabaseColumn(List<Long> attribute) {

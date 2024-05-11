@@ -1,5 +1,7 @@
 package kusitms.duduk.core.user.dto;
 
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 import kusitms.duduk.common.annotation.Mapper;
 import kusitms.duduk.core.user.dto.request.CreateUserRequest;
 import kusitms.duduk.core.user.dto.response.UserResponse;
@@ -27,13 +29,17 @@ public class UserDtoMapper {
             .provider(Provider.from(request.provider()))
             .category(Category.from(request.category()))
             .goal(Goal.from(request.goal()))
+            .archives(new ArrayList<>())
             .build();
     }
 
-    public UserResponse toDto(User save) {
+    public UserResponse toDto(User user) {
         return UserResponse.builder()
-            .email(save.getEmail().getValue())
-            .nickname(save.getNickname().getValue())
+            .email(user.getEmail().getValue())
+            .nickname(user.getNickname().getValue())
+            .archives(user.getArchives().stream()
+                .map(archive -> archive.getId())
+                .collect(Collectors.toList()))
             .build();
     }
 }
