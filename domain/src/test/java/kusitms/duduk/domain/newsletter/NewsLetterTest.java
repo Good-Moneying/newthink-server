@@ -22,7 +22,7 @@ class NewsLetterTest {
         String content = "content";
         String thumbnail = "thumbnail";
         String keywords = "keyword1,keyword2,keyword3";
-        String stock = "stock";
+        String category = "FINANCE";
         String summary = "summary\nsummary\nsummary";
 
         // when
@@ -31,7 +31,7 @@ class NewsLetterTest {
             .content(Content.from(content))
             .thumbnail(Thumbnail.from(thumbnail))
             .keywords(Keywords.from(keywords))
-            .category(Category.from(stock))
+            .category(Category.from(category))
             .summary(Summary.from(summary))
             .viewCount(Count.initial())
             .scrapCount(Count.from(6))
@@ -42,7 +42,7 @@ class NewsLetterTest {
         assertThat(newsLetter.getContent().getContent()).isEqualTo(content);
         assertThat(newsLetter.getThumbnail().getUrl()).isEqualTo(thumbnail);
         assertThat(newsLetter.getKeywords().getWords().size()).isEqualTo(3);
-        assertThat(newsLetter.getCategory().getDescription()).isEqualTo(stock);
+        assertThat(newsLetter.getCategory().name()).isEqualTo(category);
         assertThat(newsLetter.getSummary().getSentences().size()).isEqualTo(3);
         assertThat(newsLetter.getViewCount().getCount()).isEqualTo(0);
         assertThat(newsLetter.getScrapCount().getCount()).isEqualTo(6);
