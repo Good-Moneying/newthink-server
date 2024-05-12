@@ -1,5 +1,6 @@
 package kusitms.duduk.apiserver.config;
 
+import kusitms.duduk.apiserver.security.infrastructure.AuthenticationService;
 import kusitms.duduk.apiserver.security.infrastructure.filter.JwtAuthenticationFilter;
 import kusitms.duduk.application.security.service.JwtTokenProvider;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
@@ -31,6 +32,7 @@ public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
     private final LoadUserPort loadUserPort;
     private final SaveUserPort saveUserPort;
+    private final AuthenticationService authenticationService;
 
     private static final String[] RESOURCE_LIST = {
         "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/admin/img/**", "/css/**",
@@ -40,7 +42,7 @@ public class SecurityConfig {
     };
 
     private static final String[] AUTH_WHITELIST = {
-        "/api/oauth/**", "/api/users/validate/**"
+        "/api/oauth/**", "/api/users/validate/**", "/api/newsletters/**"
     };
 
     @Bean
@@ -64,7 +66,7 @@ public class SecurityConfig {
 	.requestMatchers(HttpMethod.POST, "/api/users").permitAll()
 	.anyRequest().authenticated())
             .addFilterBefore(
-	new JwtAuthenticationFilter(jwtTokenProvider, loadUserPort, saveUserPort),
+	new JwtAuthenticationFilter(jwtTokenProvider, loadUserPort, saveUserPort, authenticationService),
 	UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

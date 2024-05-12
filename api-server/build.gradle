@@ -12,6 +12,9 @@ dependencies {
     // Spring Boot Starter
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    // Transactional
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
     // Spring Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
