@@ -1,5 +1,6 @@
 package kusitms.duduk.domain.newsletter;
 
+import java.time.LocalDateTime;
 import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.global.Count;
 import kusitms.duduk.domain.global.Id;
@@ -30,6 +31,8 @@ public class NewsLetter {
     private Summary summary;
     private Count viewCount;
     private Count scrapCount;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public boolean isWrittenBy(Id id) {
         return editorId.equals(id);

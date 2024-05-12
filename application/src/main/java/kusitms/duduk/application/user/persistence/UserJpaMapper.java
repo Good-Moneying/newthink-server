@@ -86,6 +86,8 @@ public class UserJpaMapper {
             .category(userJpaEntity.getCategory())
             .goal(userJpaEntity.getGoal())
             .archives(mapArchives(userJpaEntity.getArchives()))
+            .createdAt(userJpaEntity.getCreatedAt())
+            .updatedAt(userJpaEntity.getUpdatedAt())
             .build();
     }
 

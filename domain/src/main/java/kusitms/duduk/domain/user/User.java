@@ -35,6 +35,8 @@ public class User {
     private Category category;
     private Goal goal;
     private List<Archive> archives;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public void updateRefreshToken(String reIssuedRefreshToken) {
         this.refreshToken.update(reIssuedRefreshToken);
