@@ -1,7 +1,6 @@
 package kusitms.duduk.application.user.service;
 
-import io.restassured.internal.common.assertion.Assertion;
-import kusitms.duduk.core.exception.custom.AlreadyExistsException;
+import kusitms.duduk.common.exception.custom.AlreadyExistsException;
 import kusitms.duduk.core.user.dto.request.ValidateUserEmailRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserNicknameRequest;
 import kusitms.duduk.core.user.port.input.ValidateDuplicatedUserQuery;
@@ -28,7 +27,7 @@ public class ValidateDuplicatedUserCommandTest {
 
     @BeforeEach
     void setup() {
-        saveUserPort.save(UserSteps.ROLE_USER_생성_요청());
+        saveUserPort.create(UserSteps.ROLE_USER_생성_요청());
     }
 
     @AfterEach

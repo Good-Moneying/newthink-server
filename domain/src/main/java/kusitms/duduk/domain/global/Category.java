@@ -8,17 +8,18 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum Category {
-    STOCK("stock"),
-    CRYPTO("crypto"),
-    ESTATE("estate"),
-    INTEREST_RATE("rate"),
-    ETC("extra");
+    FINANCE("금융"),
+    SECURITIES("증권"),
+    REAL_ESTATE("부동산"),
+    POLICY("정책"),
+    WORD("단어장"),
+    NONE("없음");
 
     private final String description;
 
-    public static Category from(String description) {
+    public static Category from(String name) {
         return Arrays.stream(Category.values())
-            .filter(d -> d.description.equalsIgnoreCase(description))
+            .filter(c -> c.name().equalsIgnoreCase(name))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 카테고리입니다."));
     }

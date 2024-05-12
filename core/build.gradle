@@ -8,6 +8,7 @@ jar.enabled = true
 
 dependencies {
     implementation(project(":domain"))
+    implementation project(':common')
 
     // Spring Boot Starter
     implementation 'org.springframework.boot:spring-boot-starter-web'

@@ -1,21 +1,32 @@
 package kusitms.duduk.application.user.persistence;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import kusitms.duduk.application.archive.persistence.ArchiveJpaMapper;
+import kusitms.duduk.application.archive.persistence.entity.ArchiveJpaEntity;
 import kusitms.duduk.application.user.persistence.entity.UserJpaEntity;
-import kusitms.duduk.core.annotation.Mapper;
+import kusitms.duduk.common.annotation.Mapper;
+import kusitms.duduk.domain.archive.Archive;
+import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.user.User;
-import kusitms.duduk.domain.user.vo.Acorn;
 import kusitms.duduk.domain.user.vo.Email;
 import kusitms.duduk.domain.user.vo.Nickname;
 import kusitms.duduk.domain.user.vo.RefreshToken;
+import lombok.RequiredArgsConstructor;
 
+// todo : 추후에 팩토리 패턴으로 변경 가능성 존재 (UserJpaEntityFactory#create)
+@RequiredArgsConstructor
 @Mapper
 public class UserJpaMapper {
 
+    private final ArchiveJpaMapper archiveJpaMapper;
+
     public UserJpaEntity toJpaEntity(User user) {
-        return UserJpaEntity.builder()
-            // 새로 생성하는 경우에는 ID가 없을 수 있음
+        // 빌더 패턴을 사용하여 UserJpaEntity 인스턴스 생성
+        UserJpaEntity userEntity = UserJpaEntity.builder()
             .id(user.getId() != null ? user.getId().getValue() : null)
             .email(user.getEmail().getValue())
             .nickname(user.getNickname().getValue())
@@ -25,11 +36,19 @@ public class UserJpaMapper {
             .role(user.getRole())
             .provider(user.getProvider())
             .category(user.getCategory())
+            .archives(user.getArchives() == null ? new ArrayList<>() : getArchiveJpaEntities(user))
             .goal(user.getGoal())
-            .acornCount(user.getAcorn().getCount())
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
             .build();
+
+        addDefaultArchives(userEntity);
+        return userEntity;
+    }
+
+    private void addDefaultArchives(UserJpaEntity userEntity) {
+        Arrays.stream(Category.values())
+            .forEach(category ->
+	userEntity.getArchives().add(ArchiveJpaEntity.create(category))
+            );
     }
 
     /**
@@ -40,16 +59,25 @@ public class UserJpaMapper {
             .nickname(user.getNickname().getValue())
             .refreshToken(user.getRefreshToken().getValue())
             .birthday(user.getBirthday())
-            .acornCount(user.getAcorn().getCount())
-            .updatedAt(LocalDateTime.now())
+            .category(user.getCategory())
+            .archives(getArchiveJpaEntities(user))
             .build();
     }
+
+    private List<ArchiveJpaEntity> getArchiveJpaEntities(User user) {
+        return user.getArchives().stream()
+            .map(archive -> archiveJpaMapper.toJpaEntity(archive))
+            .collect(Collectors.toList());
+    }
+
+    // user <-> archive 연관 만들고
+    // 비즈니스 로직 작업
 
     public User toDomain(UserJpaEntity userJpaEntity) {
         return User.builder()
             .id(Id.of(userJpaEntity.getId()))
-            .email(Email.of(userJpaEntity.getEmail()))
-            .nickname(Nickname.of(userJpaEntity.getNickname()))
+            .email(Email.from(userJpaEntity.getEmail()))
+            .nickname(Nickname.from(userJpaEntity.getNickname()))
             .refreshToken(RefreshToken.of(userJpaEntity.getRefreshToken()))
             .gender(userJpaEntity.getGender())
             .birthday(userJpaEntity.getBirthday())
@@ -57,7 +85,18 @@ public class UserJpaMapper {
             .provider(userJpaEntity.getProvider())
             .category(userJpaEntity.getCategory())
             .goal(userJpaEntity.getGoal())
-            .acorn(Acorn.of(userJpaEntity.getAcornCount()))
+            .archives(mapArchives(userJpaEntity.getArchives()))
             .build();
+    }
+
+    private List<Archive> mapArchives(List<ArchiveJpaEntity> archives) {
+        return archives.stream()
+            .map(archiveJpaEntity -> Archive.builder()
+	.id(archiveJpaEntity.getId())
+	.category(archiveJpaEntity.getCategory())
+	.newsLetterIds(archiveJpaEntity.getNewsLetterIds())
+	.termIds(archiveJpaEntity.getTermIds())
+	.build())
+            .toList();
     }
 }

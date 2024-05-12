@@ -3,12 +3,11 @@ package kusitms.duduk.application.newsletter.persistence;
 import java.util.List;
 import java.util.Optional;
 import kusitms.duduk.application.newsletter.persistence.entity.NewsLetterJpaEntity;
-import kusitms.duduk.core.annotation.Adapter;
+import kusitms.duduk.common.annotation.Adapter;
 import kusitms.duduk.core.newsletter.port.output.DeleteNewsLetterPort;
 import kusitms.duduk.core.newsletter.port.output.LoadNewsLetterPort;
 import kusitms.duduk.core.newsletter.port.output.SaveNewsLetterPort;
 import kusitms.duduk.core.newsletter.port.output.UpdateNewsLetterPort;
-import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.newsletter.NewsLetter;
 import lombok.RequiredArgsConstructor;
 

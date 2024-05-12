@@ -1,6 +1,6 @@
 package kusitms.duduk.application.user.service;
 
-import kusitms.duduk.core.exception.custom.AlreadyExistsException;
+import kusitms.duduk.common.exception.custom.AlreadyExistsException;
 import kusitms.duduk.core.user.dto.request.ValidateUserEmailRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserNicknameRequest;
 import kusitms.duduk.core.user.port.input.ValidateDuplicatedUserQuery;

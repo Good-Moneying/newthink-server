@@ -3,7 +3,7 @@ package kusitms.duduk.application.user.persistence;
 import java.util.Optional;
 
 import kusitms.duduk.application.user.persistence.entity.UserJpaEntity;
-import kusitms.duduk.core.annotation.Adapter;
+import kusitms.duduk.common.annotation.Adapter;
 import kusitms.duduk.core.user.port.output.DeleteUserPort;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
 import kusitms.duduk.core.user.port.output.SaveUserPort;
@@ -23,7 +23,7 @@ public class UserPersistenceAdapter implements UpdateUserPort, LoadUserPort, Sav
     private final UserJpaMapper userJpaMapper;
 
     @Override
-    public User save(User user) {
+    public User create(User user) {
         // UserJpaEntity로 변환하고
         UserJpaEntity userJpaEntity = userJpaMapper.toJpaEntity(user);
         // 변환한 UserJpaEntity를 저장 (Id 값이 자동으로 생성)

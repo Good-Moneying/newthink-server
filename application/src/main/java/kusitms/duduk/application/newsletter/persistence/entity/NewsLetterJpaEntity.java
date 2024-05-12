@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import kusitms.duduk.application.global.entity.BaseEntity;
 import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.newsletter.vo.Type;
 import lombok.AccessLevel;
@@ -22,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "news_letter")
 @Builder(toBuilder = true)
-public class NewsLetterJpaEntity {
+public class NewsLetterJpaEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,9 +1,8 @@
 rootProject.name = 'duduk-server'
 include 'api-server'
 include 'batch'
-include 'domain'
+include 'application'
 include 'core'
-include 'api-server'
-include 'application'
-include 'application'
+include 'domain'
+include 'common'
 

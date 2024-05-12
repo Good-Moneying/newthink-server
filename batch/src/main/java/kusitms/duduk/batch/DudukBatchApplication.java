@@ -8,8 +8,11 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 @ConfigurationPropertiesScan
 @EnableBatchProcessing
 @SpringBootApplication(scanBasePackages = {
-    "kusitms.duduk"
-})
+    "kusitms.duduk.batch",
+    "kusitms.duduk.application",
+    "kusitms.duduk.domain",
+    "kusitms.duduk.core",
+    "kusitms.duduk.common"})
 public class DudukBatchApplication {
 
     public static void main(String[] args) {

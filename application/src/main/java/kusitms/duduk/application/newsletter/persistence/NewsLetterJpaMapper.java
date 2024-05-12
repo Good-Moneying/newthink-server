@@ -2,7 +2,7 @@ package kusitms.duduk.application.newsletter.persistence;
 
 import java.util.List;
 import kusitms.duduk.application.newsletter.persistence.entity.NewsLetterJpaEntity;
-import kusitms.duduk.core.annotation.Mapper;
+import kusitms.duduk.common.annotation.Mapper;
 import kusitms.duduk.domain.global.Count;
 import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.newsletter.NewsLetter;

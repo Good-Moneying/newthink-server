@@ -3,7 +3,7 @@ package kusitms.duduk.core.newsletter.dto.request;
 import org.springframework.util.Assert;
 
 public record CreateNewsLetterRequest(String thumbnail, String title, String content,
-		      String keywords, String category, String summary, String aiType) {
+		      String keywords, String category, String summary, String type) {
 
     public CreateNewsLetterRequest {
         Assert.notNull(title, "title must not be null");

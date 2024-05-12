@@ -17,16 +17,15 @@ public class UserTest {
     void 유저_객체를_생성한다() {
         // when
         User user = User.builder()
-            .email(Email.of(EMAIL))
-            .nickname(Nickname.of(NICKNAME))
+            .email(Email.from(EMAIL))
+            .nickname(Nickname.from(NICKNAME))
             .refreshToken(RefreshToken.of(REFRESH_TOKEN))
             .gender(Gender.from(GENDER_TEXT))
             .birthday(BIRTHDAY)
             .role(ROLE)
             .provider(PROVIDER)
-            .category(CATEGORY_STOCK)
+            .category(CATEGORY_FINANCE)
             .goal(GOAL_EVERYDAY)
-            .acorn(ACORN_INITIAL)
             .build();
 
         // then
@@ -37,6 +36,5 @@ public class UserTest {
         assertThat(user.getBirthday()).isEqualTo(BIRTHDAY);
         assertThat(user.getRole()).isEqualTo(ROLE);
         assertThat(user.getProvider()).isEqualTo(PROVIDER);
-        assertThat(user.getAcorn()).isEqualTo(ACORN_INITIAL);
     }
 }

@@ -5,7 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages = {
     "kusitms.duduk.domain",
-    "kusitms.duduk.core"
+    "kusitms.duduk.core",
+    "kusitms.duduk.common"
 })
 public class DudukCoreApplication {
 

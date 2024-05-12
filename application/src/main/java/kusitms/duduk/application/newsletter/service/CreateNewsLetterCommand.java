@@ -11,10 +11,13 @@ import kusitms.duduk.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
+@Transactional
+// todo : @Transactional 여부에 따라 어떻게 LazyInitializationException이 발생하는지 확인할 소요가 있음
 class CreateNewsLetterCommand implements CreateNewsLetterUseCase {
 
     private final NewsLetterDtoMapper newsLetterDtoMapper;

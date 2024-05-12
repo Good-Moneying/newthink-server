@@ -35,25 +35,14 @@ class RegisterUserCommandTest {
 
     @Test
     void 회원가입을_한다() {
-        // given
-        CreateUserRequest createUserRequest = new CreateUserRequest(
-            EMAIL,
-            NICKNAME,
-            REFRESH_TOKEN,
-            GENDER_TEXT,
-            BIRTHDAY,
-            PROVIDER.name(),
-            CATEGORY_STOCK.name(),
-            GOAL_EVERYDAY.name()
-        );
-
         // when
-        UserResponse response = registerUserUseCase.register(createUserRequest);
+        UserResponse response = registerUserUseCase.register(UserSteps.createUserRequest_생성());
 
         // then
         assertThat(response).isNotNull();
         assertThat(response.email()).isEqualTo(EMAIL);
         assertThat(response.nickname()).isEqualTo(NICKNAME);
+        assertThat(response.archives().size()).isGreaterThan(0);
 
         assertThat(loadUserPort.existsUserByEmail(EMAIL)).isTrue();
     }

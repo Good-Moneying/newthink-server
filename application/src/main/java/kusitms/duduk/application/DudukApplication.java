@@ -8,7 +8,8 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 @SpringBootApplication(scanBasePackages = {
     "kusitms.duduk.application",
     "kusitms.duduk.domain",
-    "kusitms.duduk.core"
+    "kusitms.duduk.core",
+    "kusitms.duduk.common"
 })
 public class DudukApplication {
 

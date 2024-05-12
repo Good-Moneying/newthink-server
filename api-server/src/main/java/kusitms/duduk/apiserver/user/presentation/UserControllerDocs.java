@@ -1,13 +1,12 @@
 package kusitms.duduk.apiserver.user.presentation;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kusitms.duduk.core.exception.ErrorResponse;
+import kusitms.duduk.common.exception.ErrorResponse;
 import kusitms.duduk.core.user.dto.request.CreateUserRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserEmailRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserNicknameRequest;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @Tag(name = "User", description = "유저 API")
 public interface UserControllerDocs {
+
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "OK"),
         @ApiResponse(responseCode = "400", description = "BAD REQUEST",
@@ -29,7 +29,7 @@ public interface UserControllerDocs {
             description = "회원 가입을 위한 필수 정보를 담고 있는 DTO 클래스",
             required = true,
             content = @Content(
-                schema = @Schema(implementation = CreateUserRequest.class)
+	schema = @Schema(implementation = CreateUserRequest.class)
             )
         )
     )
