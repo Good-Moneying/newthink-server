@@ -29,6 +29,6 @@ public class RegisterUserCommand implements RegisterUserUseCase {
             throw new IllegalArgumentException("중복된 이메일로 회원 가입을 할 수 없습니다.");
         }
 
-        return userDtoMapper.toDto(saveUserPort.save(user));
+        return userDtoMapper.toDto(saveUserPort.create(user));
     }
 }

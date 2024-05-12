@@ -11,7 +11,6 @@ import kusitms.duduk.core.user.port.output.DeleteUserPort;
 import kusitms.duduk.core.user.port.output.SaveUserPort;
 import kusitms.duduk.domain.user.User;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +39,7 @@ public class CreateNewsLetterCommandTest {
         // given
         CreateNewsLetterRequest request = NewsLetterSteps.뉴스_레터_생성_요청();
         User user = UserSteps.ROLE_EDITOR_생성_요청();
-        saveUserPort.save(user);
+        saveUserPort.create(user);
 
         // when
         NewsLetterResponse response = createNewsLetterCommand.create(request, user.getEmail().getValue());
@@ -56,7 +55,7 @@ public class CreateNewsLetterCommandTest {
         // given
         CreateNewsLetterRequest request = NewsLetterSteps.뉴스_레터_생성_요청();
         User user = UserSteps.ROLE_USER_생성_요청();
-        saveUserPort.save(user);
+        saveUserPort.create(user);
 
         // when & then
         assertThatThrownBy(() -> createNewsLetterCommand.create(request, user.getEmail().getValue()))

@@ -27,7 +27,7 @@ public class ValidateDuplicatedUserCommandTest {
 
     @BeforeEach
     void setup() {
-        saveUserPort.save(UserSteps.ROLE_USER_생성_요청());
+        saveUserPort.create(UserSteps.ROLE_USER_생성_요청());
     }
 
     @AfterEach

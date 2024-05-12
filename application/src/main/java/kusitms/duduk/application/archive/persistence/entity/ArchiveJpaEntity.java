@@ -38,11 +38,16 @@ public class ArchiveJpaEntity extends BaseEntity {
 
     @Convert(converter = ListLongToStringConverter.class)
     @Builder.Default
+    private List<Long> newsLetterIds = new ArrayList<>();
+
+    @Convert(converter = ListLongToStringConverter.class)
+    @Builder.Default
     private List<Long> termIds = new ArrayList<>();
 
     public static ArchiveJpaEntity create(Category category) {
         return ArchiveJpaEntity.builder()
             .category(category)
+            .newsLetterIds(new ArrayList<>())
             .termIds(new ArrayList<>())
             .build();
     }

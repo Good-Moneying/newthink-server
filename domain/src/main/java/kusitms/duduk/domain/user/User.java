@@ -5,6 +5,7 @@ import java.util.List;
 import kusitms.duduk.domain.archive.Archive;
 import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.global.Id;
+import kusitms.duduk.domain.newsletter.NewsLetter;
 import kusitms.duduk.domain.user.vo.Email;
 import kusitms.duduk.domain.user.vo.Gender;
 import kusitms.duduk.domain.user.vo.Goal;
@@ -40,5 +41,12 @@ public class User {
 
     public boolean isWritable() {
         return this.role.equals(Role.EDITOR) || this.role.equals(Role.ADMIN);
+    }
+
+    public void archiveNewsLetter(NewsLetter newsLetter) {
+        this.archives.stream()
+            .filter(archive -> archive.getCategory().equals(newsLetter.getCategory()))
+            .findFirst()
+            .ifPresent(archive -> archive.addNewsLetter(newsLetter.getNewsLetterId()));
     }
 }

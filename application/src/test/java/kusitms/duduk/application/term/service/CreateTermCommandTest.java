@@ -1,11 +1,8 @@
 package kusitms.duduk.application.term.service;
 
-import kusitms.duduk.application.term.persistence.TermPersistenceAdapter;
 import kusitms.duduk.core.term.dto.request.CreateTermRequest;
 import kusitms.duduk.core.term.dto.response.RetrieveTermResponse;
 import kusitms.duduk.core.term.port.input.CreateTermUseCase;
-import kusitms.duduk.domain.term.Term;
-import kusitms.duduk.domain.term.vo.TermCategory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -3,6 +3,8 @@ package kusitms.duduk.application.user.persistence;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import kusitms.duduk.application.archive.persistence.ArchiveJpaMapper;
 import kusitms.duduk.application.archive.persistence.entity.ArchiveJpaEntity;
 import kusitms.duduk.application.user.persistence.entity.UserJpaEntity;
 import kusitms.duduk.common.annotation.Mapper;
@@ -13,10 +15,14 @@ import kusitms.duduk.domain.user.User;
 import kusitms.duduk.domain.user.vo.Email;
 import kusitms.duduk.domain.user.vo.Nickname;
 import kusitms.duduk.domain.user.vo.RefreshToken;
+import lombok.RequiredArgsConstructor;
 
 // todo : 추후에 팩토리 패턴으로 변경 가능성 존재 (UserJpaEntityFactory#create)
+@RequiredArgsConstructor
 @Mapper
 public class UserJpaMapper {
+
+    private final ArchiveJpaMapper archiveJpaMapper;
 
     public UserJpaEntity toJpaEntity(User user) {
         // 빌더 패턴을 사용하여 UserJpaEntity 인스턴스 생성
@@ -30,7 +36,7 @@ public class UserJpaMapper {
             .role(user.getRole())
             .provider(user.getProvider())
             .category(user.getCategory())
-            .archives(new ArrayList<>())
+            .archives(user.getArchives() == null ? new ArrayList<>() : getArchiveJpaEntities(user))
             .goal(user.getGoal())
             .build();
 
@@ -53,7 +59,15 @@ public class UserJpaMapper {
             .nickname(user.getNickname().getValue())
             .refreshToken(user.getRefreshToken().getValue())
             .birthday(user.getBirthday())
+            .category(user.getCategory())
+            .archives(getArchiveJpaEntities(user))
             .build();
+    }
+
+    private List<ArchiveJpaEntity> getArchiveJpaEntities(User user) {
+        return user.getArchives().stream()
+            .map(archive -> archiveJpaMapper.toJpaEntity(archive))
+            .collect(Collectors.toList());
     }
 
     // user <-> archive 연관 만들고
@@ -80,6 +94,7 @@ public class UserJpaMapper {
             .map(archiveJpaEntity -> Archive.builder()
 	.id(archiveJpaEntity.getId())
 	.category(archiveJpaEntity.getCategory())
+	.newsLetterIds(archiveJpaEntity.getNewsLetterIds())
 	.termIds(archiveJpaEntity.getTermIds())
 	.build())
             .toList();

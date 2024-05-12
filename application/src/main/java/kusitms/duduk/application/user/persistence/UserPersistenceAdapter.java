@@ -23,7 +23,7 @@ public class UserPersistenceAdapter implements UpdateUserPort, LoadUserPort, Sav
     private final UserJpaMapper userJpaMapper;
 
     @Override
-    public User save(User user) {
+    public User create(User user) {
         // UserJpaEntity로 변환하고
         UserJpaEntity userJpaEntity = userJpaMapper.toJpaEntity(user);
         // 변환한 UserJpaEntity를 저장 (Id 값이 자동으로 생성)

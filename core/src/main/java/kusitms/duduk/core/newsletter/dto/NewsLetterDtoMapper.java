@@ -25,7 +25,7 @@ public class NewsLetterDtoMapper {
             .keywords(Keywords.from(request.keywords()))
             .category(Category.from(request.category()))
             .summary(Summary.from(request.summary()))
-            .type(Type.valueOf(request.aiType()))
+            .type(Type.valueOf(request.type()))
             .viewCount(Count.initial())
             .scrapCount(Count.initial())
             .build();
@@ -40,7 +40,7 @@ public class NewsLetterDtoMapper {
             .keywords(Keywords.from(request.keywords()))
             .category(Category.from(request.category()))
             .summary(Summary.from(request.summary()))
-            .type(Type.valueOf(request.aiType()))
+            .type(Type.valueOf(request.type()))
             .viewCount(Count.initial())
             .scrapCount(Count.initial())
             .build();
