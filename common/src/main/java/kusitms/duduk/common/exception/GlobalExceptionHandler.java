@@ -2,6 +2,7 @@ package kusitms.duduk.common.exception;
 
 import kusitms.duduk.common.exception.custom.AlreadyExistsException;
 import kusitms.duduk.common.exception.custom.ConvertException;
+import kusitms.duduk.common.exception.custom.NotExistsException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.CONFLICT)
             .body(new ErrorResponse(HttpStatus.CONFLICT.value(), exception.getMessage()));
+    }
+
+    @ExceptionHandler(NotExistsException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateException(
+        final NotExistsException exception) {
+        log.error("Duplicated User Information: {}", exception.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(new ErrorResponse(HttpStatus.NOT_FOUND.value(), exception.getMessage()));
     }
 
     @ExceptionHandler(ConvertException.class)
