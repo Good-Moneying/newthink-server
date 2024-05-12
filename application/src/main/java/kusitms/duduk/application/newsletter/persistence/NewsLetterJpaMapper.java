@@ -73,6 +73,8 @@ public class NewsLetterJpaMapper {
             .summary(Summary.from(jpaEntity.getSummary()))
             .viewCount(Count.from(jpaEntity.getViewCount()))
             .scrapCount(Count.from(jpaEntity.getScrapCount()))
+            .createdAt(jpaEntity.getCreatedAt())
+            .updatedAt(jpaEntity.getUpdatedAt())
             .build();
     }
 

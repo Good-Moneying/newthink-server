@@ -3,6 +3,7 @@ package kusitms.duduk.core.newsletter.dto;
 import kusitms.duduk.common.annotation.Mapper;
 import kusitms.duduk.core.newsletter.dto.request.CreateNewsLetterRequest;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterResponse;
+import kusitms.duduk.core.newsletter.dto.response.NewsLetterThumbnailResponse;
 import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.global.Count;
 import kusitms.duduk.domain.global.Id;
@@ -25,12 +26,13 @@ public class NewsLetterDtoMapper {
             .keywords(Keywords.from(request.keywords()))
             .category(Category.from(request.category()))
             .summary(Summary.from(request.summary()))
-            .type(Type.valueOf(request.type()))
+            .type(Type.from(request.type()))
             .viewCount(Count.initial())
             .scrapCount(Count.initial())
             .build();
     }
 
+    // 에디터가 뉴스레터 작성 시 에디터의 아이디를 매핑하기 위한 메서드
     public NewsLetter toDomain(CreateNewsLetterRequest request, Id editorId) {
         return NewsLetter.builder()
             .editorId(editorId)
@@ -40,7 +42,7 @@ public class NewsLetterDtoMapper {
             .keywords(Keywords.from(request.keywords()))
             .category(Category.from(request.category()))
             .summary(Summary.from(request.summary()))
-            .type(Type.valueOf(request.type()))
+            .type(Type.from(request.type()))
             .viewCount(Count.initial())
             .scrapCount(Count.initial())
             .build();
@@ -54,6 +56,17 @@ public class NewsLetterDtoMapper {
             .category(newsLetter.getCategory().name())
             .summary(newsLetter.getSummary().toSentence())
             .type(newsLetter.getType().name())
+            .build();
+    }
+
+    public NewsLetterThumbnailResponse toThumbnailDto(NewsLetter newsLetter, boolean isScrapped) {
+        return NewsLetterThumbnailResponse.builder()
+            .thumbnail(newsLetter.getThumbnail().getUrl())
+            .title(newsLetter.getTitle().getTitle())
+            .createdAt(newsLetter.getCreatedAt())
+            .keywords(newsLetter.getKeywords().toSentence())
+            .category(newsLetter.getCategory().name())
+            .isScrapped(isScrapped)
             .build();
     }
 }
