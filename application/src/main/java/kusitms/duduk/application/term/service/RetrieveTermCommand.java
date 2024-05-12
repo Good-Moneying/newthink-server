@@ -23,4 +23,14 @@ public class RetrieveTermCommand implements RetrieveTermQuery {
 
         return termDtoMapper.toDto(term);
     }
+
+    @Override
+    public RetrieveTermResponse retrieveLatestTerm() {
+        Term term = loadTermPort.findLatestTerm()
+            .orElseThrow(() -> new IllegalArgumentException("최신 단어를 찾을 수 없습니다."));
+
+        return termDtoMapper.toDto(term);
+    }
+
+
 }

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @DisplayName("RetrieveTermCommand 테스트")
@@ -20,9 +21,6 @@ class RetrieveTermCommandTest {
 
     @Autowired
     private SaveTermPort saveTermPort;
-
-    @Autowired
-    private TermDtoMapper termDtoMapper;
 
     @Autowired
     private RetrieveTermQuery retrieveTermQuery;
@@ -43,5 +41,24 @@ class RetrieveTermCommandTest {
         assertEquals(savedTerm.getEnglishName().getValue(), response.englishName());
         assertEquals(savedTerm.getDescription().getValue(), response.description());
         assertEquals(savedTerm.getTermCategory().name(), response.category());
+    }
+
+    @Test
+    void 여러_개의_단어가_있을_경우_가장_최근의_단어를_조회한다() {
+        // given
+        Term term1 = TermSteps.단어_생성();
+        Term term2 = TermSteps.단어_생성_2();
+
+        Term savedTerm1 = saveTermPort.save(term1);
+        Term savedTerm2 = saveTermPort.save(term2);
+        // when
+        RetrieveTermResponse response = retrieveTermQuery.retrieveLatestTerm();
+
+        // then
+        assertEquals(savedTerm2.getId().getValue(), response.termId());
+        assertEquals(savedTerm2.getKoreanName().getValue(), response.koreanName());
+        assertEquals(savedTerm2.getEnglishName().getValue(), response.englishName());
+        assertEquals(savedTerm2.getDescription().getValue(), response.description());
+        assertEquals(savedTerm2.getTermCategory().name(), response.category());
     }
 }

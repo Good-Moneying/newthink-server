@@ -5,4 +5,5 @@ import kusitms.duduk.core.term.dto.response.RetrieveTermResponse;
 
 public interface RetrieveTermQuery {
     RetrieveTermResponse retrieve(RetrieveTermRequest request);
+    RetrieveTermResponse retrieveLatestTerm();
 }

@@ -28,4 +28,13 @@ public class TermSteps {
             .termCategory(TermCategory.COMPANY)
             .build();
     }
+
+    public static Term 단어_생성_2() {
+        return Term.builder()
+            .koreanName(Name.from("주식"))
+            .englishName(Name.from("Stock"))
+            .description(Description.from("기업이나 조직이 자본을 조달하기 위해 발행하는 증권의 총칭이에요"))
+            .termCategory(TermCategory.COMPANY)
+            .build();
+    }
 }

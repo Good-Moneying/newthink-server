@@ -20,9 +20,8 @@ public class TermPersistenceAdapter implements SaveTermPort, LoadTermPort {
     @Override
     public Term save(Term term) {
         TermJpaEntity termJpaEntity = termJpaEntityMapper.toJpaEntity(term);
-        TermJpaEntity termSaved = termRepository.save(termJpaEntity);
-        log.info("termSaved: {}\n", termSaved.toString());
-        return termJpaEntityMapper.toDomain(termSaved);
+        TermJpaEntity savedTerm = termRepository.save(termJpaEntity);
+        return termJpaEntityMapper.toDomain(savedTerm);
     }
 
     @Override
@@ -34,6 +33,12 @@ public class TermPersistenceAdapter implements SaveTermPort, LoadTermPort {
     @Override
     public Optional<Term> findById(Long termId) {
         return termRepository.findById(termId)
+            .map(termJpaEntityMapper::toDomain);
+    }
+
+    @Override
+    public Optional<Term> findLatestTerm() {
+        return termRepository.findLatestTerm()
             .map(termJpaEntityMapper::toDomain);
     }
 }
