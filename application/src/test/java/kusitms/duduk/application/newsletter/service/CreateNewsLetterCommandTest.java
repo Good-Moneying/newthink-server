@@ -37,7 +37,7 @@ public class CreateNewsLetterCommandTest {
     @Test
     void 뉴스_레터를_생성한다() {
         // given
-        CreateNewsLetterRequest request = NewsLetterSteps.뉴스_레터_생성_요청();
+        CreateNewsLetterRequest request = NewsLetterSteps.AI_뉴스_레터_생성_요청();
         User user = UserSteps.ROLE_EDITOR_생성_요청();
         saveUserPort.create(user);
 
@@ -53,7 +53,7 @@ public class CreateNewsLetterCommandTest {
     @Test
     void 편집_권한이_없으면_뉴스_레터를_생성할_수_없다() {
         // given
-        CreateNewsLetterRequest request = NewsLetterSteps.뉴스_레터_생성_요청();
+        CreateNewsLetterRequest request = NewsLetterSteps.AI_뉴스_레터_생성_요청();
         User user = UserSteps.ROLE_USER_생성_요청();
         saveUserPort.create(user);
 

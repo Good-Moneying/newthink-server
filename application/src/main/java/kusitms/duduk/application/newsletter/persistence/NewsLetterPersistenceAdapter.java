@@ -20,7 +20,7 @@ public class NewsLetterPersistenceAdapter implements LoadNewsLetterPort, DeleteN
     private final NewsLetterJpaMapper newsLetterJpaMapper;
 
     @Override
-    public NewsLetter save(NewsLetter newsLetter) {
+    public NewsLetter create(NewsLetter newsLetter) {
         NewsLetterJpaEntity newsLetterJpaEntity = newsLetterJpaMapper.toJpaEntity(newsLetter);
         NewsLetterJpaEntity savedNewsLetter = newsLetterRepository.save(newsLetterJpaEntity);
         return newsLetterJpaMapper.toDomain(savedNewsLetter);
@@ -29,6 +29,12 @@ public class NewsLetterPersistenceAdapter implements LoadNewsLetterPort, DeleteN
     @Override
     public Optional<NewsLetter> findById(Long id) {
         return newsLetterRepository.findById(id)
+            .map(newsLetterJpaMapper::toDomain);
+    }
+
+    @Override
+    public Optional<NewsLetter> findLatestNewsLetter() {
+        return newsLetterRepository.findLatestNewsLetter()
             .map(newsLetterJpaMapper::toDomain);
     }
 

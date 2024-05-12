@@ -5,16 +5,12 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Optional;
 import kusitms.duduk.core.security.dto.response.JwtTokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 @RequiredArgsConstructor
 @Component
@@ -31,14 +27,6 @@ public class JwtTokenProvider {
 
     @Value("${jwt.refresh.expiration}")
     private long refreshTokenExpiration;
-
-
-    // 만약에 SecretKey가 Encoding 안돼 있다면 객체 생성과 동시에 Encoding 합니다.
-
-    /**
-     * @PostConstruct protected void init() { secretKey =
-     * Base64.getEncoder().encodeToString(secretKey.getBytes()); }
-     **/
 
     public String createAccessToken(String email) {
         return createToken(email, accessTokenExpiration);

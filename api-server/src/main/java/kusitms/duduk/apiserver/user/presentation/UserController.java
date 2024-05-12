@@ -4,8 +4,10 @@ import kusitms.duduk.apiserver.security.infrastructure.CustomUserDetails;
 import kusitms.duduk.core.user.dto.request.CreateUserRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserEmailRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserNicknameRequest;
+import kusitms.duduk.core.user.dto.response.RetrieveHomeResponse;
 import kusitms.duduk.core.user.dto.response.UserResponse;
 import kusitms.duduk.core.user.port.input.RegisterUserUseCase;
+import kusitms.duduk.core.user.port.input.RetrieveUserQuery;
 import kusitms.duduk.core.user.port.input.ValidateDuplicatedUserQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController implements UserControllerDocs {
 
     private final RegisterUserUseCase registerUserUseCase;
+    private final RetrieveUserQuery retrieveUserQuery;
     private final ValidateDuplicatedUserQuery validateDuplicatedUserQuery;
 
     @PostMapping
@@ -43,14 +46,17 @@ public class UserController implements UserControllerDocs {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/home")
+    public ResponseEntity<RetrieveHomeResponse> home(CustomUserDetails customUserDetails) {
+        return new ResponseEntity<>(retrieveUserQuery.home(customUserDetails.getEmail()),
+            HttpStatus.OK);
+    }
+
     @GetMapping("/test")
     public ResponseEntity<String> test(@AuthenticationPrincipal
     CustomUserDetails customUserDetails) {
         return new ResponseEntity<>(customUserDetails.getEmail()
             , HttpStatus.OK);
     }
-
-
 }
 
-//

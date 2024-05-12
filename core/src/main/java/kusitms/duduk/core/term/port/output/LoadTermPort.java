@@ -5,6 +5,7 @@ import kusitms.duduk.domain.term.Term;
 
 public interface LoadTermPort {
 
-    Optional<Term> load(Long termId);
+    Optional<Term> findById(Long termId);
+    Optional<Term> findLatestTerm();
 
 }

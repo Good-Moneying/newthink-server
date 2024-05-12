@@ -8,7 +8,8 @@ public record RetrieveTermResponse(
     String englishName,
     String koreanName,
     String description,
-    String category
+    String category,
+    boolean isScrapped
 ) {
 
 }

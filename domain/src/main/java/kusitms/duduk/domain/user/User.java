@@ -1,6 +1,7 @@
 package kusitms.duduk.domain.user;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import kusitms.duduk.domain.archive.Archive;
 import kusitms.duduk.domain.global.Category;
@@ -35,6 +36,8 @@ public class User {
     private Category category;
     private Goal goal;
     private List<Archive> archives;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public void updateRefreshToken(String reIssuedRefreshToken) {
         this.refreshToken.update(reIssuedRefreshToken);
@@ -56,5 +59,20 @@ public class User {
             .filter(archive -> archive.getCategory().equals(Category.WORD))
             .findFirst()
             .ifPresent(archive -> archive.addTerm(term.getId()));
+    }
+
+    public boolean isScrapped(NewsLetter newsLetter) {
+        return this.archives.stream()
+            .filter(archive -> archive.getNewsLetterIds()
+	.contains(newsLetter.getNewsLetterId().getValue()))
+            .findFirst()
+            .isPresent();
+    }
+
+    public boolean isScrapped(Term term) {
+        return this.archives.stream()
+            .filter(archive -> archive.getTermIds().contains(term.getId().getValue()))
+            .findFirst()
+            .isPresent();
     }
 }

@@ -36,6 +36,8 @@ public class TermJpaMapper {
             .koreanName(Name.from(termJpaEntity.getKoreanName()))
             .termCategory(termJpaEntity.getTermCategory())
             .description(Description.from(termJpaEntity.getDescription()))
+            .createdAt(termJpaEntity.getCreatedAt())
+            .updatedAt(termJpaEntity.getUpdatedAt())
             .build();
     }
 }

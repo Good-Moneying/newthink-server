@@ -81,5 +81,6 @@ public class UserJpaEntity extends BaseEntity {
     private Goal goal;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     public List<ArchiveJpaEntity> archives = new ArrayList<>();
 }

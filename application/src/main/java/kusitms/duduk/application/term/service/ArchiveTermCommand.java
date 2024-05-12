@@ -25,7 +25,7 @@ public class ArchiveTermCommand implements ArchiveTermUseCase {
         User user = loadUserPort.findByEmail(email)
             .orElseThrow(() -> new NotExistsException("User not found"));
 
-        Term term = loadTermPort.load(termId)
+        Term term = loadTermPort.findById(termId)
             .orElseThrow(() -> new NotExistsException("Term not found"));
 
         user.archiveTerm(term);
