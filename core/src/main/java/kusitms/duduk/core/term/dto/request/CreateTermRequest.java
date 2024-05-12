@@ -1,7 +1,8 @@
 package kusitms.duduk.core.term.dto.request;
 
-import kusitms.duduk.domain.term.vo.TermCategory;
+import lombok.Builder;
 
+@Builder(toBuilder = true)
 public record CreateTermRequest(
     String koreanName,
     String englishName,
