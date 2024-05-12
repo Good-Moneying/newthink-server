@@ -2,7 +2,7 @@ package kusitms.duduk.application.user.service;
 
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterThumbnailResponse;
 import kusitms.duduk.core.newsletter.port.input.RetrieveNewsLetterQuery;
-import kusitms.duduk.core.user.dto.response.RetriveHomeResponse;
+import kusitms.duduk.core.user.dto.response.RetrieveHomeResponse;
 import kusitms.duduk.core.user.port.input.RetrieveUserQuery;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
 import kusitms.duduk.domain.user.User;
@@ -22,16 +22,19 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
     }
 
     @Override
-    public RetriveHomeResponse home(String email) {
+    public RetrieveHomeResponse home(String email) {
         // 오늘의 뉴스레터를 가져온다
         User user = loadUserPort.findByEmail(email)
             .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
 
         // 오늘의 뉴스를 가져온다
-        NewsLetterThumbnailResponse todayNewsLetter = retrieveNewsLetterQuery.retriveLatestNewsLetter(
+        NewsLetterThumbnailResponse todayNewsLetter = retrieveNewsLetterQuery.retrieveLatestNewsLetter(
             user);
 
-        return RetriveHomeResponse.builder()
+        // 오늘의 단어를 가져온다
+//        TodayTermResponse todayTerm = retrieveTermQuery.retreiveLatestTerm(user);
+
+        return RetrieveHomeResponse.builder()
             .todayNewsLetter(todayNewsLetter)
             .build();
     }

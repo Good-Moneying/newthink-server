@@ -26,7 +26,7 @@ public class RetrieveNewsLetterCommand implements RetrieveNewsLetterQuery {
         return newsLetterDtoMapper.toDto(newsLetter);
     }
 
-    public NewsLetterThumbnailResponse retriveLatestNewsLetter(User user) {
+    public NewsLetterThumbnailResponse retrieveLatestNewsLetter(User user) {
         NewsLetter newsLetter = loadNewsLetterPort.findLatestNewsLetter()
             .orElseThrow(() -> new IllegalArgumentException("오늘의 뉴스레터를 찾을 수 없습니다."));
 

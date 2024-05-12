@@ -4,6 +4,6 @@ import kusitms.duduk.core.newsletter.dto.response.NewsLetterThumbnailResponse;
 import lombok.Builder;
 
 @Builder(toBuilder = true)
-public record RetriveHomeResponse(NewsLetterThumbnailResponse todayNewsLetter) {
+public record RetrieveHomeResponse(NewsLetterThumbnailResponse todayNewsLetter) {
 
 }

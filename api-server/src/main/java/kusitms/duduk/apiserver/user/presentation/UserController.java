@@ -4,7 +4,7 @@ import kusitms.duduk.apiserver.security.infrastructure.CustomUserDetails;
 import kusitms.duduk.core.user.dto.request.CreateUserRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserEmailRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserNicknameRequest;
-import kusitms.duduk.core.user.dto.response.RetriveHomeResponse;
+import kusitms.duduk.core.user.dto.response.RetrieveHomeResponse;
 import kusitms.duduk.core.user.dto.response.UserResponse;
 import kusitms.duduk.core.user.port.input.RegisterUserUseCase;
 import kusitms.duduk.core.user.port.input.RetrieveUserQuery;
@@ -47,7 +47,7 @@ public class UserController implements UserControllerDocs {
     }
 
     @GetMapping("/home")
-    public ResponseEntity<RetriveHomeResponse> home(CustomUserDetails customUserDetails) {
+    public ResponseEntity<RetrieveHomeResponse> home(CustomUserDetails customUserDetails) {
         return new ResponseEntity<>(retrieveUserQuery.home(customUserDetails.getEmail()),
             HttpStatus.OK);
     }

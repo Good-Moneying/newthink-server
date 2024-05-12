@@ -81,7 +81,7 @@ public class RetrieveNewsLetterCommandTest {
     @Test
     void 가장_최근의_뉴스레터를_조회한다() {
         // when & then
-        NewsLetterThumbnailResponse response = retrieveNewsLetterQuery.retriveLatestNewsLetter(
+        NewsLetterThumbnailResponse response = retrieveNewsLetterQuery.retrieveLatestNewsLetter(
             savedUser);
 
         // then

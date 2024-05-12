@@ -32,7 +32,7 @@ public class TermPersistenceAdapter implements SaveTermPort, LoadTermPort {
     }
 
     @Override
-    public Optional<Term> load(Long termId) {
+    public Optional<Term> findById(Long termId) {
         return termRepository.findById(termId)
             .map(termJpaEntityMapper::toDomain);
     }

@@ -11,7 +11,7 @@ import kusitms.duduk.common.exception.ErrorResponse;
 import kusitms.duduk.core.user.dto.request.CreateUserRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserEmailRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserNicknameRequest;
-import kusitms.duduk.core.user.dto.response.RetriveHomeResponse;
+import kusitms.duduk.core.user.dto.response.RetrieveHomeResponse;
 import kusitms.duduk.core.user.dto.response.UserResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -72,7 +72,7 @@ public interface UserControllerDocs {
             content = {@Content(schema = @Schema(implementation = ErrorResponse.class))})
     })
     @Operation(summary = "홈", description = "홈 데이터를 조회합니다.")
-    ResponseEntity<RetriveHomeResponse> home(
+    ResponseEntity<RetrieveHomeResponse> home(
         @AuthenticationPrincipal final CustomUserDetails customUserDetails
     );
 }
