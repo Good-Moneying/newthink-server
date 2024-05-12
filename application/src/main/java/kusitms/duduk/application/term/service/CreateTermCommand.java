@@ -4,7 +4,7 @@ import kusitms.duduk.core.term.dto.TermDtoMapper;
 import kusitms.duduk.core.term.dto.request.CreateTermRequest;
 import kusitms.duduk.core.term.dto.response.RetrieveTermResponse;
 import kusitms.duduk.core.term.port.input.CreateTermUseCase;
-import kusitms.duduk.core.term.port.output.SaveUserPort;
+import kusitms.duduk.core.term.port.output.SaveTermPort;
 import kusitms.duduk.domain.term.Term;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CreateTermCommand implements CreateTermUseCase {
 
-    private final SaveUserPort createTermPort;
+    private final SaveTermPort saveTermPort;
     private final TermDtoMapper termDtoMapper;
 
     @Override
@@ -23,6 +23,6 @@ public class CreateTermCommand implements CreateTermUseCase {
         Term term = termDtoMapper.toDomain(request);
 
         // todo : 추후에 관리자만 생성할 수 있도록 추가
-        return termDtoMapper.toDto(createTermPort.save(term));
+        return termDtoMapper.toDto(saveTermPort.save(term));
     }
 }

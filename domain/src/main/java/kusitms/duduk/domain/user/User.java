@@ -6,6 +6,7 @@ import kusitms.duduk.domain.archive.Archive;
 import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.newsletter.NewsLetter;
+import kusitms.duduk.domain.term.Term;
 import kusitms.duduk.domain.user.vo.Email;
 import kusitms.duduk.domain.user.vo.Gender;
 import kusitms.duduk.domain.user.vo.Goal;
@@ -48,5 +49,12 @@ public class User {
             .filter(archive -> archive.getCategory().equals(newsLetter.getCategory()))
             .findFirst()
             .ifPresent(archive -> archive.addNewsLetter(newsLetter.getNewsLetterId()));
+    }
+
+    public void archiveTerm(Term term) {
+        this.archives.stream()
+            .filter(archive -> archive.getCategory().equals(Category.WORD))
+            .findFirst()
+            .ifPresent(archive -> archive.addTerm(term.getId()));
     }
 }

@@ -1,8 +1,10 @@
 package kusitms.duduk.application.term.persistence;
 
+import java.util.Optional;
 import kusitms.duduk.application.term.persistence.entity.TermJpaEntity;
 import kusitms.duduk.common.annotation.Adapter;
-import kusitms.duduk.core.term.port.output.SaveUserPort;
+import kusitms.duduk.core.term.port.output.LoadTermPort;
+import kusitms.duduk.core.term.port.output.SaveTermPort;
 import kusitms.duduk.domain.term.Term;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @Adapter
-public class TermPersistenceAdapter implements SaveUserPort {
+public class TermPersistenceAdapter implements SaveTermPort, LoadTermPort {
 
     private final TermRepository termRepository;
     private final TermJpaMapper termJpaEntityMapper;
@@ -27,5 +29,11 @@ public class TermPersistenceAdapter implements SaveUserPort {
     public void saveAndFlush(Term term) {
         TermJpaEntity termJpaEntity = termJpaEntityMapper.toJpaEntity(term);
         termRepository.saveAndFlush(termJpaEntity);
+    }
+
+    @Override
+    public Optional<Term> load(Long termId) {
+        return termRepository.findById(termId)
+            .map(termJpaEntityMapper::toDomain);
     }
 }

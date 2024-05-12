@@ -4,7 +4,6 @@ import kusitms.duduk.common.exception.custom.NotExistsException;
 import kusitms.duduk.core.newsletter.port.input.ArchiveNewsLetterUseCase;
 import kusitms.duduk.core.newsletter.port.output.LoadNewsLetterPort;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
-import kusitms.duduk.core.user.port.output.SaveUserPort;
 import kusitms.duduk.core.user.port.output.UpdateUserPort;
 import kusitms.duduk.domain.newsletter.NewsLetter;
 import kusitms.duduk.domain.user.User;

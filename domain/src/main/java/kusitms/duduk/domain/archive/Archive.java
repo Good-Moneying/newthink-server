@@ -8,8 +8,10 @@ import kusitms.duduk.domain.user.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -19,7 +21,9 @@ public class Archive {
 
     private Long id;
     private Category category;
+    @Default
     private List<Long> newsLetterIds = new ArrayList<>();
+    @Default
     private List<Long> termIds = new ArrayList<>();
 
     public static Archive create(Long id, Category category, List<Long> newsLetterIds,
@@ -32,16 +36,11 @@ public class Archive {
             .build();
     }
 
-    public void addTermId(Long termId) {
-        this.termIds.add(termId);
-    }
-
-    public void removeTermId(Long termId) {
-        this.termIds.remove(termId);
-    }
-
     public void addNewsLetter(Id newsLetterId) {
         this.newsLetterIds.add(newsLetterId.getValue());
     }
-}
 
+    public void addTerm(Id id) {
+        this.termIds.add(id.getValue());
+    }
+}

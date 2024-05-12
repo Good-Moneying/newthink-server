@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @Tag(name = "User", description = "유저 API")
 public interface UserControllerDocs {
+
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "OK"),
         @ApiResponse(responseCode = "400", description = "BAD REQUEST",
@@ -28,7 +29,7 @@ public interface UserControllerDocs {
             description = "회원 가입을 위한 필수 정보를 담고 있는 DTO 클래스",
             required = true,
             content = @Content(
-                schema = @Schema(implementation = CreateUserRequest.class)
+	schema = @Schema(implementation = CreateUserRequest.class)
             )
         )
     )

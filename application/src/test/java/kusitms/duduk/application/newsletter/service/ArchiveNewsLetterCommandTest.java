@@ -6,17 +6,14 @@ import kusitms.duduk.core.newsletter.port.output.SaveNewsLetterPort;
 import kusitms.duduk.core.user.port.output.DeleteUserPort;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
 import kusitms.duduk.core.user.port.output.SaveUserPort;
-import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.newsletter.NewsLetter;
 import kusitms.duduk.domain.user.User;
-import kusitms.duduk.domain.user.vo.Email;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
@@ -51,6 +48,7 @@ public class ArchiveNewsLetterCommandTest {
 
         String email = user.getEmail().getValue();
         Long newsLetterId = newsLetter.getNewsLetterId().getValue();
+
         // when
         archiveNewsLetterUseCase.archiveNewsLetter(email, newsLetterId);
 

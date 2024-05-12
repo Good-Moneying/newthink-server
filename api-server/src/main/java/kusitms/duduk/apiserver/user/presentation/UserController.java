@@ -39,4 +39,6 @@ public class UserController implements UserControllerDocs {
         validateDuplicatedUserQuery.validateDuplicatedNickname(request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 }
