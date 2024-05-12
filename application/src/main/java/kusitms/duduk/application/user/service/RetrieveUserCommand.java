@@ -2,6 +2,8 @@ package kusitms.duduk.application.user.service;
 
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterThumbnailResponse;
 import kusitms.duduk.core.newsletter.port.input.RetrieveNewsLetterQuery;
+import kusitms.duduk.core.term.dto.response.RetrieveTermResponse;
+import kusitms.duduk.core.term.port.input.RetrieveTermQuery;
 import kusitms.duduk.core.user.dto.response.RetrieveHomeResponse;
 import kusitms.duduk.core.user.port.input.RetrieveUserQuery;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
@@ -15,6 +17,7 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
 
     private final LoadUserPort loadUserPort;
     private final RetrieveNewsLetterQuery retrieveNewsLetterQuery;
+    private final RetrieveTermQuery retrieveTermQuery;
 
     @Override
     public boolean isUserRegisteredByEmail(String email) {
@@ -32,10 +35,11 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
             user);
 
         // 오늘의 단어를 가져온다
-//        TodayTermResponse todayTerm = retrieveTermQuery.retreiveLatestTerm(user);
+        RetrieveTermResponse todayTerm = retrieveTermQuery.retrieveLatestTerm(user);
 
         return RetrieveHomeResponse.builder()
             .todayNewsLetter(todayNewsLetter)
+            .todayTerm(todayTerm)
             .build();
     }
 }

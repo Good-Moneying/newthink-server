@@ -6,6 +6,7 @@ import kusitms.duduk.core.term.dto.response.RetrieveTermResponse;
 import kusitms.duduk.core.term.port.input.RetrieveTermQuery;
 import kusitms.duduk.core.term.port.output.LoadTermPort;
 import kusitms.duduk.domain.term.Term;
+import kusitms.duduk.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +26,13 @@ public class RetrieveTermCommand implements RetrieveTermQuery {
     }
 
     @Override
-    public RetrieveTermResponse retrieveLatestTerm() {
+    public RetrieveTermResponse retrieveLatestTerm(User user) {
         Term term = loadTermPort.findLatestTerm()
             .orElseThrow(() -> new IllegalArgumentException("최신 단어를 찾을 수 없습니다."));
 
-        return termDtoMapper.toDto(term);
+        boolean isScrapped = user.isScrapped(term);
+
+        return termDtoMapper.toResponse(term, isScrapped);
     }
 
 
