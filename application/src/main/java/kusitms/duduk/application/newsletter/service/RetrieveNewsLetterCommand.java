@@ -1,5 +1,6 @@
 package kusitms.duduk.application.newsletter.service;
 
+import java.util.List;
 import kusitms.duduk.core.newsletter.dto.NewsLetterDtoMapper;
 import kusitms.duduk.core.newsletter.dto.request.RetrieveNewsLetterRequest;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterResponse;
@@ -32,5 +33,26 @@ public class RetrieveNewsLetterCommand implements RetrieveNewsLetterQuery {
 
         boolean isScrapped = user.isScrapped(newsLetter);
         return newsLetterDtoMapper.toThumbnailDto(newsLetter, isScrapped);
+    }
+
+    @Override
+    public List<NewsLetterThumbnailResponse> retrieveRealtimeTrendNewsLetter(User user) {
+        return loadNewsLetterPort.findRealtimeTrendNewsLetters().stream()
+            .map(newsLetter -> {
+	boolean isScrapped = user.isScrapped(newsLetter);
+	return newsLetterDtoMapper.toThumbnailDto(newsLetter, isScrapped);
+            })
+            .toList();
+    }
+
+    @Override
+    public List<NewsLetterThumbnailResponse> retrieveCustomizeNewsLetter(User user) {
+        return loadNewsLetterPort.findCustomizeNewsLetters(user.getCategory())
+            .stream()
+            .map(newsLetter -> {
+	boolean isScrapped = user.isScrapped(newsLetter);
+	return newsLetterDtoMapper.toThumbnailDto(newsLetter, isScrapped);
+            })
+            .toList();
     }
 }

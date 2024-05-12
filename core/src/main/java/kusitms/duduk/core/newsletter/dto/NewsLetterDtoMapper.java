@@ -66,6 +66,7 @@ public class NewsLetterDtoMapper {
             .createdAt(newsLetter.getCreatedAt())
             .keywords(newsLetter.getKeywords().toSentence())
             .category(newsLetter.getCategory().name())
+            .type(newsLetter.getType().name())
             .isScrapped(isScrapped)
             .build();
     }

@@ -70,6 +70,7 @@ public class UserSteps {
             .provider(Provider.KAKAO)
             .role(Role.USER)
             .archives(new ArrayList<>())
+            .category(Category.FINANCE)
             .build();
 
         return user;

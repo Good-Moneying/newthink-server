@@ -2,12 +2,14 @@ package kusitms.duduk.application.newsletter.persistence;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import kusitms.duduk.application.newsletter.persistence.entity.NewsLetterJpaEntity;
 import kusitms.duduk.common.annotation.Adapter;
 import kusitms.duduk.core.newsletter.port.output.DeleteNewsLetterPort;
 import kusitms.duduk.core.newsletter.port.output.LoadNewsLetterPort;
 import kusitms.duduk.core.newsletter.port.output.SaveNewsLetterPort;
 import kusitms.duduk.core.newsletter.port.output.UpdateNewsLetterPort;
+import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.newsletter.NewsLetter;
 import lombok.RequiredArgsConstructor;
 
@@ -41,6 +43,23 @@ public class NewsLetterPersistenceAdapter implements LoadNewsLetterPort, DeleteN
     @Override
     public List<NewsLetter> findAll() {
         return newsLetterJpaMapper.toDomainList(newsLetterRepository.findAll());
+    }
+
+    @Override
+    public List<NewsLetter> findRealtimeTrendNewsLetters() {
+        return newsLetterRepository.findRealtimeTrendNewsLetters()
+            .stream()
+            .map(newsLetterJpaMapper::toDomain)
+            .collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<NewsLetter> findCustomizeNewsLetters(Category category) {
+        return newsLetterRepository.findCustomizeNewsLetters(category)
+            .stream()
+            .map(newsLetterJpaMapper::toDomain)
+            .collect(Collectors.toList());
     }
 
     @Override
