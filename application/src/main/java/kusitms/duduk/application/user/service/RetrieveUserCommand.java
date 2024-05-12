@@ -31,6 +31,8 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
         NewsLetterThumbnailResponse todayNewsLetter = retrieveNewsLetterQuery.retriveLatestNewsLetter(
             user);
 
-        return new RetriveHomeResponse();
+        return RetriveHomeResponse.builder()
+            .todayNewsLetter(todayNewsLetter)
+            .build();
     }
 }

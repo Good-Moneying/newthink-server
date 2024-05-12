@@ -1,5 +1,9 @@
 package kusitms.duduk.core.user.dto.response;
 
-public record RetriveHomeResponse() {
+import kusitms.duduk.core.newsletter.dto.response.NewsLetterThumbnailResponse;
+import lombok.Builder;
+
+@Builder(toBuilder = true)
+public record RetriveHomeResponse(NewsLetterThumbnailResponse todayNewsLetter) {
 
 }
