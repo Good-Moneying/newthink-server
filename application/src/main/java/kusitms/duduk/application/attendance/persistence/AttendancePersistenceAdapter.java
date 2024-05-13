@@ -1,25 +1,25 @@
-package kusitms.duduk.application.attendant.persistence;
+package kusitms.duduk.application.attendance.persistence;
 
 import java.time.LocalDate;
 import java.util.List;
-import kusitms.duduk.application.attendant.persistence.entity.AttendantJpaEntity;
+import kusitms.duduk.application.attendance.persistence.entity.AttendanceJpaEntity;
 import kusitms.duduk.common.annotation.Adapter;
-import kusitms.duduk.core.attendant.port.output.LoadAttendantPort;
-import kusitms.duduk.core.attendant.port.output.SaveAttendantPort;
+import kusitms.duduk.core.attendance.port.output.LoadAttendancePort;
+import kusitms.duduk.core.attendance.port.output.SaveAttendancePort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
 @Adapter
-public class AttendantPersistenceAdapter implements SaveAttendantPort, LoadAttendantPort {
+public class AttendancePersistenceAdapter implements SaveAttendancePort, LoadAttendancePort {
 
-    private final AttendantRepository attendantRepository;
+    private final AttendanceRepository attendantRepository;
     private final AttendanceRepositoryCustom attendanceRepositoryCustom;
 
     @Override
     public void save(LocalDate today, String email) {
-        attendantRepository.save(AttendantJpaEntity.builder()
+        attendantRepository.save(AttendanceJpaEntity.builder()
             .date(today)
             .email(email)
             .build());

@@ -1,11 +1,10 @@
-package kusitms.duduk.application.attendant.persistence;
+package kusitms.duduk.application.attendance.persistence;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import java.time.LocalDate;
 import java.util.List;
-import kusitms.duduk.application.attendant.persistence.entity.QAttendantJpaEntity;
+import kusitms.duduk.application.attendance.persistence.entity.QAttendantJpaEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

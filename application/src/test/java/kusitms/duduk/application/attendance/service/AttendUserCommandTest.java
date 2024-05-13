@@ -1,12 +1,12 @@
-package kusitms.duduk.application.attendant.service;
+package kusitms.duduk.application.attendance.service;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
-import kusitms.duduk.core.attendant.dto.WeeklyAttendantResponse;
-import kusitms.duduk.core.attendant.port.output.SaveAttendantPort;
+import kusitms.duduk.core.attendance.dto.WeeklyAttendanceResponse;
+import kusitms.duduk.core.attendance.port.output.SaveAttendancePort;
 import kusitms.duduk.core.user.port.input.AttendUserUseCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +23,7 @@ class AttendanceServiceTest {
     private AttendUserUseCase attendUserUseCase;
 
     @Autowired
-    private SaveAttendantPort saveAttendantPort;
+    private SaveAttendancePort saveAttendantPort;
 
     private final String EMAIL = "test@example.com";
 
@@ -36,9 +36,9 @@ class AttendanceServiceTest {
     }
 
     @Test
-    void calculateWeeklyAttendance() {
+    void 일주일_간의_출석_률을_계산_한다() {
         // when
-        WeeklyAttendantResponse response = attendUserUseCase.calculateAttendance(EMAIL);
+        WeeklyAttendanceResponse response = attendUserUseCase.calculateAttendance(EMAIL);
 
         // then
         Assertions.assertNotNull(response);

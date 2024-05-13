@@ -1,4 +1,4 @@
-package kusitms.duduk.application.attendant.persistence;
+package kusitms.duduk.application.attendance.persistence;
 
 import java.time.LocalDate;
 import java.util.List;

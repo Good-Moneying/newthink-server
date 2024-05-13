@@ -1,9 +1,9 @@
-package kusitms.duduk.core.attendant.port.output;
+package kusitms.duduk.core.attendance.port.output;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface LoadAttendantPort {
+public interface LoadAttendancePort {
 
     boolean isAttendedToday(String email);
 

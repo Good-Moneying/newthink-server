@@ -1,4 +1,4 @@
-package kusitms.duduk.core.attendant.port.input;
+package kusitms.duduk.core.attendance.port.input;
 
 import java.time.LocalDate;
 

@@ -1,4 +1,4 @@
-package kusitms.duduk.application.attendant.persistence.entity;
+package kusitms.duduk.application.attendance.persistence.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -10,10 +10,10 @@ import com.querydsl.core.types.Path;
 
 
 /**
- * QAttendantJpaEntity is a Querydsl query type for AttendantJpaEntity
+ * QAttendantJpaEntity is a Querydsl query type for AttendanceJpaEntity
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QAttendantJpaEntity extends EntityPathBase<AttendantJpaEntity> {
+public class QAttendantJpaEntity extends EntityPathBase<AttendanceJpaEntity> {
 
     private static final long serialVersionUID = 1188764693L;
 
@@ -26,15 +26,15 @@ public class QAttendantJpaEntity extends EntityPathBase<AttendantJpaEntity> {
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public QAttendantJpaEntity(String variable) {
-        super(AttendantJpaEntity.class, forVariable(variable));
+        super(AttendanceJpaEntity.class, forVariable(variable));
     }
 
-    public QAttendantJpaEntity(Path<? extends AttendantJpaEntity> path) {
+    public QAttendantJpaEntity(Path<? extends AttendanceJpaEntity> path) {
         super(path.getType(), path.getMetadata());
     }
 
     public QAttendantJpaEntity(PathMetadata metadata) {
-        super(AttendantJpaEntity.class, metadata);
+        super(AttendanceJpaEntity.class, metadata);
     }
 
 }

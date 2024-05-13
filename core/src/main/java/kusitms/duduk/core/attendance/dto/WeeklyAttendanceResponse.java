@@ -1,4 +1,4 @@
-package kusitms.duduk.core.attendant.dto;
+package kusitms.duduk.core.attendance.dto;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -12,9 +12,9 @@ import lombok.Data;
 import lombok.Getter;
 
 @Builder(toBuilder = true)
-public record WeeklyAttendantResponse(List<DailyAttendant> attendants) {
+public record WeeklyAttendanceResponse(List<DailyAttendant> attendants) {
 
-    public static WeeklyAttendantResponse of(List<LocalDate> attendanceDates) {
+    public static WeeklyAttendanceResponse of(List<LocalDate> attendanceDates) {
         Map<DayOfWeek, Boolean> attendanceMap = Stream.of(DayOfWeek.values())
             .collect(Collectors.toMap(day -> day, day -> false));  // 모든 요일을 false로 초기화
 
@@ -25,7 +25,7 @@ public record WeeklyAttendantResponse(List<DailyAttendant> attendants) {
             .map(entry -> new DailyAttendant(entry.getKey(), entry.getValue()))
             .collect(Collectors.toList());
 
-        return WeeklyAttendantResponse.builder()
+        return WeeklyAttendanceResponse.builder()
             .attendants(dailyAttendants)
             .build();
     }

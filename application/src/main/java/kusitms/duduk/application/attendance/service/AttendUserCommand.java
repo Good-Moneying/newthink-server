@@ -1,12 +1,12 @@
-package kusitms.duduk.application.attendant.service;
+package kusitms.duduk.application.attendance.service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
-import kusitms.duduk.core.attendant.dto.WeeklyAttendantResponse;
-import kusitms.duduk.core.attendant.port.input.DateProvider;
-import kusitms.duduk.core.attendant.port.output.LoadAttendantPort;
-import kusitms.duduk.core.attendant.port.output.SaveAttendantPort;
+import kusitms.duduk.core.attendance.dto.WeeklyAttendanceResponse;
+import kusitms.duduk.core.attendance.port.input.DateProvider;
+import kusitms.duduk.core.attendance.port.output.LoadAttendancePort;
+import kusitms.duduk.core.attendance.port.output.SaveAttendancePort;
 import kusitms.duduk.core.user.port.input.AttendUserUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +18,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AttendUserCommand implements AttendUserUseCase {
 
-    private final SaveAttendantPort saveAttendantPort;
-    private final LoadAttendantPort loadAttendantPort;
+    private final SaveAttendancePort saveAttendantPort;
+    private final LoadAttendancePort loadAttendantPort;
 
     @Qualifier("systemDateProvider")
     private final DateProvider dateProvider;
@@ -33,13 +33,13 @@ public class AttendUserCommand implements AttendUserUseCase {
     }
 
     @Override
-    public WeeklyAttendantResponse calculateAttendance(final String email) {
+    public WeeklyAttendanceResponse calculateAttendance(final String email) {
         LocalDate startDate = LocalDate.now().with(DayOfWeek.MONDAY);
         LocalDate endDate = LocalDate.now().with(DayOfWeek.SUNDAY);
 
         List<LocalDate> attendanceDates = loadAttendantPort.findAttendantDatesByEmailAndDateBetween(
             email, startDate, endDate);
 
-        return WeeklyAttendantResponse.of(attendanceDates);
+        return WeeklyAttendanceResponse.of(attendanceDates);
     }
 }
