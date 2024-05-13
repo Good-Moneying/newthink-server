@@ -23,7 +23,7 @@ class AttendanceServiceTest {
     private AttendUserUseCase attendUserUseCase;
 
     @Autowired
-    private SaveAttendancePort saveAttendantPort;
+    private SaveAttendancePort saveAttendancePort;
 
     private final String EMAIL = "test@example.com";
 
@@ -32,7 +32,7 @@ class AttendanceServiceTest {
         // 일주일간 날짜 데이터 설정
         LocalDate today = LocalDate.now();
         // 어제
-        saveAttendantPort.save(today, EMAIL);
+        saveAttendancePort.save(today, EMAIL);
     }
 
     @Test
