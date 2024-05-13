@@ -6,7 +6,9 @@ import kusitms.duduk.apiserver.security.infrastructure.CustomUserDetails;
 import kusitms.duduk.core.newsletter.dto.response.ArchiveNewsLetterResponse;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterThumbnailResponse;
 import kusitms.duduk.core.newsletter.port.input.ArchiveNewsLetterUseCase;
+import kusitms.duduk.core.term.dto.response.ArchiveTermResponse;
 import kusitms.duduk.core.term.dto.response.RetrieveTermResponse;
+import kusitms.duduk.core.term.port.input.ArchiveTermUseCase;
 import kusitms.duduk.core.user.dto.request.CreateUserRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserEmailRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserNicknameRequest;
@@ -20,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +37,7 @@ public class UserController implements UserControllerDocs {
     private final RetrieveUserQuery retrieveUserQuery;
     private final ValidateDuplicatedUserQuery validateDuplicatedUserQuery;
     private final ArchiveNewsLetterUseCase archiveNewsLetterUseCase;
+    private final ArchiveTermUseCase archiveTermUseCase;
 
     @PostMapping
     public ResponseEntity<UserResponse> register(@RequestBody CreateUserRequest createUserRequest) {
@@ -143,10 +147,18 @@ public class UserController implements UserControllerDocs {
 
     @GetMapping("/archive/{newsLetterId}")
     public ResponseEntity<ArchiveNewsLetterResponse> archiveNewsLetter(
-        CustomUserDetails customUserDetails, Long newsLetterId) {
+        @AuthenticationPrincipal CustomUserDetails customUserDetails,
+        @PathVariable(name = "newsLetterId") Long newsLetterId) {
         return new ResponseEntity<>(
-            archiveNewsLetterUseCase.archive(customUserDetails.getEmail(), newsLetterId),
-            HttpStatus.OK);
+            archiveNewsLetterUseCase.archive(customUserDetails.getEmail(), newsLetterId), HttpStatus.OK);
+    }
+
+    @GetMapping("/archive/{termId}")
+    public ResponseEntity<ArchiveTermResponse> archiveTerm(
+        @AuthenticationPrincipal CustomUserDetails customUserDetails,
+        @PathVariable(name = "termId") Long termId) {
+        return new ResponseEntity<>(
+            archiveTermUseCase.archive(customUserDetails.getEmail(), termId), HttpStatus.OK);
     }
 
     @GetMapping("/test")
