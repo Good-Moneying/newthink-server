@@ -1,6 +1,6 @@
-package kusitms.duduk.apiserver.user.event;
+package kusitms.duduk.apiserver.newsletter.event;
 
-import kusitms.duduk.application.user.event.LoginUserEvent;
+import kusitms.duduk.application.newsletter.event.RetrieveNewsLetterEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -11,10 +11,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationEventPublisher;
 
 @SpringBootTest
-public class LoginEventListenerTest {
+public class RetrieveEventListenerTest {
 
     @MockBean
-    private LoginEventListener loginEventListener;
+    private RetrieveEventListener retrieveEventListener;
 
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
@@ -26,17 +26,14 @@ public class LoginEventListenerTest {
     }
 
     @Test
-    void 로그인_이벤트가_발생하면_리스너가_호출된다() {
+    void 조회_이벤트가_빨생하면_리스너가_호출된다(){
         // given
-        // Event 인스턴스를 생성한다
-        LoginUserEvent event = new LoginUserEvent(this, "test@test,com");
+        RetrieveNewsLetterEvent event = new RetrieveNewsLetterEvent(this, 1L);
 
         // when
-        // 이벤트를 발행한다
         applicationEventPublisher.publishEvent(event);
 
         // then
-        // verify 메소드를 활요하여 리스너의 attendUser 메소드가 호출되었는지 확인한다
-        Mockito.verify(loginEventListener).attendUser(event);
+        Mockito.verify(retrieveEventListener).increaseViewCount(event);
     }
 }

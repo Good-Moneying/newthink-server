@@ -61,6 +61,7 @@ public class NewsLetterDtoMapper {
 
     public NewsLetterThumbnailResponse toThumbnailDto(NewsLetter newsLetter, boolean isScrapped) {
         return NewsLetterThumbnailResponse.builder()
+            .id(newsLetter.getNewsLetterId().getValue())
             .thumbnail(newsLetter.getThumbnail().getUrl())
             .title(newsLetter.getTitle().getTitle())
             .createdAt(newsLetter.getCreatedAt())
