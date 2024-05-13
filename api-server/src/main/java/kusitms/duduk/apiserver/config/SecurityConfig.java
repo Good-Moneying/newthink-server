@@ -38,7 +38,7 @@ public class SecurityConfig {
         "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/admin/img/**", "/css/**",
         "/js/**",
         "/favicon.ico", "/error/**", "/webjars/**", "/h2-console/**", "/api-docs/**",
-        "/api/healthcheck"
+        "/api/healthcheck", "/api/users/home"
     };
 
     private static final String[] AUTH_WHITELIST = {

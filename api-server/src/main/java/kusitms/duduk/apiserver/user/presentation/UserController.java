@@ -1,6 +1,10 @@
 package kusitms.duduk.apiserver.user.presentation;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import kusitms.duduk.apiserver.security.infrastructure.CustomUserDetails;
+import kusitms.duduk.core.newsletter.dto.response.NewsLetterThumbnailResponse;
+import kusitms.duduk.core.term.dto.response.RetrieveTermResponse;
 import kusitms.duduk.core.user.dto.request.CreateUserRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserEmailRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserNicknameRequest;
@@ -48,8 +52,87 @@ public class UserController implements UserControllerDocs {
 
     @GetMapping("/home")
     public ResponseEntity<RetrieveHomeResponse> home(CustomUserDetails customUserDetails) {
-        return new ResponseEntity<>(retrieveUserQuery.home(customUserDetails.getEmail()),
-            HttpStatus.OK);
+        RetrieveHomeResponse response = RetrieveHomeResponse.builder()
+            .todayNewsLetter(NewsLetterThumbnailResponse.builder()
+                .id(1L)
+                .title("오늘의 주목할 뉴스")
+                .type("editor")
+                .keywords("테슬라, 주가 변동, 시장 분석")
+                .thumbnail("https://image.shutterstock.com/image-photo/latest-stock-market-charts.jpg")
+                .isScrapped(false)
+                .createdAt(LocalDateTime.now())
+                .build())
+            .realtimeTrendNewsLetters(List.of(
+                NewsLetterThumbnailResponse.builder()
+                    .id(2L)
+                    .title("기술 섹터 동향")
+                    .type("analysis")
+                    .keywords("애플, 삼성, 최신 기술")
+                    .thumbnail("https://image.shutterstock.com/image-photo/technology-trends.jpg")
+                    .isScrapped(true)
+                    .createdAt(LocalDateTime.now().minusHours(3))
+                    .build(),
+                NewsLetterThumbnailResponse.builder()
+                    .id(3L)
+                    .title("유럽 시장 개요")
+                    .type("global")
+                    .keywords("유로존, 경제 성장")
+                    .thumbnail("https://image.shutterstock.com/image-photo/european-markets.jpg")
+                    .isScrapped(false)
+                    .createdAt(LocalDateTime.now().minusHours(2))
+                    .build(),
+                NewsLetterThumbnailResponse.builder()
+                    .id(4L)
+                    .title("투자 조언: 금융 포트폴리오 관리")
+                    .type("financial")
+                    .keywords("투자, 자산 관리")
+                    .thumbnail("https://image.shutterstock.com/image-photo/financial-management.jpg")
+                    .isScrapped(true)
+                    .createdAt(LocalDateTime.now().minusHours(1))
+                    .build()
+            ))
+            .customizeNewsLetters(List.of(
+                NewsLetterThumbnailResponse.builder()
+                    .id(5L)
+                    .title("지속 가능한 투자 동향")
+                    .type("sustainable")
+                    .keywords("그린 에너지, 친환경 정책")
+                    .thumbnail("https://image.shutterstock.com/image-photo/sustainable-investments.jpg")
+                    .isScrapped(false)
+                    .createdAt(LocalDateTime.now().minusDays(1))
+                    .build(),
+                NewsLetterThumbnailResponse.builder()
+                    .id(6L)
+                    .title("신흥 시장 뉴스 업데이트")
+                    .type("emerging")
+                    .keywords("신흥 시장, 경제 발전")
+                    .thumbnail("https://image.shutterstock.com/image-photo/emerging-markets.jpg")
+                    .isScrapped(true)
+                    .createdAt(LocalDateTime.now().minusDays(1).minusHours(2))
+                    .build(),
+                NewsLetterThumbnailResponse.builder()
+                    .id(7L)
+                    .title("실리콘 밸리 최신 소식")
+                    .type("tech")
+                    .keywords("스타트업, 혁신, 기술")
+                    .thumbnail("https://image.shutterstock.com/image-photo/silicon-valley.jpg")
+                    .isScrapped(false)
+                    .createdAt(LocalDateTime.now().minusDays(1).minusHours(4))
+                    .build()
+            ))
+            .todayTerm(RetrieveTermResponse.builder()
+                .termId(1L)
+                .koreanName("지속 가능성")
+                .englishName("Sustainability")
+                .description("지속 가능성은 환경적, 경제적, 사회적 측면에서 장기적으로 견딜 수 있는 발전을 의미합니다.")
+                .category("ENVIRONMENT")
+                .isScrapped(true)
+                .build())
+            .build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+//        return new ResponseEntity<>(retrieveUserQuery.home(customUserDetails.getEmail()),
+//            HttpStatus.OK);
     }
 
     @GetMapping("/test")
