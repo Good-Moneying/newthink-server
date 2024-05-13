@@ -3,6 +3,10 @@ package kusitms.duduk.apiserver.archive.presentation;
 import kusitms.duduk.apiserver.security.infrastructure.CustomUserDetails;
 import kusitms.duduk.core.archive.dto.response.ArchiveResponse;
 import kusitms.duduk.core.archive.port.input.RetrieveArchiveUseCase;
+import kusitms.duduk.core.newsletter.dto.response.ArchiveNewsLetterResponse;
+import kusitms.duduk.core.newsletter.port.input.ArchiveNewsLetterUseCase;
+import kusitms.duduk.core.term.dto.response.ArchiveTermResponse;
+import kusitms.duduk.core.term.port.input.ArchiveTermUseCase;
 import kusitms.duduk.domain.global.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/archies")
+@RequestMapping("/api/archives")
 public class ArchiveController implements ArchiveControllerDocs {
 
     private final RetrieveArchiveUseCase retrieveArchiveUseCase;
+    private final ArchiveNewsLetterUseCase archiveNewsLetterUseCase;
+    private final ArchiveTermUseCase archiveTermUseCase;
 
     @GetMapping("/newsletters/{category}")
     public ResponseEntity<ArchiveResponse> retrieveArchivedNewsLetters(
@@ -36,5 +42,22 @@ public class ArchiveController implements ArchiveControllerDocs {
         return new ResponseEntity<>(
             retrieveArchiveUseCase.retrieveTerms(customUserDetails.getEmail()),
             HttpStatus.OK);
+    }
+
+    @GetMapping("/{newsLetterId}")
+    public ResponseEntity<ArchiveNewsLetterResponse> archiveNewsLetter(
+        @AuthenticationPrincipal CustomUserDetails customUserDetails,
+        @PathVariable(name = "newsLetterId") Long newsLetterId) {
+        return new ResponseEntity<>(
+            archiveNewsLetterUseCase.archive(customUserDetails.getEmail(), newsLetterId),
+            HttpStatus.OK);
+    }
+
+    @GetMapping("/{termId}")
+    public ResponseEntity<ArchiveTermResponse> archiveTerm(
+        @AuthenticationPrincipal CustomUserDetails customUserDetails,
+        @PathVariable(name = "termId") Long termId) {
+        return new ResponseEntity<>(
+            archiveTermUseCase.archive(customUserDetails.getEmail(), termId), HttpStatus.OK);
     }
 }

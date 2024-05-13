@@ -37,8 +37,6 @@ public class UserController implements UserControllerDocs {
     private final RegisterUserUseCase registerUserUseCase;
     private final RetrieveUserQuery retrieveUserQuery;
     private final ValidateDuplicatedUserQuery validateDuplicatedUserQuery;
-    private final ArchiveNewsLetterUseCase archiveNewsLetterUseCase;
-    private final ArchiveTermUseCase archiveTermUseCase;
 
     @PostMapping
     public ResponseEntity<UserResponse> register(@RequestBody CreateUserRequest createUserRequest) {
@@ -150,30 +148,6 @@ public class UserController implements UserControllerDocs {
     public ResponseEntity<RetrieveMypageResponse> mypage(CustomUserDetails customUserDetails) {
         return new ResponseEntity<>(retrieveUserQuery.mypage(customUserDetails.getEmail()),
             HttpStatus.OK);
-    }
-
-    @GetMapping("/archive/{newsLetterId}")
-    public ResponseEntity<ArchiveNewsLetterResponse> archiveNewsLetter(
-        @AuthenticationPrincipal CustomUserDetails customUserDetails,
-        @PathVariable(name = "newsLetterId") Long newsLetterId) {
-        return new ResponseEntity<>(
-            archiveNewsLetterUseCase.archive(customUserDetails.getEmail(), newsLetterId),
-            HttpStatus.OK);
-    }
-
-    @GetMapping("/archive/{termId}")
-    public ResponseEntity<ArchiveTermResponse> archiveTerm(
-        @AuthenticationPrincipal CustomUserDetails customUserDetails,
-        @PathVariable(name = "termId") Long termId) {
-        return new ResponseEntity<>(
-            archiveTermUseCase.archive(customUserDetails.getEmail(), termId), HttpStatus.OK);
-    }
-
-    @GetMapping("/test")
-    public ResponseEntity<String> test(@AuthenticationPrincipal
-    CustomUserDetails customUserDetails) {
-        return new ResponseEntity<>(customUserDetails.getEmail()
-            , HttpStatus.OK);
     }
 }
 

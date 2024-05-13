@@ -78,30 +78,4 @@ public interface UserControllerDocs {
     ResponseEntity<RetrieveHomeResponse> home(
         @AuthenticationPrincipal final CustomUserDetails customUserDetails
     );
-
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "OK"),
-        @ApiResponse(responseCode = "400", description = "BAD REQUEST",
-            content = {@Content(schema = @Schema(implementation = ErrorResponse.class))}),
-        @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR",
-            content = {@Content(schema = @Schema(implementation = ErrorResponse.class))})
-    })
-    @Operation(summary = "뉴스레터 아카이브", description = "뉴스레터를 아카이브에 저장합니다.")
-    ResponseEntity<ArchiveNewsLetterResponse> archiveNewsLetter(
-        @AuthenticationPrincipal final CustomUserDetails customUserDetails,
-        @PathVariable final Long newsLetterId
-    );
-
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "OK"),
-        @ApiResponse(responseCode = "400", description = "BAD REQUEST",
-            content = {@Content(schema = @Schema(implementation = ErrorResponse.class))}),
-        @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR",
-            content = {@Content(schema = @Schema(implementation = ErrorResponse.class))})
-    })
-    @Operation(summary = "단어 아카이브", description = "단어를 아카이브에 저장합니다.")
-    ResponseEntity<ArchiveTermResponse> archiveTerm(
-        @AuthenticationPrincipal final CustomUserDetails customUserDetails,
-        @PathVariable final Long termId
-    );
 }
