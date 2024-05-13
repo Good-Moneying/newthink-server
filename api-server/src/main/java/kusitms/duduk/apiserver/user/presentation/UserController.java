@@ -13,6 +13,7 @@ import kusitms.duduk.core.user.dto.request.CreateUserRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserEmailRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserNicknameRequest;
 import kusitms.duduk.core.user.dto.response.RetrieveHomeResponse;
+import kusitms.duduk.core.user.dto.response.RetrieveMypageResponse;
 import kusitms.duduk.core.user.dto.response.UserResponse;
 import kusitms.duduk.core.user.port.input.RegisterUserUseCase;
 import kusitms.duduk.core.user.port.input.RetrieveUserQuery;
@@ -145,12 +146,19 @@ public class UserController implements UserControllerDocs {
 //            HttpStatus.OK);
     }
 
+    @GetMapping("/mypage")
+    public ResponseEntity<RetrieveMypageResponse> mypage(CustomUserDetails customUserDetails) {
+        return new ResponseEntity<>(retrieveUserQuery.mypage(customUserDetails.getEmail()),
+            HttpStatus.OK);
+    }
+
     @GetMapping("/archive/{newsLetterId}")
     public ResponseEntity<ArchiveNewsLetterResponse> archiveNewsLetter(
         @AuthenticationPrincipal CustomUserDetails customUserDetails,
         @PathVariable(name = "newsLetterId") Long newsLetterId) {
         return new ResponseEntity<>(
-            archiveNewsLetterUseCase.archive(customUserDetails.getEmail(), newsLetterId), HttpStatus.OK);
+            archiveNewsLetterUseCase.archive(customUserDetails.getEmail(), newsLetterId),
+            HttpStatus.OK);
     }
 
     @GetMapping("/archive/{termId}")

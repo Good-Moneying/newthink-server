@@ -1,6 +1,5 @@
 package kusitms.duduk.application.newsletter.persistence;
 
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import java.util.Optional;

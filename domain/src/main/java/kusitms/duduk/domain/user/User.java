@@ -27,6 +27,7 @@ public class User {
 
     private Id id;
     private Email email;
+    // todo : Profile 추가해야 할까
     private Nickname nickname;
     private RefreshToken refreshToken;
     private Gender gender;
@@ -35,6 +36,7 @@ public class User {
     private Provider provider;
     private Category category;
     private Goal goal;
+    // todo : Reward Count 추가 해야될까
     private List<Archive> archives;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
