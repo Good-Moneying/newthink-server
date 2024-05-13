@@ -2,6 +2,7 @@ package kusitms.duduk.application.newsletter.service;
 
 import kusitms.duduk.application.newsletter.event.ArchiveNewsLetterEvent;
 import kusitms.duduk.common.exception.custom.NotExistsException;
+import kusitms.duduk.core.newsletter.dto.response.ArchiveNewsLetterResponse;
 import kusitms.duduk.core.newsletter.port.input.ArchiveNewsLetterUseCase;
 import kusitms.duduk.core.newsletter.port.output.LoadNewsLetterPort;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
@@ -24,7 +25,7 @@ public class ArchiveNewsLetterCommand implements ArchiveNewsLetterUseCase {
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @Override
-    public void archiveNewsLetter(String email, Long newsLetterId) {
+    public ArchiveNewsLetterResponse archive(String email, Long newsLetterId) {
         // 유저를 찾는다
         User user = loadUserPort.findByEmail(email)
             .orElseThrow(() -> new NotExistsException("User not found"));
@@ -37,5 +38,6 @@ public class ArchiveNewsLetterCommand implements ArchiveNewsLetterUseCase {
         applicationEventPublisher.publishEvent(new ArchiveNewsLetterEvent(this, newsLetterId));
         user.archiveNewsLetter(newsLetter);
         updateUserPort.update(user);
+        return new ArchiveNewsLetterResponse(newsLetterId);
     }
 }

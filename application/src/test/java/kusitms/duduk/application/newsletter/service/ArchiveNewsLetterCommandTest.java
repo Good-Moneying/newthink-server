@@ -50,7 +50,7 @@ public class ArchiveNewsLetterCommandTest {
         Long newsLetterId = newsLetter.getNewsLetterId().getValue();
 
         // when
-        archiveNewsLetterUseCase.archiveNewsLetter(email, newsLetterId);
+        archiveNewsLetterUseCase.archive(email, newsLetterId);
 
         // then
         User loadUser = loadUserPort.findByEmail(email).get();
