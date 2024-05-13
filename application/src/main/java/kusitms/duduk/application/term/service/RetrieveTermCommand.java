@@ -34,6 +34,4 @@ public class RetrieveTermCommand implements RetrieveTermQuery {
 
         return termDtoMapper.toResponse(term, isScrapped);
     }
-
-
 }

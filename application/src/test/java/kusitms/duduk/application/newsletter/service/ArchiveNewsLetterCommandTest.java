@@ -44,13 +44,13 @@ public class ArchiveNewsLetterCommandTest {
     void 뉴스레터를_아카이브한다() {
         // given
         User user = saveUserPort.create(UserSteps.ROLE_EDITOR_생성_요청());
-        NewsLetter newsLetter = saveNewsLetterPort.create(NewsLetterSteps.AI_뉴스_레터_생성());
+        NewsLetter newsLetter = saveNewsLetterPort.create(NewsLetterSteps.AI_FINANCE_뉴스_레터_생성());
 
         String email = user.getEmail().getValue();
         Long newsLetterId = newsLetter.getNewsLetterId().getValue();
 
         // when
-        archiveNewsLetterUseCase.archiveNewsLetter(email, newsLetterId);
+        archiveNewsLetterUseCase.archive(email, newsLetterId);
 
         // then
         User loadUser = loadUserPort.findByEmail(email).get();

@@ -1,7 +1,6 @@
 package kusitms.duduk.application.term.service;
 
 import kusitms.duduk.core.term.dto.request.CreateTermRequest;
-import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.term.Term;
 import kusitms.duduk.domain.term.vo.Description;
 import kusitms.duduk.domain.term.vo.Name;
@@ -19,7 +18,7 @@ public class TermSteps {
             termCategory);
     }
 
-    public static Term 단어_생성() {
+    public static Term COMPANY_단어_생성() {
         CreateTermRequest request = 단어_생성_요청();
         return Term.builder()
             .koreanName(Name.from(request.koreanName()))

@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import kusitms.duduk.core.user.dto.request.CreateUserRequest;
 import kusitms.duduk.domain.global.Category;
-import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.user.User;
 import kusitms.duduk.domain.user.vo.Email;
 import kusitms.duduk.domain.user.vo.Gender;

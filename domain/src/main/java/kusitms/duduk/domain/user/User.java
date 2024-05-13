@@ -27,6 +27,7 @@ public class User {
 
     private Id id;
     private Email email;
+    // todo : Profile 추가해야 할까
     private Nickname nickname;
     private RefreshToken refreshToken;
     private Gender gender;
@@ -35,6 +36,7 @@ public class User {
     private Provider provider;
     private Category category;
     private Goal goal;
+    // todo : Reward Count 추가 해야될까
     private List<Archive> archives;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -74,5 +76,21 @@ public class User {
             .filter(archive -> archive.getTermIds().contains(term.getId().getValue()))
             .findFirst()
             .isPresent();
+    }
+
+    public List<Long> getNewsLettersFromArchive(Category category) {
+        return this.archives.stream()
+            .filter(archive -> archive.getCategory().equals(category))
+            .findFirst()
+            .map(Archive::getNewsLetterIds)
+            .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+    }
+
+    public List<Long> getTermsFromArchive() {
+        return this.archives.stream()
+            .filter(archive -> archive.getCategory().equals(Category.WORD))
+            .findFirst()
+            .map(Archive::getTermIds)
+            .orElseThrow(() -> new IllegalArgumentException("Category not found"));
     }
 }

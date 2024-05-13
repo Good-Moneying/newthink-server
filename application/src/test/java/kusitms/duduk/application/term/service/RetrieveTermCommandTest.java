@@ -3,8 +3,6 @@ package kusitms.duduk.application.term.service;
 import static org.junit.jupiter.api.Assertions.*;
 
 import kusitms.duduk.application.user.service.UserSteps;
-import kusitms.duduk.core.term.dto.TermDtoMapper;
-import kusitms.duduk.core.term.dto.request.CreateTermRequest;
 import kusitms.duduk.core.term.dto.request.RetrieveTermRequest;
 import kusitms.duduk.core.term.dto.response.RetrieveTermResponse;
 import kusitms.duduk.core.term.port.input.RetrieveTermQuery;
@@ -19,7 +17,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @DisplayName("RetrieveTermCommand 테스트")
@@ -54,7 +51,7 @@ class RetrieveTermCommandTest {
     @Test
     void 단어를_조회한다() {
         // given
-        Term term = TermSteps.단어_생성();
+        Term term = TermSteps.COMPANY_단어_생성();
         Term savedTerm = saveTermPort.save(term);
 
         // when
@@ -72,7 +69,7 @@ class RetrieveTermCommandTest {
     @Test
     void 여러_개의_단어가_있을_경우_가장_최근의_단어를_조회한다() {
         // given
-        Term term1 = TermSteps.단어_생성();
+        Term term1 = TermSteps.COMPANY_단어_생성();
         Term term2 = TermSteps.단어_생성_2();
 
         Term savedTerm1 = saveTermPort.save(term1);

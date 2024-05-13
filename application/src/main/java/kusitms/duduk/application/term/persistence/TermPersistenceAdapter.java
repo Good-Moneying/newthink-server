@@ -3,6 +3,7 @@ package kusitms.duduk.application.term.persistence;
 import java.util.Optional;
 import kusitms.duduk.application.term.persistence.entity.TermJpaEntity;
 import kusitms.duduk.common.annotation.Adapter;
+import kusitms.duduk.core.term.port.output.DeleteTermPort;
 import kusitms.duduk.core.term.port.output.LoadTermPort;
 import kusitms.duduk.core.term.port.output.SaveTermPort;
 import kusitms.duduk.domain.term.Term;
@@ -12,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @Adapter
-public class TermPersistenceAdapter implements SaveTermPort, LoadTermPort {
+public class TermPersistenceAdapter implements SaveTermPort, LoadTermPort, DeleteTermPort {
 
     private final TermRepository termRepository;
     private final TermJpaMapper termJpaEntityMapper;
@@ -40,5 +41,16 @@ public class TermPersistenceAdapter implements SaveTermPort, LoadTermPort {
     public Optional<Term> findLatestTerm() {
         return termRepository.findLatestTerm()
             .map(termJpaEntityMapper::toDomain);
+    }
+
+    @Override
+    public void deleteById(Long termId) {
+        termRepository.deleteById(termId);
+    }
+
+
+    @Override
+    public void deleteAll() {
+        termRepository.deleteAll();
     }
 }

@@ -5,6 +5,8 @@ import kusitms.duduk.core.newsletter.port.input.RetrieveNewsLetterQuery;
 import kusitms.duduk.core.term.dto.response.RetrieveTermResponse;
 import kusitms.duduk.core.term.port.input.RetrieveTermQuery;
 import kusitms.duduk.core.user.dto.response.RetrieveHomeResponse;
+import kusitms.duduk.core.user.dto.response.RetrieveMypageResponse;
+import kusitms.duduk.core.user.port.input.AttendUserUseCase;
 import kusitms.duduk.core.user.port.input.RetrieveUserQuery;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
 import kusitms.duduk.domain.user.User;
@@ -18,6 +20,7 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
     private final LoadUserPort loadUserPort;
     private final RetrieveNewsLetterQuery retrieveNewsLetterQuery;
     private final RetrieveTermQuery retrieveTermQuery;
+    private final AttendUserUseCase attendUserUseCase;
 
     @Override
     public boolean isUserRegisteredByEmail(String email) {
@@ -40,6 +43,19 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
         return RetrieveHomeResponse.builder()
             .todayNewsLetter(todayNewsLetter)
             .todayTerm(todayTerm)
+            .build();
+    }
+
+    @Override
+    public RetrieveMypageResponse mypage(String email) {
+        // 유저 정보를 가져온다
+        User user = loadUserPort.findByEmail(email)
+            .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
+
+        return RetrieveMypageResponse.builder()
+            .nickname(user.getNickname().getValue())
+            .reward(5)
+            .attendants(attendUserUseCase.calculateAttendance(email))
             .build();
     }
 }

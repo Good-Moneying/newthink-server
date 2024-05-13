@@ -55,7 +55,7 @@ public class NewsLetterSteps {
         return request;
     }
 
-    public static NewsLetter AI_뉴스_레터_생성() {
+    public static NewsLetter AI_FINANCE_뉴스_레터_생성() {
         CreateNewsLetterRequest request = AI_뉴스_레터_생성_요청();
         NewsLetter newsLetter = NewsLetter.builder()
             .thumbnail(Thumbnail.from(request.thumbnail()))
