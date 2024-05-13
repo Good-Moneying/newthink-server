@@ -12,3 +12,11 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+
+crawling:
+  driver_path: ${ CRAWLING_DRIVER_PATH }
+  target-url: ${ TARGET_URL }
+
+open-ai:
+  endpoint : ${ OPEN_AI_API_END_POINT }
+  secret-key : ${ OPEN_AI_SECRET_KEY }
