@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/newsletters")
-public class NewsLetterController {
+public class NewsLetterController implements NewsLetterControllerDocs{
 
     @GetMapping("/test")
     public NewsLetterTestResponse test() {

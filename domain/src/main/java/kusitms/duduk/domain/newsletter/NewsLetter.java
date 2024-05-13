@@ -37,4 +37,12 @@ public class NewsLetter {
     public boolean isWrittenBy(Id id) {
         return editorId.equals(id);
     }
+
+    public void increaseViewCount() {
+        this.viewCount.increase();
+    }
+
+    public void increaseScrapCount() {
+        this.scrapCount.increase();
+    }
 }
