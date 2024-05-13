@@ -47,7 +47,7 @@ public class ArchiveTermCommandTest {
     void 단어를_아카이브한다() {
         // given
         User user = saveUserPort.create(UserSteps.ROLE_EDITOR_생성_요청());
-        Term term = saveTermPort.save(TermSteps.단어_생성());
+        Term term = saveTermPort.save(TermSteps.COMPANY_단어_생성());
 
         String email = user.getEmail().getValue();
         Long termId = term.getId().getValue();

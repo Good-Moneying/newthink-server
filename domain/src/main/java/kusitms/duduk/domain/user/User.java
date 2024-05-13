@@ -75,4 +75,20 @@ public class User {
             .findFirst()
             .isPresent();
     }
+
+    public List<Long> getNewsLettersFromArchive(Category category) {
+        return this.archives.stream()
+            .filter(archive -> archive.getCategory().equals(category))
+            .findFirst()
+            .map(Archive::getNewsLetterIds)
+            .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+    }
+
+    public List<Long> getTermsFromArchive() {
+        return this.archives.stream()
+            .filter(archive -> archive.getCategory().equals(Category.WORD))
+            .findFirst()
+            .map(Archive::getTermIds)
+            .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+    }
 }
