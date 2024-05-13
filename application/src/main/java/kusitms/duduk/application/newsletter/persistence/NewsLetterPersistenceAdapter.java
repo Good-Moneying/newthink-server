@@ -29,6 +29,12 @@ public class NewsLetterPersistenceAdapter implements LoadNewsLetterPort, DeleteN
     }
 
     @Override
+    public void saveAndFlush(NewsLetter newsLetter) {
+        NewsLetterJpaEntity newsLetterJpaEntity = newsLetterJpaMapper.toJpaEntity(newsLetter);
+        newsLetterRepository.saveAndFlush(newsLetterJpaEntity);
+    }
+
+    @Override
     public Optional<NewsLetter> findById(Long id) {
         return newsLetterRepository.findById(id)
             .map(newsLetterJpaMapper::toDomain);
