@@ -55,7 +55,7 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
         return RetrieveMypageResponse.builder()
             .nickname(user.getNickname().getValue())
             .reward(5)
-            .attendants(attendUserUseCase.calculateAttendance(email))
+            .attendances(attendUserUseCase.calculateAttendance(email))
             .build();
     }
 }

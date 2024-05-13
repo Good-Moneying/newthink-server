@@ -5,6 +5,6 @@ import lombok.Builder;
 
 @Builder(toBuilder = true)
 public record RetrieveMypageResponse(String nickname, int reward,
-		     WeeklyAttendanceResponse attendants) {
+		     WeeklyAttendanceResponse attendances) {
 
 }

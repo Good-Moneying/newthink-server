@@ -12,7 +12,7 @@ import lombok.Data;
 import lombok.Getter;
 
 @Builder(toBuilder = true)
-public record WeeklyAttendanceResponse(List<DailyAttendant> attendants) {
+public record WeeklyAttendanceResponse(List<DailyAttendance> attendances) {
 
     public static WeeklyAttendanceResponse of(List<LocalDate> attendanceDates) {
         Map<DayOfWeek, Boolean> attendanceMap = Stream.of(DayOfWeek.values())
@@ -21,19 +21,19 @@ public record WeeklyAttendanceResponse(List<DailyAttendant> attendants) {
         attendanceDates.forEach(
             date -> attendanceMap.put(date.getDayOfWeek(), true));  // 출석한 날짜 업데이트
 
-        List<DailyAttendant> dailyAttendants = attendanceMap.entrySet().stream()
-            .map(entry -> new DailyAttendant(entry.getKey(), entry.getValue()))
+        List<DailyAttendance> dailyAttendances = attendanceMap.entrySet().stream()
+            .map(entry -> new DailyAttendance(entry.getKey(), entry.getValue()))
             .collect(Collectors.toList());
 
         return WeeklyAttendanceResponse.builder()
-            .attendants(dailyAttendants)
+            .attendances(dailyAttendances)
             .build();
     }
 
     @Data
     @AllArgsConstructor
     @Getter
-    public static class DailyAttendant {
+    public static class DailyAttendance {
 
         public DayOfWeek dayOfWeek;
         public boolean isAttendant;

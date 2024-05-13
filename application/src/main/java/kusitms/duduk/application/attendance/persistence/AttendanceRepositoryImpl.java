@@ -17,14 +17,14 @@ public class AttendanceRepositoryImpl implements AttendanceRepositoryCustom {
     @Override
     public List<LocalDate> findAttendanceBetweenStartDateAndEndDate(String email, LocalDate startDate,
         LocalDate endDate) {
-        QAttendanceJpaEntity attendant = QAttendanceJpaEntity.attendanceJpaEntity;
+        QAttendanceJpaEntity attendance = QAttendanceJpaEntity.attendanceJpaEntity;
 
         // QueryDSL로 쿼리 구성하여 LocalDate 리스트 반환
         return new JPAQueryFactory(entityManager)
-            .select(attendant.date)
-            .from(attendant)
-            .where(attendant.email.eq(email)
-                .and(attendant.date.between(startDate, endDate)))
+            .select(attendance.date)
+            .from(attendance)
+            .where(attendance.email.eq(email)
+                .and(attendance.date.between(startDate, endDate)))
             .fetch();
     }
 }

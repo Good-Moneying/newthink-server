@@ -14,12 +14,12 @@ import lombok.extern.slf4j.Slf4j;
 @Adapter
 public class AttendancePersistenceAdapter implements SaveAttendancePort, LoadAttendancePort {
 
-    private final AttendanceRepository attendantRepository;
+    private final AttendanceRepository attendanceRepository;
     private final AttendanceRepositoryCustom attendanceRepositoryCustom;
 
     @Override
     public void save(LocalDate today, String email) {
-        attendantRepository.save(AttendanceJpaEntity.builder()
+        attendanceRepository.save(AttendanceJpaEntity.builder()
             .date(today)
             .email(email)
             .build());
@@ -27,7 +27,7 @@ public class AttendancePersistenceAdapter implements SaveAttendancePort, LoadAtt
 
     @Override
     public boolean isAttendedToday(String email) {
-        return attendantRepository.existsByEmailAndDate(email, LocalDate.now());
+        return attendanceRepository.existsByEmailAndDate(email, LocalDate.now());
     }
 
     @Override

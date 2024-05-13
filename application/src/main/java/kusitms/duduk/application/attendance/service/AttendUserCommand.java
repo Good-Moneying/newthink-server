@@ -18,17 +18,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class AttendUserCommand implements AttendUserUseCase {
 
-    private final SaveAttendancePort saveAttendantPort;
-    private final LoadAttendancePort loadAttendantPort;
+    private final SaveAttendancePort saveAttendancePort;
+    private final LoadAttendancePort loadAttendancePort;
 
     @Qualifier("systemDateProvider")
     private final DateProvider dateProvider;
 
     @Override
     public void attend(final String email) {
-        if (!loadAttendantPort.isAttendedToday(email)) {
+        if (!loadAttendancePort.isAttendedToday(email)) {
             log.info("attend user: {}", email);
-            saveAttendantPort.save(dateProvider.now(), email);
+            saveAttendancePort.save(dateProvider.now(), email);
         }
     }
 
@@ -37,7 +37,7 @@ public class AttendUserCommand implements AttendUserUseCase {
         LocalDate startDate = LocalDate.now().with(DayOfWeek.MONDAY);
         LocalDate endDate = LocalDate.now().with(DayOfWeek.SUNDAY);
 
-        List<LocalDate> attendanceDates = loadAttendantPort.findAttendantDatesByEmailAndDateBetween(
+        List<LocalDate> attendanceDates = loadAttendancePort.findAttendantDatesByEmailAndDateBetween(
             email, startDate, endDate);
 
         return WeeklyAttendanceResponse.of(attendanceDates);

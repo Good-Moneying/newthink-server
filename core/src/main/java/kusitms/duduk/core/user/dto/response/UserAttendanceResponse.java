@@ -1,5 +1,5 @@
 package kusitms.duduk.core.user.dto.response;
 
-public record UserAttendantResponse() {
+public record UserAttendanceResponse() {
 
 }

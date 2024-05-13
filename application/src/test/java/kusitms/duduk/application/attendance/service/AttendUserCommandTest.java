@@ -42,7 +42,7 @@ class AttendanceServiceTest {
 
         // then
         Assertions.assertNotNull(response);
-        assertEquals(7, response.attendants().size());
-        assertTrue(response.attendants().stream().anyMatch(a-> a.isAttendant()  && a.getDayOfWeek() == LocalDate.now().getDayOfWeek()));
+        assertEquals(7, response.attendances().size());
+        assertTrue(response.attendances().stream().anyMatch(a-> a.isAttendant()  && a.getDayOfWeek() == LocalDate.now().getDayOfWeek()));
     }
 }

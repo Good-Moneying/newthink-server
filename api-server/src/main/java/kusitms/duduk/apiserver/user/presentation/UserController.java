@@ -145,7 +145,8 @@ public class UserController implements UserControllerDocs {
     }
 
     @GetMapping("/mypage")
-    public ResponseEntity<RetrieveMypageResponse> mypage(CustomUserDetails customUserDetails) {
+    public ResponseEntity<RetrieveMypageResponse> mypage(
+        @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         return new ResponseEntity<>(retrieveUserQuery.mypage(customUserDetails.getEmail()),
             HttpStatus.OK);
     }
