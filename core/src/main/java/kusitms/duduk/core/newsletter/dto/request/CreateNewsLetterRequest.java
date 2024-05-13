@@ -1,7 +1,9 @@
 package kusitms.duduk.core.newsletter.dto.request;
 
+import lombok.Builder;
 import org.springframework.util.Assert;
 
+@Builder(toBuilder = true)
 public record CreateNewsLetterRequest(String thumbnail, String title, String content,
 		      String keywords, String category, String summary, String type) {
 

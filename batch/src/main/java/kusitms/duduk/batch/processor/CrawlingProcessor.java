@@ -3,6 +3,7 @@ package kusitms.duduk.batch.processor;
 import kusitms.duduk.batch.dto.crawling.CrawlingNews;
 import kusitms.duduk.batch.dto.openai.parsing.ParsedAiContent;
 import kusitms.duduk.batch.util.GenerateAiNewsUtils;
+import kusitms.duduk.core.newsletter.dto.request.CreateNewsLetterRequest;
 import kusitms.duduk.domain.global.Count;
 import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.newsletter.NewsLetter;
@@ -15,25 +16,21 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class CrawlingProcessor implements ItemProcessor<CrawlingNews, NewsLetter> {
+public class CrawlingProcessor implements ItemProcessor<CrawlingNews, CreateNewsLetterRequest> {
 
     private final GenerateAiNewsUtils generateAiNewsUtils;
 
     @Override
-    public NewsLetter process(CrawlingNews item) throws Exception {
+    public CreateNewsLetterRequest process(CrawlingNews item) throws Exception {
         ParsedAiContent parsedAiContent = generateAiNewsUtils.getAIResponse(item);
-
-        return NewsLetter.builder()
-                .editorId(Id.of(0L))
+        //S3
+        return CreateNewsLetterRequest.
+            builder()
                 .thumbnail(null)
-                .title(Title.from(parsedAiContent.getHeadline()))
-                .content(Content.from(parsedAiContent.getContent()))
+                .title(parsedAiContent.getHeadline())
+                .content(parsedAiContent.getContent())
                 .keywords(null)
                 .category(null)
-                .type(null)
-                .summary(null)
-                .viewCount(Count.from(0))
-                .scrapCount(Count.from(0))
-                .build();
+            .build();
     }
 }

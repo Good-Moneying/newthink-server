@@ -4,6 +4,7 @@ import kusitms.duduk.batch.dto.crawling.CrawlingNews;
 import kusitms.duduk.batch.processor.CrawlingProcessor;
 import kusitms.duduk.batch.reader.CrawlingReader;
 import kusitms.duduk.batch.writer.CrawlingWriter;
+import kusitms.duduk.core.newsletter.dto.request.CreateNewsLetterRequest;
 import kusitms.duduk.domain.newsletter.NewsLetter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +32,7 @@ public class NewsLetterStepConfig {
     @Bean
     public Step crawlingNewsStep() {
         return new StepBuilder("crawlingNewsStep", jobRepository)
-                .<CrawlingNews, NewsLetter>chunk(10,transactionManager)
+                .<CrawlingNews, CreateNewsLetterRequest>chunk(10,transactionManager)
                 .reader(crawlingReader)
                 .processor(crawlingProcessor)
                 .writer(crawlingWriter)

@@ -18,6 +18,9 @@ spring:
         format_sql: true # SQL 포맷팅
         show_sql: true # SQL 출력
 
+  config:
+    import: optional:secrets.yml
+
 crawling:
   driver_path: ${ CRAWLING_DRIVER_PATH }
   target-url: ${ TARGET_URL }

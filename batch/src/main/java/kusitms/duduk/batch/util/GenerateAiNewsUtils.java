@@ -30,15 +30,19 @@ public class GenerateAiNewsUtils {
 
         String query = "다음으로 주어지는 뉴스를 최소 300자에서 500자 이내로 요약해서 뉴스레터 내용을 작성해줘. 형식은 이렇게 작성해줘. "
                 + "“본문: “ 이후로 나오는 내용이 주어지는 뉴스이고 "
-                + "“요약 내용: “ 이후에 요약한 내용을 써주면 돼. "
                 + "“제목: ” 이후로는 주어진 뉴스의 제목을 작성해줘. "
-                + "“관련주: ” 에는 뉴스를 통해 가장 관련이 높다고 판단되는 주식 종목을 하나만 알려줘. "
-                + "마지막으로 “퀴즈: ” 부분에는 뉴스 내용에 관한 퀴즈를 객관식으로 만들어줘. 객관식 선택지는 5개로 해줘. 정답도 번호로 알려줘. 아래는 예시야.\n 본문:"
+                + "“키워드를 1~3개 사이로 알려줘! "
+                + "“카테고리를 알려줘! 카테고리 종류는 FINANCE, POLICY, REAL_ESTATE, SECURITIES"
                 + crawlingNews.getContent()
                 + "\n 제목:"
                 + crawlingNews.getTitle()
-                + "\n요약 내용: \n관련주: \n퀴즈: \n 1: \n 2: \n 3: \n 4: \n 5: "
-                + "\n 정답: ";
+                + "\n 형식은 다음과 같아"
+            + "{"
+            + "headline: 제목, "
+            + "content: 본문, "
+            + "keywords: 키워드, "
+            + "category: 카테고리"
+            + "}";
 
         WebClient webClient = WebClient.builder()
                 .baseUrl(END_POINT)

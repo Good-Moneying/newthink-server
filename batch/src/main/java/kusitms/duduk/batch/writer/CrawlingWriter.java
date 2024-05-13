@@ -1,26 +1,22 @@
 package kusitms.duduk.batch.writer;
 
-import kusitms.duduk.application.newsletter.persistence.NewsLetterPersistenceAdapter;
-import kusitms.duduk.application.newsletter.service.CreateNewsLetterCommand;
 import kusitms.duduk.core.newsletter.dto.request.CreateNewsLetterRequest;
-import kusitms.duduk.domain.newsletter.NewsLetter;
+import kusitms.duduk.core.newsletter.port.input.CreateNewsLetterUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
-
 @Component
 @RequiredArgsConstructor
-public class CrawlingWriter implements ItemWriter<NewsLetter> {
+public class CrawlingWriter implements ItemWriter<CreateNewsLetterRequest> {
 
-    private final NewsLetterPersistenceAdapter newsLetterPersistenceAdapter;
+    private final CreateNewsLetterUseCase createNewsLetterUseCase;
 
     @Override
-    public void write(Chunk<? extends NewsLetter> chunk) throws Exception {
-        for (NewsLetter newsLetter : chunk.getItems()) {
-            newsLetterPersistenceAdapter.save(newsLetter);
+    public void write(Chunk<? extends CreateNewsLetterRequest> chunk) throws Exception {
+        for (CreateNewsLetterRequest request : chunk.getItems()) {
+            createNewsLetterUseCase.create(request);
         }
     }
 }

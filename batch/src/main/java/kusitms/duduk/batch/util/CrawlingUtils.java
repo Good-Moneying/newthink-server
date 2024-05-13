@@ -25,6 +25,7 @@ public class CrawlingUtils {
         Path path = Paths.get(CRAWLING_DRIVER_PATH);
 
         // WebDriver 경로 설정
+        // EC2에 어떻게 올릴지 
         System.setProperty("webdriver.chrome.driver", path.toString());
 
         // 브라우저 드라이버 실행
