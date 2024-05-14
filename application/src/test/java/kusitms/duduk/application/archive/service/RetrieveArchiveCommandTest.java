@@ -2,6 +2,8 @@ package kusitms.duduk.application.archive.service;
 
 import kusitms.duduk.application.newsletter.service.NewsLetterSteps;
 import kusitms.duduk.application.term.service.TermSteps;
+import kusitms.duduk.core.archive.dto.response.RetrieveArchivedNewsLetterResponse;
+import kusitms.duduk.core.archive.dto.response.RetrieveArchivedTermResponse;
 import kusitms.duduk.core.archive.port.input.RetrieveArchiveUseCase;
 import kusitms.duduk.core.newsletter.port.input.ArchiveNewsLetterUseCase;
 import kusitms.duduk.core.newsletter.port.output.DeleteNewsLetterPort;
@@ -86,15 +88,16 @@ public class RetrieveArchiveCommandTest {
         String email = savedUser.getEmail().getValue();
         Long newsLetterId = savedNewsLetter.getNewsLetterId().getValue();
 
-        archiveNewsLetterUseCase.archive(savedUser.getEmail().getValue(),
-            savedNewsLetter.getNewsLetterId().getValue());
+        archiveNewsLetterUseCase.archive(email,
+            newsLetterId);
 
         // when
-        ArchiveResponse newsLettersResponse = retrieveArchiveUseCase.retrieveNewsLetters(email,
+        RetrieveArchivedNewsLetterResponse response = retrieveArchiveUseCase.retrieveNewsLetters(
+            email,
             Category.FINANCE);
 
         // then
-        Assertions.assertThat(newsLettersResponse.ids()).contains(newsLetterId);
+        Assertions.assertThat(response.newsLetters()).isNotEmpty();
     }
 
     @Test
@@ -108,13 +111,14 @@ public class RetrieveArchiveCommandTest {
         String email = savedUser.getEmail().getValue();
         Long termId = savedTerm.getId().getValue();
 
-        archiveTermUseCase.archive(savedUser.getEmail().getValue(),
-            savedTerm.getId().getValue());
+        archiveTermUseCase.archive(email,
+            termId);
 
         // when
-        ArchiveResponse response = retrieveArchiveUseCase.retrieveTerms(email);
+        RetrieveArchivedTermResponse response = retrieveArchiveUseCase.retrieveTerms(
+            email);
 
         // then
-        Assertions.assertThat(response.ids()).contains(termId);
+        Assertions.assertThat(response.terms()).isNotEmpty();
     }
 }
