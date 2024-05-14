@@ -18,10 +18,10 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 public class GenerateAiNewsUtils {
 
-    @Value("open-ai.endpoint")
+    @Value("${open-ai.end-point}")
     private String END_POINT;
 
-    @Value("open-ai.secret-key")
+    @Value("${open-ai.secret-key}")
     private String OPEN_AI_SECRET_KEY;
 
     private final ParsingAiContentUtils parsingAiContent;
@@ -32,7 +32,8 @@ public class GenerateAiNewsUtils {
                         + "형식은 이렇게 작성해줘. “본문: “ 이후에 요약한 내용을 써주면 돼. "
                         + "“제목: ” 이후로는 주어진 뉴스의 제목을 작성해줘. "
                         + "”키워드: ” 이후로는 뉴스 내용에서 키워드를 3가지 추출해줘. "
-                        + "”카테고리: ” 이후로는 FINANCE, POLICY, REAL_ESTATE, SECURITIES 중에 뉴스 내용과 가장 연관성이 있다고 생각하는 것을 하나 골라줘. \n "
+                        + "”카테고리: ” 이후로는 FINANCE, POLICY, REAL_ESTATE, SECURITIES 중에 뉴스 내용과 가장 연관성이 있다고 생각하는 것을 하나 골라줘. "
+                        + "FINANCE 라고만 대답하지는 마. \n"
                         + "뉴스: "
                         + crawlingNews.getContent()
                         + " \n본문: \n제목: "
@@ -65,6 +66,7 @@ public class GenerateAiNewsUtils {
                 .bodyToMono(OpenAIResponse.class).block();
 
         assert openAIResponse != null;
+        System.out.println(openAIResponse.getContent());
         return parsingAiContent.getParingResult(openAIResponse.getContent());
     }
 

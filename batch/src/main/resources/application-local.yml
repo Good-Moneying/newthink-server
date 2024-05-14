@@ -3,21 +3,24 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
     password:
-    url: jdbc:h2:mem:test;MODE=MySQL
+    url: jdbc:h2:~/test;MODE=MySQL
 
   batch:
     jdbc:
-      initialize-schema: always
+      initialize-schema: embedded
     job:
       enabled: true
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
         show_sql: true
+
+  config:
+    import: "application-secret.yml"
 
 jwt:
   secret-key: NiOeyFbN1Gqo10bPgUyTFsRMkJpGLXSvGP04eFqj5B30r5TcrtlSXfQ7TndvYjNvfkEKLqILn0j1SmKODO1Yw3JpBBgI3nVPEahqxeY8qbPSFGyzyEVxnl4AQcrnVneI
@@ -30,11 +33,4 @@ jwt:
     header: Authorization-refresh
 
 
-crawling:
-  driver_path: "/Users/kwonminhyeok/Downloads/chromedriver_mac_arm64/chromedriver"
-  target-url: "https://www.hankyung.com/all-news"
-
-open-ai:
-  endpoint : ${ OPEN_AI_API_END_POINT }
-  secret-key : ${ OPEN_AI_SECRET_KEY }
 

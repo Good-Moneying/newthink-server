@@ -23,6 +23,7 @@ public class CrawlingReader implements ItemReader<CrawlingNews> {
 
     @Override
     public CrawlingNews read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
-        return crawlingUtils.getCrawlingNews(TARGET_URL);
+        CrawlingNews crawlingNews = crawlingUtils.getCrawlingNews(TARGET_URL);
+        return crawlingNews;
     }
 }
