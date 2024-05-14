@@ -11,6 +11,7 @@ import kusitms.duduk.core.newsletter.port.output.SaveNewsLetterPort;
 import kusitms.duduk.core.newsletter.port.output.UpdateNewsLetterPort;
 import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.newsletter.NewsLetter;
+import kusitms.duduk.domain.user.User;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -76,5 +77,15 @@ public class NewsLetterPersistenceAdapter implements LoadNewsLetterPort, DeleteN
     @Override
     public void deleteAll() {
         newsLetterRepository.deleteAll();
+    }
+
+    @Override
+    public Optional<NewsLetter> update(NewsLetter newsLetter) {
+        Long newsLetterId = newsLetter.getNewsLetterId().getValue();
+
+        return newsLetterRepository.findById(newsLetterId)
+            .map(persistedNewsLetterData -> newsLetterJpaMapper.toJpaEntity(newsLetter, persistedNewsLetterData))
+            .map(newsLetterRepository::save)
+            .map(newsLetterJpaMapper::toDomain);
     }
 }

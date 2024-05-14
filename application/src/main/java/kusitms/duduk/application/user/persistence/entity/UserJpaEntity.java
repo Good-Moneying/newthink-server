@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import kusitms.duduk.application.archive.persistence.entity.ArchiveJpaEntity;
+import kusitms.duduk.application.comment.persistence.entity.CommentJpaEntity;
 import kusitms.duduk.application.global.entity.BaseEntity;
 import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.user.vo.Gender;
@@ -67,6 +68,9 @@ public class UserJpaEntity extends BaseEntity {
     @JsonFormat(pattern = "yyyyMMdd")
     private LocalDate birthday;
 
+    @Column
+    private int experiencePoint;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -83,4 +87,8 @@ public class UserJpaEntity extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     public List<ArchiveJpaEntity> archives = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<CommentJpaEntity> comments = new ArrayList<>();
 }

@@ -4,13 +4,17 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import kusitms.duduk.domain.archive.Archive;
+import kusitms.duduk.domain.comment.Comment;
 import kusitms.duduk.domain.global.Category;
+import kusitms.duduk.domain.global.Count;
 import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.newsletter.NewsLetter;
 import kusitms.duduk.domain.term.Term;
 import kusitms.duduk.domain.user.vo.Email;
+import kusitms.duduk.domain.user.vo.ExperiencePoint;
 import kusitms.duduk.domain.user.vo.Gender;
 import kusitms.duduk.domain.user.vo.Goal;
+import kusitms.duduk.domain.user.vo.Level;
 import kusitms.duduk.domain.user.vo.Nickname;
 import kusitms.duduk.domain.user.vo.Provider;
 import kusitms.duduk.domain.user.vo.RefreshToken;
@@ -27,7 +31,6 @@ public class User {
 
     private Id id;
     private Email email;
-    // todo : Profile 추가해야 할까
     private Nickname nickname;
     private RefreshToken refreshToken;
     private Gender gender;
@@ -35,9 +38,12 @@ public class User {
     private Role role;
     private Provider provider;
     private Category category;
+    private ExperiencePoint experiencePoint;
+    private Level level;
     private Goal goal;
-    // todo : Reward Count 추가 해야될까
+    private Count reward;
     private List<Archive> archives;
+    private List<Comment> comments;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

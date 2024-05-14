@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -22,6 +23,8 @@ public class QNewsLetterJpaEntity extends EntityPathBase<NewsLetterJpaEntity> {
     public final kusitms.duduk.application.global.entity.QBaseEntity _super = new kusitms.duduk.application.global.entity.QBaseEntity(this);
 
     public final EnumPath<kusitms.duduk.domain.global.Category> category = createEnum("category", kusitms.duduk.domain.global.Category.class);
+
+    public final ListPath<kusitms.duduk.application.comment.persistence.entity.CommentJpaEntity, kusitms.duduk.application.comment.persistence.entity.QCommentJpaEntity> comments = this.<kusitms.duduk.application.comment.persistence.entity.CommentJpaEntity, kusitms.duduk.application.comment.persistence.entity.QCommentJpaEntity>createList("comments", kusitms.duduk.application.comment.persistence.entity.CommentJpaEntity.class, kusitms.duduk.application.comment.persistence.entity.QCommentJpaEntity.class, PathInits.DIRECT2);
 
     public final StringPath content = createString("content");
 

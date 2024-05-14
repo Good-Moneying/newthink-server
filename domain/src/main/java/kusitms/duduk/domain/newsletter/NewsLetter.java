@@ -1,6 +1,8 @@
 package kusitms.duduk.domain.newsletter;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import kusitms.duduk.domain.comment.Comment;
 import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.global.Count;
 import kusitms.duduk.domain.global.Id;
@@ -29,6 +31,7 @@ public class NewsLetter {
     private Category category;
     private Type type;
     private Summary summary;
+    private List<Comment> comments;
     private Count viewCount;
     private Count scrapCount;
     private LocalDateTime createdAt;
