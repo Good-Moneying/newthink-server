@@ -21,12 +21,8 @@ public class CrawlingReader implements ItemReader<CrawlingNews> {
 
     private final CrawlingUtils crawlingUtils;
 
-    //read 전처리 작업 필요 x
-
     @Override
     public CrawlingNews read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
         return crawlingUtils.getCrawlingNews(TARGET_URL);
     }
-
-    //read 후 처리 작업 필요 x
 }

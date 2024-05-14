@@ -1,6 +1,5 @@
 package kusitms.duduk.batch;
 
-import kusitms.duduk.batch.config.NewsLetterJobConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -21,11 +20,12 @@ public class NewsLetterBatchService {
 
     private final JobLauncher jobLauncher;
 
-    @Qualifier("generateNewsLetter")
+    @Qualifier("generateNewsLetterJob")
     private final Job generateNewsLetter;
 
     //@Scheduled(fixedRate = 5000)
-    @Scheduled(cron = "0 */1 * * *")
+    //@Scheduled(cron = "0 */1 * * *")
+    @Scheduled(cron = "1 * * * * *")
     public void scheduledTask() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
         log.info("News letter batch service started");
 

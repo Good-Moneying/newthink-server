@@ -39,11 +39,13 @@ public class CrawlingUtils {
         // news list 가져오기
         WebElement webElementNewsList= driver.findElement(By.cssSelector(".news-list"));
         List<WebElement> newsList = webElementNewsList.findElements(By.cssSelector(".txt-cont"));
+        List<WebElement> thumbList = webElementNewsList.findElements(By.cssSelector(".thumb"));
 
         //dto mapping
         return CrawlingNews.builder()
                 .title(newsList.get(0).findElement(By.cssSelector(".news-tit")).getAttribute("innerText"))
                 .content(newsList.get(0).findElement(By.cssSelector(".lead")).getAttribute("innerText"))
+                .thumbnailURL(thumbList.get(0).findElement(By.cssSelector("img")).getAttribute("src"))
                 .build();
     }
 }

@@ -28,21 +28,16 @@ public class GenerateAiNewsUtils {
 
     public ParsedAiContent getAIResponse(CrawlingNews crawlingNews) {
 
-        String query = "다음으로 주어지는 뉴스를 최소 300자에서 500자 이내로 요약해서 뉴스레터 내용을 작성해줘. 형식은 이렇게 작성해줘. "
-                + "“본문: “ 이후로 나오는 내용이 주어지는 뉴스이고 "
-                + "“제목: ” 이후로는 주어진 뉴스의 제목을 작성해줘. "
-                + "“키워드를 1~3개 사이로 알려줘! "
-                + "“카테고리를 알려줘! 카테고리 종류는 FINANCE, POLICY, REAL_ESTATE, SECURITIES"
-                + crawlingNews.getContent()
-                + "\n 제목:"
-                + crawlingNews.getTitle()
-                + "\n 형식은 다음과 같아"
-            + "{"
-            + "headline: 제목, "
-            + "content: 본문, "
-            + "keywords: 키워드, "
-            + "category: 카테고리"
-            + "}";
+        String query = "다음으로 주어지는 뉴스를 최소 300자에서 500자 이내로 요약해서 뉴스레터 내용을 작성해줘. "
+                        + "형식은 이렇게 작성해줘. “본문: “ 이후에 요약한 내용을 써주면 돼. "
+                        + "“제목: ” 이후로는 주어진 뉴스의 제목을 작성해줘. "
+                        + "”키워드: ” 이후로는 뉴스 내용에서 키워드를 3가지 추출해줘. "
+                        + "”카테고리: ” 이후로는 FINANCE, POLICY, REAL_ESTATE, SECURITIES 중에 뉴스 내용과 가장 연관성이 있다고 생각하는 것을 하나 골라줘. \n "
+                        + "뉴스: "
+                        + crawlingNews.getContent()
+                        + " \n본문: \n제목: "
+                        + crawlingNews.getTitle()
+                        + "\n키워드: \n카테고리: ";
 
         WebClient webClient = WebClient.builder()
                 .baseUrl(END_POINT)

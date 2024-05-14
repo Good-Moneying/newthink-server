@@ -7,6 +7,8 @@ import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
 @RequiredArgsConstructor
 public class CrawlingWriter implements ItemWriter<CreateNewsLetterRequest> {
@@ -15,8 +17,8 @@ public class CrawlingWriter implements ItemWriter<CreateNewsLetterRequest> {
 
     @Override
     public void write(Chunk<? extends CreateNewsLetterRequest> chunk) throws Exception {
-        for (CreateNewsLetterRequest request : chunk.getItems()) {
-            createNewsLetterUseCase.create(request);
+        for (CreateNewsLetterRequest createNewsLetterRequest : chunk.getItems()) {
+            createNewsLetterUseCase.create(createNewsLetterRequest);
         }
     }
 }

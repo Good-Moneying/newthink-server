@@ -10,4 +10,5 @@ import lombok.Data;
 public class CrawlingNews {
     private String title;
     private String content;
+    private String thumbnailURL;
 }

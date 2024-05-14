@@ -18,18 +18,16 @@ import org.springframework.context.annotation.Configuration;
 public class NewsLetterJobConfig {
 
     //    job의 step
-    //    1. 뉴스를 크롤링 해서 원문을 DB에 저장한다. ( 경제뉴스 가장 상단의 )
-    //    2. openAI api를 활용해서 헤드라인, 뉴스레터, 관련주 정보, 퀴즈를 생성한다.
+    //    1. 뉴스를 크롤링 힌다 (한국경제 가장 상단의 뉴스)
+    //    2. openAI api를 활용해서 헤드라인, 뉴스레터, 키워드, 카테고리를 생성한다.
     //    3. 생성한 정보들을 DB에 저장한다.
-    //    4. Naver Clova Summary로 본문에 대해 3줄 요약을 한다.
-    //    5. 3줄 요약을 DB에 저장한다.
 
     private final JobRepository jobRepository;
     private final Step stepConfig;
 
     @Bean
     public Job generateNewsLetter(){
-        return new JobBuilder("generateNewsLetter",jobRepository)
+        return new JobBuilder("generateNewsLetterJob",jobRepository)
                 .start(stepConfig)
                 .build();
     }

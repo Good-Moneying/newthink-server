@@ -4,6 +4,7 @@ import kusitms.duduk.batch.dto.crawling.CrawlingNews;
 import kusitms.duduk.batch.dto.openai.parsing.ParsedAiContent;
 import kusitms.duduk.batch.util.GenerateAiNewsUtils;
 import kusitms.duduk.core.newsletter.dto.request.CreateNewsLetterRequest;
+import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.global.Count;
 import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.newsletter.NewsLetter;
@@ -23,14 +24,15 @@ public class CrawlingProcessor implements ItemProcessor<CrawlingNews, CreateNews
     @Override
     public CreateNewsLetterRequest process(CrawlingNews item) throws Exception {
         ParsedAiContent parsedAiContent = generateAiNewsUtils.getAIResponse(item);
-        //S3
-        return CreateNewsLetterRequest.
-            builder()
-                .thumbnail(null)
-                .title(parsedAiContent.getHeadline())
-                .content(parsedAiContent.getContent())
-                .keywords(null)
-                .category(null)
-            .build();
+
+        return new CreateNewsLetterRequest(
+                item.getThumbnailURL(),
+                parsedAiContent.getHeadline(),
+                parsedAiContent.getContent(),
+                parsedAiContent.getKeywords(),
+                parsedAiContent.getCategory(),
+                null,
+                "AI"
+        );
     }
 }
