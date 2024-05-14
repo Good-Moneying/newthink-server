@@ -12,7 +12,7 @@ import lombok.Data;
 import lombok.Getter;
 
 @Builder(toBuilder = true)
-public record WeeklyAttendanceResponse(List<DailyAttendance> attendances) {
+public record WeeklyAttendanceResponse(List<DailyAttendance> data) {
 
     public static WeeklyAttendanceResponse of(List<LocalDate> attendanceDates) {
         Map<DayOfWeek, Boolean> attendanceMap = Stream.of(DayOfWeek.values())
@@ -26,7 +26,7 @@ public record WeeklyAttendanceResponse(List<DailyAttendance> attendances) {
             .collect(Collectors.toList());
 
         return WeeklyAttendanceResponse.builder()
-            .attendances(dailyAttendances)
+            .data(dailyAttendances)
             .build();
     }
 
@@ -37,5 +37,9 @@ public record WeeklyAttendanceResponse(List<DailyAttendance> attendances) {
 
         public DayOfWeek dayOfWeek;
         public boolean isAttendant;
+
+        public static DailyAttendance of(DayOfWeek dayOfWeek, boolean isAttendant) {
+            return new DailyAttendance(dayOfWeek, isAttendant);
+        }
     }
 }

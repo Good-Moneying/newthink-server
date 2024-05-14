@@ -8,7 +8,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kusitms.duduk.apiserver.security.infrastructure.CustomUserDetails;
 import kusitms.duduk.common.exception.ErrorResponse;
-import kusitms.duduk.core.archive.dto.response.ArchiveResponse;
+import kusitms.duduk.core.archive.dto.response.RetrieveArchivedNewsLetterResponse;
+import kusitms.duduk.core.archive.dto.response.RetrieveArchivedTermResponse;
 import kusitms.duduk.core.newsletter.dto.response.ArchiveNewsLetterResponse;
 import kusitms.duduk.core.term.dto.response.ArchiveTermResponse;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public interface ArchiveControllerDocs {
             content = {@Content(schema = @Schema(implementation = ErrorResponse.class))})
     })
     @Operation(summary = "아카이브 뉴스레터 조회", description = "아카이브에 저장되어 있는 뉴스레터를 조회합니다.")
-    ResponseEntity<ArchiveResponse> retrieveArchivedNewsLetters(
+    ResponseEntity<RetrieveArchivedNewsLetterResponse> retrieveArchivedNewsLetters(
         @AuthenticationPrincipal final CustomUserDetails customUserDetails,
         @PathVariable final String category
     );
@@ -39,7 +40,7 @@ public interface ArchiveControllerDocs {
             content = {@Content(schema = @Schema(implementation = ErrorResponse.class))})
     })
     @Operation(summary = "아카이브 단어 조회", description = "아카이브에 저장되어 있는 단어를 조회합니다.")
-    ResponseEntity<ArchiveResponse> retrieveArchivedTerms(
+    ResponseEntity<RetrieveArchivedTermResponse> retrieveArchivedTerms(
         @AuthenticationPrincipal final CustomUserDetails customUserDetails);
 
     @ApiResponses(value = {

@@ -6,13 +6,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 import kusitms.duduk.application.archive.persistence.ArchiveJpaMapper;
 import kusitms.duduk.application.archive.persistence.entity.ArchiveJpaEntity;
+import kusitms.duduk.application.comment.persistence.CommentJpaMapper;
+import kusitms.duduk.application.comment.persistence.entity.CommentJpaEntity;
+import kusitms.duduk.application.newsletter.persistence.NewsLetterJpaMapper;
 import kusitms.duduk.application.user.persistence.entity.UserJpaEntity;
 import kusitms.duduk.common.annotation.Mapper;
 import kusitms.duduk.domain.archive.Archive;
+import kusitms.duduk.domain.comment.Comment;
 import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.user.User;
 import kusitms.duduk.domain.user.vo.Email;
+import kusitms.duduk.domain.user.vo.Level;
 import kusitms.duduk.domain.user.vo.Nickname;
 import kusitms.duduk.domain.user.vo.RefreshToken;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +28,10 @@ import lombok.RequiredArgsConstructor;
 public class UserJpaMapper {
 
     private final ArchiveJpaMapper archiveJpaMapper;
+    private final CommentJpaMapper commentJpaMapper;
 
+
+    // todo : 추가된 컬럼들 추가
     public UserJpaEntity toJpaEntity(User user) {
         // 빌더 패턴을 사용하여 UserJpaEntity 인스턴스 생성
         UserJpaEntity userEntity = UserJpaEntity.builder()
@@ -36,7 +44,9 @@ public class UserJpaMapper {
             .role(user.getRole())
             .provider(user.getProvider())
             .category(user.getCategory())
+            .experiencePoint(user.getExperiencePoint().initial().getValue())
             .archives(user.getArchives() == null ? new ArrayList<>() : getArchiveJpaEntities(user))
+            .comments(user.getComments() == null ? new ArrayList<>() : getCommentJpaEntities(user))
             .goal(user.getGoal())
             .build();
 
@@ -60,7 +70,9 @@ public class UserJpaMapper {
             .refreshToken(user.getRefreshToken().getValue())
             .birthday(user.getBirthday())
             .category(user.getCategory())
+            .experiencePoint(user.getLevel().getExperiencePoint())
             .archives(getArchiveJpaEntities(user))
+            .comments(getCommentJpaEntities(user))
             .build();
     }
 
@@ -70,8 +82,11 @@ public class UserJpaMapper {
             .collect(Collectors.toList());
     }
 
-    // user <-> archive 연관 만들고
-    // 비즈니스 로직 작업
+    private List<CommentJpaEntity> getCommentJpaEntities(User user) {
+        return user.getComments().stream()
+            .map(comment -> commentJpaMapper.toJpaEntity(comment))
+            .collect(Collectors.toList());
+    }
 
     public User toDomain(UserJpaEntity userJpaEntity) {
         return User.builder()
@@ -84,8 +99,10 @@ public class UserJpaMapper {
             .role(userJpaEntity.getRole())
             .provider(userJpaEntity.getProvider())
             .category(userJpaEntity.getCategory())
+            .level(Level.of(userJpaEntity.getExperiencePoint()))
             .goal(userJpaEntity.getGoal())
             .archives(mapArchives(userJpaEntity.getArchives()))
+            .comments(mapComments(userJpaEntity.getComments()))
             .createdAt(userJpaEntity.getCreatedAt())
             .updatedAt(userJpaEntity.getUpdatedAt())
             .build();
@@ -93,12 +110,13 @@ public class UserJpaMapper {
 
     private List<Archive> mapArchives(List<ArchiveJpaEntity> archives) {
         return archives.stream()
-            .map(archiveJpaEntity -> Archive.builder()
-	.id(archiveJpaEntity.getId())
-	.category(archiveJpaEntity.getCategory())
-	.newsLetterIds(archiveJpaEntity.getNewsLetterIds())
-	.termIds(archiveJpaEntity.getTermIds())
-	.build())
+            .map(archiveJpaEntity -> archiveJpaMapper.toDomain(archiveJpaEntity))
+            .toList();
+    }
+
+    private List<Comment> mapComments(List<CommentJpaEntity> comments) {
+        return comments.stream()
+            .map(commentJpaEntity -> commentJpaMapper.toDomain(commentJpaEntity))
             .toList();
     }
 }

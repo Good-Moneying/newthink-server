@@ -8,6 +8,7 @@ import kusitms.duduk.core.user.dto.response.UserResponse;
 import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.user.User;
 import kusitms.duduk.domain.user.vo.Email;
+import kusitms.duduk.domain.user.vo.ExperiencePoint;
 import kusitms.duduk.domain.user.vo.Gender;
 import kusitms.duduk.domain.user.vo.Goal;
 import kusitms.duduk.domain.user.vo.Nickname;
@@ -18,6 +19,8 @@ import kusitms.duduk.domain.user.vo.Role;
 @Mapper
 public class UserDtoMapper {
 
+    // todo : defaultProfileUrl 추가
+    final String defaultUrl = "https://duduk.kusitms.club/images/default-profile.png";
     public User toDomain(CreateUserRequest request) {
         return User.builder()
             .email(Email.from(request.email()))
@@ -29,6 +32,7 @@ public class UserDtoMapper {
             .provider(Provider.from(request.provider()))
             .category(Category.from(request.category()))
             .goal(Goal.from(request.goal()))
+            .experiencePoint(ExperiencePoint.initial())
             .archives(new ArrayList<>())
             .build();
     }

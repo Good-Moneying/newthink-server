@@ -1,8 +1,13 @@
 package kusitms.duduk.application.newsletter.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import kusitms.duduk.application.comment.persistence.CommentJpaMapper;
+import kusitms.duduk.application.comment.persistence.entity.CommentJpaEntity;
 import kusitms.duduk.application.newsletter.persistence.entity.NewsLetterJpaEntity;
 import kusitms.duduk.common.annotation.Mapper;
+import kusitms.duduk.domain.comment.Comment;
 import kusitms.duduk.domain.global.Count;
 import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.newsletter.NewsLetter;
@@ -11,9 +16,16 @@ import kusitms.duduk.domain.newsletter.vo.Keywords;
 import kusitms.duduk.domain.newsletter.vo.Summary;
 import kusitms.duduk.domain.newsletter.vo.Thumbnail;
 import kusitms.duduk.domain.newsletter.vo.Title;
+import kusitms.duduk.domain.user.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
+@RequiredArgsConstructor
 @Mapper
 public class NewsLetterJpaMapper {
+
+    private final CommentJpaMapper commentJpaMapper;
 
     public NewsLetterJpaEntity toJpaEntity(NewsLetter newsLetter) {
         if (newsLetter == null) {
@@ -29,6 +41,8 @@ public class NewsLetterJpaMapper {
 	newsLetter.getThumbnail() != null ? newsLetter.getThumbnail().getUrl() : null)
             .title(newsLetter.getTitle().getTitle())
             .content(newsLetter.getContent().getContent())
+            .comments(newsLetter.getComments() == null ? new ArrayList<>()
+	: getCommentJpaEntities(newsLetter))
             .keywords(newsLetter.getKeywords().toSentence())
             .category(newsLetter.getCategory())
             .type(newsLetter.getType())
@@ -36,6 +50,12 @@ public class NewsLetterJpaMapper {
             .viewCount(newsLetter.getViewCount().getCount())
             .scrapCount(newsLetter.getScrapCount().getCount())
             .build();
+    }
+
+    private List<CommentJpaEntity> getCommentJpaEntities(NewsLetter newsLetter) {
+        return newsLetter.getComments().stream()
+            .map(comment -> commentJpaMapper.toJpaEntity(comment))
+            .collect(Collectors.toList());
     }
 
     public NewsLetterJpaEntity toJpaEntity(NewsLetter newsLetter,
@@ -51,6 +71,7 @@ public class NewsLetterJpaMapper {
             .keywords(newsLetter.getKeywords().toSentence())
             .category(newsLetter.getCategory())
             .summary(newsLetter.getSummary().toSentence())
+            .comments(getCommentJpaEntities(newsLetter))
             .viewCount(newsLetter.getViewCount().getCount())
             .scrapCount(newsLetter.getScrapCount().getCount())
             .build();
@@ -73,6 +94,7 @@ public class NewsLetterJpaMapper {
             .summary(Summary.from(jpaEntity.getSummary()))
             .viewCount(Count.from(jpaEntity.getViewCount()))
             .scrapCount(Count.from(jpaEntity.getScrapCount()))
+            .comments(mapComments(jpaEntity.getComments()))
             .createdAt(jpaEntity.getCreatedAt())
             .updatedAt(jpaEntity.getUpdatedAt())
             .build();
@@ -81,6 +103,13 @@ public class NewsLetterJpaMapper {
     public List<NewsLetter> toDomainList(List<NewsLetterJpaEntity> newsLetters) {
         return newsLetters.stream()
             .map(this::toDomain)
+            .toList();
+    }
+
+    // todo 중복되는데 나중에 분리하자
+    private List<Comment> mapComments(List<CommentJpaEntity> comments) {
+        return comments.stream()
+            .map(commentJpaEntity -> commentJpaMapper.toDomain(commentJpaEntity))
             .toList();
     }
 }

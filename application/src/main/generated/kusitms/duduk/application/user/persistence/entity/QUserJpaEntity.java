@@ -28,10 +28,14 @@ public class QUserJpaEntity extends EntityPathBase<UserJpaEntity> {
 
     public final EnumPath<kusitms.duduk.domain.global.Category> category = createEnum("category", kusitms.duduk.domain.global.Category.class);
 
+    public final ListPath<kusitms.duduk.application.comment.persistence.entity.CommentJpaEntity, kusitms.duduk.application.comment.persistence.entity.QCommentJpaEntity> comments = this.<kusitms.duduk.application.comment.persistence.entity.CommentJpaEntity, kusitms.duduk.application.comment.persistence.entity.QCommentJpaEntity>createList("comments", kusitms.duduk.application.comment.persistence.entity.CommentJpaEntity.class, kusitms.duduk.application.comment.persistence.entity.QCommentJpaEntity.class, PathInits.DIRECT2);
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
     public final StringPath email = createString("email");
+
+    public final NumberPath<Integer> experiencePoint = createNumber("experiencePoint", Integer.class);
 
     public final EnumPath<kusitms.duduk.domain.user.vo.Gender> gender = createEnum("gender", kusitms.duduk.domain.user.vo.Gender.class);
 

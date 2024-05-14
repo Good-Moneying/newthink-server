@@ -1,8 +1,11 @@
 package kusitms.duduk.apiserver.user.presentation;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.List;
 import kusitms.duduk.apiserver.security.infrastructure.CustomUserDetails;
+import kusitms.duduk.core.attendance.dto.WeeklyAttendanceResponse;
+import kusitms.duduk.core.attendance.dto.WeeklyAttendanceResponse.DailyAttendance;
 import kusitms.duduk.core.newsletter.dto.response.ArchiveNewsLetterResponse;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterThumbnailResponse;
 import kusitms.duduk.core.newsletter.port.input.ArchiveNewsLetterUseCase;
@@ -58,6 +61,19 @@ public class UserController implements UserControllerDocs {
 
     @GetMapping("/home")
     public ResponseEntity<RetrieveHomeResponse> home(CustomUserDetails customUserDetails) {
+        return new ResponseEntity<>(retrieveUserQuery.home(customUserDetails.getEmail()),
+            HttpStatus.OK);
+    }
+
+    @GetMapping("/mypage")
+    public ResponseEntity<RetrieveMypageResponse> mypage(
+        @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        return new ResponseEntity<>(retrieveUserQuery.mypage(customUserDetails.getEmail()),
+            HttpStatus.OK);
+    }
+
+    @GetMapping("/home/test")
+    public ResponseEntity<RetrieveHomeResponse> homeTest(CustomUserDetails customUserDetails) {
         RetrieveHomeResponse response = RetrieveHomeResponse.builder()
             .todayNewsLetter(NewsLetterThumbnailResponse.builder()
 	.id(1L)
@@ -140,14 +156,31 @@ public class UserController implements UserControllerDocs {
             .build();
 
         return new ResponseEntity<>(response, HttpStatus.OK);
-//        return new ResponseEntity<>(retrieveUserQuery.home(customUserDetails.getEmail()),
-//            HttpStatus.OK);
     }
 
-    @GetMapping("/mypage")
-    public ResponseEntity<RetrieveMypageResponse> mypage(
+    @GetMapping("/mypage/test")
+    public ResponseEntity<RetrieveMypageResponse> mypageTest(
         @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        return new ResponseEntity<>(retrieveUserQuery.mypage(customUserDetails.getEmail()),
+        return new ResponseEntity<>(
+            RetrieveMypageResponse.builder()
+	.nickname("백건도리")
+	.reward(3)
+	.attendances(
+	    WeeklyAttendanceResponse.builder()
+	        .data(
+	            List.of(
+		DailyAttendance.of(DayOfWeek.MONDAY, true),
+		DailyAttendance.of(DayOfWeek.TUESDAY, true),
+		DailyAttendance.of(DayOfWeek.WEDNESDAY, false),
+		DailyAttendance.of(DayOfWeek.THURSDAY, false),
+		DailyAttendance.of(DayOfWeek.FRIDAY, true),
+		DailyAttendance.of(DayOfWeek.SATURDAY, false),
+		DailyAttendance.of(DayOfWeek.SUNDAY, false)
+	            )
+	        )
+	        .build()
+	)
+	.build(),
             HttpStatus.OK);
     }
 }
