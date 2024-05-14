@@ -7,7 +7,6 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,8 +16,6 @@ import com.querydsl.core.types.dsl.PathInits;
 public class QCommentJpaEntity extends EntityPathBase<CommentJpaEntity> {
 
     private static final long serialVersionUID = -1209168235L;
-
-    private static final PathInits INITS = PathInits.DIRECT2;
 
     public static final QCommentJpaEntity commentJpaEntity = new QCommentJpaEntity("commentJpaEntity");
 
@@ -31,9 +28,11 @@ public class QCommentJpaEntity extends EntityPathBase<CommentJpaEntity> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final BooleanPath isPrivate = createBoolean("isPrivate");
+
     public final NumberPath<Integer> likeCount = createNumber("likeCount", Integer.class);
 
-    public final kusitms.duduk.application.newsletter.persistence.entity.QNewsLetterJpaEntity newsLetter;
+    public final NumberPath<Long> newsLetterId = createNumber("newsLetterId", Long.class);
 
     public final EnumPath<kusitms.duduk.domain.comment.vo.Perspective> perspective = createEnum("perspective", kusitms.duduk.domain.comment.vo.Perspective.class);
 
@@ -42,28 +41,18 @@ public class QCommentJpaEntity extends EntityPathBase<CommentJpaEntity> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
-    public final kusitms.duduk.application.user.persistence.entity.QUserJpaEntity user;
+    public final NumberPath<Long> userId = createNumber("userId", Long.class);
 
     public QCommentJpaEntity(String variable) {
-        this(CommentJpaEntity.class, forVariable(variable), INITS);
+        super(CommentJpaEntity.class, forVariable(variable));
     }
 
     public QCommentJpaEntity(Path<? extends CommentJpaEntity> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        super(path.getType(), path.getMetadata());
     }
 
     public QCommentJpaEntity(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
-    }
-
-    public QCommentJpaEntity(PathMetadata metadata, PathInits inits) {
-        this(CommentJpaEntity.class, metadata, inits);
-    }
-
-    public QCommentJpaEntity(Class<? extends CommentJpaEntity> type, PathMetadata metadata, PathInits inits) {
-        super(type, metadata, inits);
-        this.newsLetter = inits.isInitialized("newsLetter") ? new kusitms.duduk.application.newsletter.persistence.entity.QNewsLetterJpaEntity(forProperty("newsLetter")) : null;
-        this.user = inits.isInitialized("user") ? new kusitms.duduk.application.user.persistence.entity.QUserJpaEntity(forProperty("user")) : null;
+        super(CommentJpaEntity.class, metadata);
     }
 
 }

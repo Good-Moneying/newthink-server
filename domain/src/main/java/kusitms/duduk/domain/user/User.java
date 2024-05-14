@@ -99,4 +99,8 @@ public class User {
             .map(Archive::getTermIds)
             .orElseThrow(() -> new IllegalArgumentException("Category not found"));
     }
+
+    public void addComment(Comment savedComment) {
+        this.comments.add(savedComment);
+    }
 }

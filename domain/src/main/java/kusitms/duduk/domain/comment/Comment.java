@@ -15,11 +15,16 @@ import lombok.Getter;
 public class Comment {
 
     private Id id;
-    private User user;
-    private NewsLetter newsLetter;
+    private Id userId;
+    private Id newsLetterId;
+    boolean isPrivate;
     private Content content;
     private Content summarizedContent;
     private Perspective perspective;
     private Count likeCount;
     private LocalDateTime createdAt;
+
+    public void addSummarizedContent(String summarize) {
+        this.summarizedContent = Content.from(summarize);
+    }
 }

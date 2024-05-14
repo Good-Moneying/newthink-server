@@ -26,16 +26,16 @@ public class ArchiveNewsLetterCommand implements ArchiveNewsLetterUseCase {
 
     @Override
     public ArchiveNewsLetterResponse archive(String email, Long newsLetterId) {
-        // 유저를 찾는다
         User user = loadUserPort.findByEmail(email)
             .orElseThrow(() -> new NotExistsException("User not found"));
 
-        // 뉴스레터를 찾는다
         NewsLetter newsLetter = loadNewsLetterPort.findById(newsLetterId)
             .orElseThrow(() -> new NotExistsException("NewsLetter not found"));
 
-        // 유저의 아카이브에 추가한다
+        // 아카이브 이벤트를 발행한다
         applicationEventPublisher.publishEvent(new ArchiveNewsLetterEvent(this, newsLetterId));
+
+        // 유저의 아카이브에 추가한다
         user.archiveNewsLetter(newsLetter);
         updateUserPort.update(user);
         return new ArchiveNewsLetterResponse(newsLetterId);

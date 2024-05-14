@@ -10,6 +10,7 @@ import kusitms.duduk.domain.newsletter.NewsLetter;
 import kusitms.duduk.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,8 +24,10 @@ class CreateNewsLetterCommand implements CreateNewsLetterUseCase {
     private final NewsLetterDtoMapper newsLetterDtoMapper;
     private final SaveNewsLetterPort saveNewsLetterPort;
     private final LoadUserPort loadUserPort;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Override
+
     public NewsLetterResponse create(CreateNewsLetterRequest request) {
         NewsLetter newsLetter = newsLetterDtoMapper.toDomain(request);
         log.info("Create NewsLetter By AI\n request: {}", request.toString());
@@ -41,12 +44,9 @@ class CreateNewsLetterCommand implements CreateNewsLetterUseCase {
             throw new IllegalArgumentException("User is not editor");
         }
 
-        // todo 유저 아이디 값을 여기서 세팅
         NewsLetter newsLetter = newsLetterDtoMapper.toDomain(request, editor.getId());
         log.info("Create NewsLetter By Editor\n request: {}", request.toString());
 
-        // todo
-        // newsLetter.writeBy(user); 해서 여기서 처리?
         return newsLetterDtoMapper.toDto(saveNewsLetterPort.create(newsLetter));
     }
 }

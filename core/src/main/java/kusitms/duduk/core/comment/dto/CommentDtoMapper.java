@@ -14,19 +14,21 @@ public class CommentDtoMapper {
 
     public Comment toDomain(CreateCommentRequest request, User user, NewsLetter newsLetter) {
         return Comment.builder()
-            .user(user)
-            .newsLetter(newsLetter)
+            .userId(user.getId())
+            .newsLetterId(newsLetter.getNewsLetterId())
             .content(Content.from(request.content()))
             .perspective(Perspective.from(request.perspective()))
+            .isPrivate(request.isPrivate())
             .build();
     }
 
     public CommentResponse toDto(Comment comment) {
         return CommentResponse.builder()
             .commentId(comment.getId().getValue())
-            .email(comment.getUser().getEmail().getValue())
-            .newsLetterId(comment.getNewsLetter().getNewsLetterId().getValue())
+            .userId(comment.getUserId().getValue())
+            .newsLetterId(comment.getNewsLetterId().getValue())
             .content(comment.getContent().getSentence())
+            .isPrivate(comment.isPrivate())
             .perspective(comment.getPerspective().name())
             .build();
     }

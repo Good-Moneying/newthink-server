@@ -29,11 +29,10 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
 
     @Override
     public RetrieveHomeResponse home(String email) {
-        // 오늘의 뉴스레터를 가져온다
         User user = loadUserPort.findByEmail(email)
             .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
 
-        // 오늘의 뉴스를 가져온다
+        // 오늘의 뉴스레터를 가져온다
         NewsLetterThumbnailResponse todayNewsLetter = retrieveNewsLetterQuery.retrieveLatestNewsLetter(
             user);
 
@@ -48,7 +47,6 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
 
     @Override
     public RetrieveMypageResponse mypage(String email) {
-        // 유저 정보를 가져온다
         User user = loadUserPort.findByEmail(email)
             .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
 
