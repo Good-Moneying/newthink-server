@@ -23,6 +23,7 @@ public class RetrieveArchiveCommand implements RetrieveArchiveUseCase {
         User user = loadUserPort.findByEmail(email)
             .orElseThrow(() -> new NotExistsException("User not found"));
 
+        // todo : 아이디만 줄게 아니라 다르게 줘야함
         List<Long> newsLetterIds = user.getNewsLettersFromArchive(category);
         return new ArchiveResponse(newsLetterIds);
     }
@@ -32,6 +33,7 @@ public class RetrieveArchiveCommand implements RetrieveArchiveUseCase {
         User user = loadUserPort.findByEmail(email)
             .orElseThrow(() -> new NotExistsException("User not found"));
 
+        // todo : 아이디만 줄게 아니라 다르게 줘야함
         List<Long> termIds = user.getTermsFromArchive();
         return new ArchiveResponse(termIds);
     }

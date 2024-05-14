@@ -44,7 +44,7 @@ public class UserJpaMapper {
             .role(user.getRole())
             .provider(user.getProvider())
             .category(user.getCategory())
-            .experiencePoint(user.getExperiencePoint().getValue())
+            .experiencePoint(user.getExperiencePoint().initial().getValue())
             .archives(user.getArchives() == null ? new ArrayList<>() : getArchiveJpaEntities(user))
             .comments(user.getComments() == null ? new ArrayList<>() : getCommentJpaEntities(user))
             .goal(user.getGoal())

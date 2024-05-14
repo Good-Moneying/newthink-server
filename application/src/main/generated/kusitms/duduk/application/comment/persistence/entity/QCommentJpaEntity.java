@@ -31,7 +31,13 @@ public class QCommentJpaEntity extends EntityPathBase<CommentJpaEntity> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final NumberPath<Integer> likeCount = createNumber("likeCount", Integer.class);
+
     public final kusitms.duduk.application.newsletter.persistence.entity.QNewsLetterJpaEntity newsLetter;
+
+    public final EnumPath<kusitms.duduk.domain.comment.vo.Perspective> perspective = createEnum("perspective", kusitms.duduk.domain.comment.vo.Perspective.class);
+
+    public final StringPath summarizedContent = createString("summarizedContent");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
