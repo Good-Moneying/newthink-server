@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class NewsLetterBatchService {
+public class BatchScheduler {
 
     private final JobLauncher jobLauncher;
 

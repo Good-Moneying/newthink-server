@@ -1,14 +1,11 @@
 package kusitms.duduk.batch.processor;
 
-import kusitms.duduk.batch.dto.crawling.CrawlingNews;
-import kusitms.duduk.batch.dto.openai.parsing.ParsedAiContent;
-import kusitms.duduk.batch.util.GenerateAiNewsUtils;
+import kusitms.duduk.application.ai.service.ParsingAiContent;
+import kusitms.duduk.core.ai.dto.response.OpenAIResponse;
+import kusitms.duduk.core.ai.port.output.AiClientPort;
+import kusitms.duduk.core.crawler.dto.response.CrawlingNewsResponse;
+import kusitms.duduk.core.ai.dto.response.ParsedAiContentResponse;
 import kusitms.duduk.core.newsletter.dto.request.CreateNewsLetterRequest;
-import kusitms.duduk.domain.global.Category;
-import kusitms.duduk.domain.global.Count;
-import kusitms.duduk.domain.global.Id;
-import kusitms.duduk.domain.newsletter.NewsLetter;
-import kusitms.duduk.domain.newsletter.vo.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ItemProcessor;
@@ -17,20 +14,22 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class CrawlingProcessor implements ItemProcessor<CrawlingNews, CreateNewsLetterRequest> {
+public class CrawlingProcessor implements ItemProcessor<CrawlingNewsResponse, CreateNewsLetterRequest> {
 
-    private final GenerateAiNewsUtils generateAiNewsUtils;
+    private final AiClientPort aiClientPort;
+    private final ParsingAiContent parsingAiContent;
 
     @Override
-    public CreateNewsLetterRequest process(CrawlingNews item) throws Exception {
-        ParsedAiContent parsedAiContent = generateAiNewsUtils.getAIResponse(item);
+    public CreateNewsLetterRequest process(CrawlingNewsResponse item) throws Exception {
+        OpenAIResponse openAIResponse = aiClientPort.retrieveAiResponse(item);
+        ParsedAiContentResponse parsedAiContentResponse = parsingAiContent.getParsingResult(openAIResponse.getContent());
 
         return new CreateNewsLetterRequest(
                 item.getThumbnailURL(),
-                parsedAiContent.getHeadline(),
-                parsedAiContent.getContent(),
-                parsedAiContent.getKeywords(),
-                parsedAiContent.getCategory(),
+                parsedAiContentResponse.headline(),
+                parsedAiContentResponse.content(),
+                parsedAiContentResponse.keywords(),
+                parsedAiContentResponse.category(),
                 null,
                 "AI"
         );

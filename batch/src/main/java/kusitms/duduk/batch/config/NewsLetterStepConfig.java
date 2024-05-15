@@ -1,9 +1,11 @@
 package kusitms.duduk.batch.config;
 
-import kusitms.duduk.batch.dto.crawling.CrawlingNews;
-import kusitms.duduk.batch.dto.openai.parsing.ParsedAiContent;
-import kusitms.duduk.batch.util.CrawlingUtils;
-import kusitms.duduk.batch.util.GenerateAiNewsUtils;
+import kusitms.duduk.application.ai.service.ParsingAiContent;
+import kusitms.duduk.batch.crawling.service.NewsCrawler;
+import kusitms.duduk.core.ai.dto.response.OpenAIResponse;
+import kusitms.duduk.core.ai.dto.response.ParsedAiContentResponse;
+import kusitms.duduk.core.ai.port.output.AiClientPort;
+import kusitms.duduk.core.crawler.dto.response.CrawlingNewsResponse;
 import kusitms.duduk.core.newsletter.dto.request.CreateNewsLetterRequest;
 import kusitms.duduk.core.newsletter.port.input.CreateNewsLetterUseCase;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +15,11 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.repeat.RepeatStatus;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
+
+import java.util.List;
 
 @Slf4j
 @Configuration
@@ -30,36 +33,39 @@ public class NewsLetterStepConfig {
 //    private final CrawlingReader crawlingReader;
 //    private final CrawlingProcessor crawlingProcessor;
 //    private final CrawlingWriter crawlingWriter;
-    private final CrawlingUtils crawlingUtils;
-    private final GenerateAiNewsUtils generateAiNewsUtils;
+    private final List<NewsCrawler> newsCrawlerList;
+    private final AiClientPort aiClientPort;
+    private final ParsingAiContent parsingAiContent;
     private final CreateNewsLetterUseCase createNewsLetterUseCase;
-
-    @Value("${crawling.target-url}")
-    private String TARGET_URL;
 
     @Bean
     public Step crawlingNewsStep() {
         return new StepBuilder("crawlingNewsStep", jobRepository)
-//                .<CrawlingNews, CreateNewsLetterRequest>chunk(1,transactionManager)
+//                .<CrawlingNewsResponse, CreateNewsLetterRequest>chunk(1,transactionManager)
 //                .reader(crawlingReader)
 //                .processor(crawlingProcessor)
 //                .writer(crawlingWriter)
                 .tasklet(
                         (contribution, chunkContext) -> {
-                            CrawlingNews crawlingNews = crawlingUtils.getCrawlingNews(TARGET_URL);
-                            ParsedAiContent parsedAiContent = generateAiNewsUtils.getAIResponse(crawlingNews);
+                            //커멘드 패턴을 활용한 다형성 구현 방식 적용
+                            for(NewsCrawler newsCrawler : newsCrawlerList) {
+                                CrawlingNewsResponse crawlingNews = newsCrawler.crawl();
 
-                            createNewsLetterUseCase.create(
-                                    new CreateNewsLetterRequest(
-                                            crawlingNews.getThumbnailURL(),
-                                            parsedAiContent.getHeadline(),
-                                            parsedAiContent.getContent(),
-                                            parsedAiContent.getKeywords(),
-                                            parsedAiContent.getCategory(),
-                                            "미정",
-                                            "AI"
-                                    )
-                            );
+                                OpenAIResponse openAIResponse = aiClientPort.retrieveAiResponse(crawlingNews);
+                                ParsedAiContentResponse parsedAiContent = parsingAiContent.getParsingResult(openAIResponse.getContent());
+
+                                createNewsLetterUseCase.create(
+                                        new CreateNewsLetterRequest(
+                                                crawlingNews.getThumbnailURL(),
+                                                parsedAiContent.headline(),
+                                                parsedAiContent.content(),
+                                                parsedAiContent.keywords(),
+                                                parsedAiContent.category(),
+                                                "미정",
+                                                "AI"
+                                        )
+                                );
+                            }
                             return RepeatStatus.FINISHED;
                         }, transactionManager
                 )

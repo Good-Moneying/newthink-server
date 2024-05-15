@@ -1,7 +1,6 @@
-package kusitms.duduk.batch.util;
+package kusitms.duduk.batch.crawling.service;
 
-import kusitms.duduk.batch.dto.crawling.CrawlingNews;
-import lombok.RequiredArgsConstructor;
+import kusitms.duduk.core.crawler.dto.response.CrawlingNewsResponse;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,13 +12,16 @@ import java.nio.file.Paths;
 import java.util.List;
 
 @Component
-public class CrawlingUtils {
+public class KoreaEconomyNewsCrawler implements NewsCrawler{
 
     @Value("${crawling.driver_path}")
     private String CRAWLING_DRIVER_PATH;
 
-    public CrawlingNews getCrawlingNews(String target_url) throws InterruptedException {
+    @Value("${crawling.target-url}")
+    private String TARGET_URL;
 
+    @Override
+    public CrawlingNewsResponse crawl() throws InterruptedException {
         ChromeDriver driver = new ChromeDriver();
 
         // 현재 package의 workspace 경로
@@ -30,7 +32,7 @@ public class CrawlingUtils {
         System.setProperty("webdriver.chrome.driver", path.toString());
 
         // 브라우저 드라이버 실행
-        driver.get(target_url);
+        driver.get(TARGET_URL);
         Thread.sleep(3000);
 
         //경제 파트로 이동
@@ -45,7 +47,7 @@ public class CrawlingUtils {
         List<WebElement> thumbList = webElementNewsList.findElements(By.cssSelector(".thumb"));
 
         //dto mapping
-        CrawlingNews crawlingNews = CrawlingNews.builder()
+        CrawlingNewsResponse crawlingNews = CrawlingNewsResponse.builder()
                 .title(newsList.get(0).findElement(By.cssSelector(".news-tit")).getAttribute("innerText"))
                 .content(newsList.get(0).findElement(By.cssSelector(".lead")).getAttribute("innerText"))
                 .thumbnailURL(thumbList.get(0).findElement(By.cssSelector("img")).getAttribute("src"))
