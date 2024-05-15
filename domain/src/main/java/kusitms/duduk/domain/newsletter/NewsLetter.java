@@ -52,4 +52,8 @@ public class NewsLetter {
     public void addComment(Comment savedComment) {
         this.comments.add(savedComment);
     }
+
+    public void addSummary(String summary) {
+        this.summary = Summary.from(summary);
+    }
 }

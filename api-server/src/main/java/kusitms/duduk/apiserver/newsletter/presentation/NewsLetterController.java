@@ -3,9 +3,11 @@ package kusitms.duduk.apiserver.newsletter.presentation;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import kusitms.duduk.core.newsletter.dto.response.NewsLetterDetailResponse;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterTestResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/newsletters")
 public class NewsLetterController implements NewsLetterControllerDocs{
+
+    @GetMapping("/{newsLetterId}")
+    public NewsLetterDetailResponse retrieveNewsLetterDetail(
+        @PathVariable(name = "newsLetterId") Long newsLetterId) {
+        return retrieveNewsLetterDetail(newsLetterId);
+    }
 
     @GetMapping("/test")
     public NewsLetterTestResponse test() {

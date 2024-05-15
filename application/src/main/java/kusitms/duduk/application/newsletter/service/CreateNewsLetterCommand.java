@@ -1,9 +1,13 @@
 package kusitms.duduk.application.newsletter.service;
 
+import kusitms.duduk.application.newsletter.event.CreateSummaryEvent;
+import kusitms.duduk.common.exception.custom.NotExistsException;
 import kusitms.duduk.core.newsletter.dto.NewsLetterDtoMapper;
 import kusitms.duduk.core.newsletter.dto.request.CreateNewsLetterRequest;
+import kusitms.duduk.core.newsletter.dto.response.NewsLetterDetailResponse;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterResponse;
 import kusitms.duduk.core.newsletter.port.input.CreateNewsLetterUseCase;
+import kusitms.duduk.core.newsletter.port.output.LoadNewsLetterPort;
 import kusitms.duduk.core.newsletter.port.output.SaveNewsLetterPort;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
 import kusitms.duduk.domain.newsletter.NewsLetter;
@@ -24,15 +28,21 @@ class CreateNewsLetterCommand implements CreateNewsLetterUseCase {
     private final NewsLetterDtoMapper newsLetterDtoMapper;
     private final SaveNewsLetterPort saveNewsLetterPort;
     private final LoadUserPort loadUserPort;
+    private final LoadNewsLetterPort loadNewsLetterPort;
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @Override
-
     public NewsLetterResponse create(CreateNewsLetterRequest request) {
         NewsLetter newsLetter = newsLetterDtoMapper.toDomain(request);
         log.info("Create NewsLetter By AI\n request: {}", request.toString());
+        NewsLetter savedNewsLetter = saveNewsLetterPort.create(newsLetterDtoMapper.toDomain(request));
 
-        return newsLetterDtoMapper.toDto(saveNewsLetterPort.create(newsLetter));
+        applicationEventPublisher.publishEvent(new CreateSummaryEvent(this, newsLetter.getNewsLetterId().getValue()));
+
+        NewsLetter loadedNewsLetter = loadNewsLetterPort.findById(savedNewsLetter.getNewsLetterId().getValue())
+            .orElseThrow(() -> new NotExistsException("NewsLetter not found"));
+
+        return newsLetterDtoMapper.toDto(loadedNewsLetter);
     }
 
     @Override
@@ -44,9 +54,14 @@ class CreateNewsLetterCommand implements CreateNewsLetterUseCase {
             throw new IllegalArgumentException("User is not editor");
         }
 
-        NewsLetter newsLetter = newsLetterDtoMapper.toDomain(request, editor.getId());
+        NewsLetter savedNewsLetter = saveNewsLetterPort.create(newsLetterDtoMapper.toDomain(request, editor.getId()));
         log.info("Create NewsLetter By Editor\n request: {}", request.toString());
 
-        return newsLetterDtoMapper.toDto(saveNewsLetterPort.create(newsLetter));
+        applicationEventPublisher.publishEvent(new CreateSummaryEvent(this, savedNewsLetter.getNewsLetterId().getValue()));
+
+        NewsLetter loadedNewsLetter = loadNewsLetterPort.findById(savedNewsLetter.getNewsLetterId().getValue())
+            .orElseThrow(() -> new NotExistsException("NewsLetter not found"));
+
+        return newsLetterDtoMapper.toDto(loadedNewsLetter);
     }
 }
