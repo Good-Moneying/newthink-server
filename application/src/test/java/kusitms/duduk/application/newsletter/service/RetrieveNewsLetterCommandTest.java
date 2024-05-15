@@ -14,7 +14,6 @@ import kusitms.duduk.core.newsletter.port.output.DeleteNewsLetterPort;
 import kusitms.duduk.core.newsletter.port.output.SaveNewsLetterPort;
 import kusitms.duduk.core.user.port.output.DeleteUserPort;
 import kusitms.duduk.core.user.port.output.SaveUserPort;
-import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.newsletter.NewsLetter;
 import kusitms.duduk.domain.user.User;
 import org.junit.jupiter.api.AfterEach;
@@ -74,7 +73,7 @@ public class RetrieveNewsLetterCommandTest {
             savedNewsLetter.getNewsLetterId().getValue());
 
         // when
-        NewsLetterResponse response = retrieveNewsLetterQuery.retrieve(request);
+        NewsLetterResponse response = retrieveNewsLetterQuery.retrieveNewsLetterDetail(request);
 
         // then
         assertThat(response.title()).isEqualTo(savedNewsLetter.getTitle().getTitle());

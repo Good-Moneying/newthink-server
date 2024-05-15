@@ -14,25 +14,31 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class RetrieveNewsLetterCommand implements RetrieveNewsLetterQuery {
 
     private final LoadNewsLetterPort loadNewsLetterPort;
     private final NewsLetterDtoMapper newsLetterDtoMapper;
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    public NewsLetterResponse retrieve(RetrieveNewsLetterRequest request) {
-        NewsLetter newsLetter = loadNewsLetterPort.findById(request.id())
+    public NewsLetterResponse retrieveNewsLetterDetail(RetrieveNewsLetterRequest request) {
+        NewsLetter newsLetter = loadNewsLetterPort.findById(request.newsLetterId())
             .orElseThrow(() -> new IllegalArgumentException("해당 뉴스레터를 찾을 수 없습니다."));
 
         // 뉴스레터 조회 이벤트 발생
         applicationEventPublisher.publishEvent(
             new RetrieveNewsLetterEvent(this, newsLetter.getNewsLetterId().getValue()));
 
-        return newsLetterDtoMapper.toDto(newsLetter);
+        // 다시 로드
+        NewsLetter savedNewsLetter = loadNewsLetterPort.findById(request.newsLetterId())
+            .orElseThrow(() -> new IllegalArgumentException("해당 뉴스레터를 찾을 수 없습니다."));
+
+        return newsLetterDtoMapper.toDto(savedNewsLetter);
     }
 
     public NewsLetterThumbnailResponse retrieveLatestNewsLetter(User user) {

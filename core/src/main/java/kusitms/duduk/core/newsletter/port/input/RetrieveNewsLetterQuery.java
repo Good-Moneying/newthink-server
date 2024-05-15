@@ -8,7 +8,7 @@ import kusitms.duduk.domain.user.User;
 
 public interface RetrieveNewsLetterQuery {
 
-    NewsLetterResponse retrieve(RetrieveNewsLetterRequest request);
+    NewsLetterResponse retrieveNewsLetterDetail(RetrieveNewsLetterRequest request);
 
     NewsLetterThumbnailResponse retrieveLatestNewsLetter(User user);
 

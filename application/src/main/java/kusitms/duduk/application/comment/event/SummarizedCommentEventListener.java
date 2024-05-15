@@ -35,7 +35,7 @@ public class SummarizedCommentEventListener {
     @Transactional
     public void handleSummarizeCommentEvent(SummarizedCommentEvent event) {
         Comment comment = loadCommentPort.findById(event.getId())
-            .orElseThrow(() -> new NotExistsException("Comment not existed. id: " + event.getId()));
+            .orElseThrow(() -> new NotExistsException("Comment not existed. newsLetterId: " + event.getId()));
 
         String summarizedContent = summarizeCommentUseCase.summarize(comment);
         comment.addSummarizedContent(summarizedContent);
@@ -43,10 +43,10 @@ public class SummarizedCommentEventListener {
 
         User user = loadUserPort.findById(comment.getUserId().getValue())
             .orElseThrow(() -> new NotExistsException(
-	"User not existed. id: " + comment.getUserId().getValue()));
+	"User not existed. newsLetterId: " + comment.getUserId().getValue()));
         NewsLetter newsLetter = loadNewsLetterPort.findById(comment.getNewsLetterId().getValue())
             .orElseThrow(() -> new NotExistsException(
-	"NewsLetter not existed. id: " + comment.getNewsLetterId().getValue()));
+	"NewsLetter not existed. newsLetterId: " + comment.getNewsLetterId().getValue()));
 
         user.addComment(comment);
         newsLetter.addComment(comment);

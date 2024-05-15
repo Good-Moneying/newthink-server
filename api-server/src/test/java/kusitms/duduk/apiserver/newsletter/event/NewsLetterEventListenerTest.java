@@ -1,6 +1,7 @@
 package kusitms.duduk.apiserver.newsletter.event;
 
 import kusitms.duduk.application.newsletter.event.ArchiveNewsLetterEvent;
+import kusitms.duduk.application.newsletter.event.NewsLetterEventListener;
 import kusitms.duduk.application.newsletter.event.RetrieveNewsLetterEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

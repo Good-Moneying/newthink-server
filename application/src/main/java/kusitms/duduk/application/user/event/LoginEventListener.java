@@ -1,6 +1,5 @@
-package kusitms.duduk.apiserver.user.event;
+package kusitms.duduk.application.user.event;
 
-import kusitms.duduk.application.user.event.LoginUserEvent;
 import kusitms.duduk.core.user.port.input.AttendUserUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;

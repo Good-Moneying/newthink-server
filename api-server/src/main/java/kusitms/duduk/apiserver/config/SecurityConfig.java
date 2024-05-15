@@ -53,7 +53,7 @@ public class SecurityConfig {
             .cors(cors -> cors.disable())
             .headers(headers -> headers.disable())
             // Spring Security에서 제공하는 기본 로그인 페이지를 비활성화 합니다.
-            // Request 헤더에 id, password를 담아서 요청하는 방식을 사용하는 방식은 보안적으로 취약합니다.
+            // Request 헤더에 newsLetterId, password를 담아서 요청하는 방식을 사용하는 방식은 보안적으로 취약합니다.
             .httpBasic(AbstractHttpConfigurer::disable)
             .formLogin(form -> form.disable())
             // JWT 방식은 세션을 사용하지 않습니다.
