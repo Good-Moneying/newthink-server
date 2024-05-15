@@ -29,10 +29,10 @@ public class CommentJpaEntity extends BaseEntity {
     @Column(name = "comment_id")
     private Long id;
 
-    @Column(name = "news_letter_id", nullable = false)
+    @Column(name = "news_letter_id")
     private Long newsLetterId;
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id")
     private Long userId;
 
     @Column(name = "content", nullable = false)
