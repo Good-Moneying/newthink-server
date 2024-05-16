@@ -40,7 +40,7 @@ public class NewsLetterJpaMapper {
             .thumbnail(
 	newsLetter.getThumbnail() != null ? newsLetter.getThumbnail().getUrl() : null)
             .title(newsLetter.getTitle().getTitle())
-            .content(newsLetter.getContent().getContent())
+            .content(newsLetter.getContent() != null ? newsLetter.getContent().getContent() : null)
             .comments(newsLetter.getComments() == null ? new ArrayList<>()
 	: getCommentJpaEntities(newsLetter))
             .keywords(newsLetter.getKeywords().toSentence())

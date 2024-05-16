@@ -6,8 +6,7 @@ import java.util.List;
 import kusitms.duduk.application.user.service.UserSteps;
 import kusitms.duduk.core.newsletter.dto.NewsLetterDtoMapper;
 import kusitms.duduk.core.newsletter.dto.request.CreateNewsLetterRequest;
-import kusitms.duduk.core.newsletter.dto.request.RetrieveNewsLetterRequest;
-import kusitms.duduk.core.newsletter.dto.response.NewsLetterResponse;
+import kusitms.duduk.core.newsletter.dto.response.NewsLetterDetailResponse;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterThumbnailResponse;
 import kusitms.duduk.core.newsletter.port.input.RetrieveNewsLetterQuery;
 import kusitms.duduk.core.newsletter.port.output.DeleteNewsLetterPort;
@@ -48,15 +47,24 @@ public class RetrieveNewsLetterCommandTest {
     private RetrieveNewsLetterQuery retrieveNewsLetterQuery;
 
     private User savedUser;
+    private User savedEditor;
     private NewsLetter savedNewsLetter;
+
+    private NewsLetter aiNewsLetter;
 
     @BeforeEach
     void setup() {
         User user = UserSteps.ROLE_USER_생성_요청();
         savedUser = saveUserPort.create(user);
 
-        NewsLetter newsLetter = newsLetterDtoMapper.toDomain(NewsLetterSteps.EDITOR_뉴스_레터_생성_요청());
+        User editor = UserSteps.ROLE_EDITOR_생성_요청();
+        savedEditor = saveUserPort.create(editor);
+
+        NewsLetter newsLetter = NewsLetterSteps.EDITOR_뉴스_레터_생성(savedEditor.getId().getValue());
         savedNewsLetter = saveNewsLetterPort.create(newsLetter);
+
+        NewsLetter ai = NewsLetterSteps.AI_뉴스_레터_생성();
+        aiNewsLetter = saveNewsLetterPort.create(ai);
     }
 
     @AfterEach
@@ -67,17 +75,31 @@ public class RetrieveNewsLetterCommandTest {
 
 
     @Test
-    void 뉴스레터_아이디로_뉴스레터를_조회한다() {
-        // given
-        RetrieveNewsLetterRequest request = new RetrieveNewsLetterRequest(
+    void 유저_아이디와_뉴스레터_아이디로_에디터_뉴스레터를_조회한다() {
+        // when
+        NewsLetterDetailResponse response = retrieveNewsLetterQuery.retrieveNewsLetterDetail(
+            savedEditor.getEmail().getValue(),
             savedNewsLetter.getNewsLetterId().getValue());
 
-        // when
-        NewsLetterResponse response = retrieveNewsLetterQuery.retrieveNewsLetterDetail(request);
+        // todo : NewsLetter Comment가 잘 불러오는지 확인해야됨
 
         // then
+        assertThat(response).isNotNull();
         assertThat(response.title()).isEqualTo(savedNewsLetter.getTitle().getTitle());
-        assertThat(response.content()).isEqualTo(savedNewsLetter.getContent().getContent());
+    }
+
+    @Test
+    void 뉴스레터_아이디로_AI_뉴스레터를_조회한다() {
+        // when
+        NewsLetterDetailResponse response = retrieveNewsLetterQuery.retrieveNewsLetterDetail(
+            savedUser.getEmail().getValue(),
+            aiNewsLetter.getNewsLetterId().getValue());
+
+        // then
+        assertThat(response).isNotNull();
+        assertThat(response.title()).isEqualTo(savedNewsLetter.getTitle().getTitle());
+        // body를 Null로 놔두는 것이 맞는가
+        assertThat(response.body()).isNull();
     }
 
     @Test
@@ -103,10 +125,12 @@ public class RetrieveNewsLetterCommandTest {
             NewsLetterSteps.EDITOR_뉴스_레터_생성_요청(),
             NewsLetterSteps.EDITOR_뉴스_레터_생성_요청()
         );
-        aiNewsLetters.forEach(request -> saveNewsLetterPort.create(newsLetterDtoMapper.toDomain(request)));
+        aiNewsLetters.forEach(
+            request -> saveNewsLetterPort.create(newsLetterDtoMapper.toDomain(request)));
 
         // when
-        List<NewsLetterThumbnailResponse> responses = retrieveNewsLetterQuery.retrieveRealtimeTrendNewsLetter(savedUser);
+        List<NewsLetterThumbnailResponse> responses = retrieveNewsLetterQuery.retrieveRealtimeTrendNewsLetter(
+            savedUser);
 
         // then
         assertThat(responses.size()).isEqualTo(3);
@@ -124,10 +148,12 @@ public class RetrieveNewsLetterCommandTest {
             NewsLetterSteps.EDITOR_뉴스_레터_생성_요청(),
             NewsLetterSteps.EDITOR_뉴스_레터_생성_요청()
         );
-        aiNewsLetters.forEach(request -> saveNewsLetterPort.create(newsLetterDtoMapper.toDomain(request)));
+        aiNewsLetters.forEach(
+            request -> saveNewsLetterPort.create(newsLetterDtoMapper.toDomain(request)));
 
         // when
-        List<NewsLetterThumbnailResponse> responses = retrieveNewsLetterQuery.retrieveCustomizeNewsLetter(savedUser);
+        List<NewsLetterThumbnailResponse> responses = retrieveNewsLetterQuery.retrieveCustomizeNewsLetter(
+            savedUser);
 
         // then
         assertThat(responses.size()).isEqualTo(3);

@@ -1,19 +1,34 @@
 package kusitms.duduk.core.newsletter.dto.response;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.util.List;
+import kusitms.duduk.domain.newsletter.vo.Summary;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Value;
 
 @Builder(toBuilder = true)
-public record NewsLetterDetailResponse(LocalDate publishedAt, String editor,
-		       ArrayList<Block> blocks, ArrayList<Comment> comments,
+public record NewsLetterDetailResponse(String title,
+		       Editor editor,
+		       LocalDateTime publishedAt,
+                                       String summary,
+		       List<Block> body,
+		       List<Comment> comments,
 		       boolean isCommented) {
-
 
     @Data
     @AllArgsConstructor
+    @Builder
+    public static class Editor {
+
+        private String nickname;
+        private String profileUrl;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @Builder
     public static class Block {
 
         private String type;
@@ -22,9 +37,11 @@ public record NewsLetterDetailResponse(LocalDate publishedAt, String editor,
 
     @Data
     @AllArgsConstructor
+    @Builder
     public static class Comment {
 
-        private String nickname;
+        private Long userId;
         private String content;
+        private int likeCount;
     }
 }

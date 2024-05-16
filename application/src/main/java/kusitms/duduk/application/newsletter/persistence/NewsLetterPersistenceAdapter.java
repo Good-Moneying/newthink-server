@@ -11,7 +11,6 @@ import kusitms.duduk.core.newsletter.port.output.SaveNewsLetterPort;
 import kusitms.duduk.core.newsletter.port.output.UpdateNewsLetterPort;
 import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.newsletter.NewsLetter;
-import kusitms.duduk.domain.user.User;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

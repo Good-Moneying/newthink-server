@@ -6,8 +6,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import kusitms.duduk.apiserver.security.infrastructure.CustomUserDetails;
 import kusitms.duduk.common.exception.ErrorResponse;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterDetailResponse;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Tag(name = "NewsLetter", description = "뉴스레터 API")
@@ -21,6 +24,7 @@ public interface NewsLetterControllerDocs {
             content = {@Content(schema = @Schema(implementation = ErrorResponse.class))})
     })
     @Operation(summary = "뉴스레터 상세 조회", description = "뉴스레터를 상세 조회 합니다")
-    public NewsLetterDetailResponse retrieveNewsLetterDetail(
-        @PathVariable(name = "newsLetterId") Long newsLetterId);
+    ResponseEntity<NewsLetterDetailResponse> retrieveNewsLetterDetail(
+        @PathVariable(name = "newsLetterId") Long newsLetterId,
+        @AuthenticationPrincipal CustomUserDetails userDetails);
 }

@@ -17,11 +17,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Component
 public class NaverClovaSummaryApiClient implements NaverClovaSummaryClientPort {
 
-    @Value("${naver.client-id}")
-    private String clientId;
+//    @Value("${naver.client-id}")
+    private String clientId = "iboe5ch6oi";
 
-    @Value("${naver.client-secret}")
-    private String clientSecret;
+//    @Value("${naver.client-secret}")
+    private String clientSecret = "35GkUOob92lG6b1uipAf5gUW5JaETGCPTAf7ax9Z";
 
     private static final String NAVER_CLOVA_BASE_URL = "https://naveropenapi.apigw.ntruss.com";
 
