@@ -1,7 +1,6 @@
 package kusitms.duduk.application.comment.service;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import kusitms.duduk.application.newsletter.service.NewsLetterSteps;
 import kusitms.duduk.application.user.service.UserSteps;
@@ -62,7 +61,7 @@ class CreateCommentCommandTest {
     @AfterEach
     void tearDown() {
         deleteUserPort.deleteById(savedUser.getId().getValue());
-        deleteNewsLetterPort.deleteById(savedNewsLetter.getNewsLetterId().getValue());
+        deleteNewsLetterPort.deleteById(savedNewsLetter.getId().getValue());
     }
 
     @Test
@@ -76,7 +75,7 @@ class CreateCommentCommandTest {
             .build();
 
         String email = savedUser.getEmail().getValue();
-        Long newsLetterId = savedNewsLetter.getNewsLetterId().getValue();
+        Long newsLetterId = savedNewsLetter.getId().getValue();
 
         // when
         CommentResponse response = createCommentUseCase.create(email, newsLetterId, request);
@@ -87,7 +86,7 @@ class CreateCommentCommandTest {
         NewsLetter loadedNewsLetter = loadNewsLetterPort.findById(newsLetterId).get();
 
         assertThat(response.newsLetterId())
-            .isEqualTo(savedNewsLetter.getNewsLetterId().getValue());
+            .isEqualTo(savedNewsLetter.getId().getValue());
         assertThat(response.content()).isEqualTo("코멘트 내용");
         assertThat(response.perspective()).isEqualTo("POSITIVE");
         assertThat(loadedUser.getComments().get(0).getContent().getSentence()).isEqualTo("코멘트 내용");

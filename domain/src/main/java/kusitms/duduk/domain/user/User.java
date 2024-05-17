@@ -59,7 +59,7 @@ public class User {
         this.archives.stream()
             .filter(archive -> archive.getCategory().equals(newsLetter.getCategory()))
             .findFirst()
-            .ifPresent(archive -> archive.addNewsLetter(newsLetter.getNewsLetterId()));
+            .ifPresent(archive -> archive.addNewsLetter(newsLetter.getId()));
     }
 
     public void archiveTerm(Term term) {
@@ -72,7 +72,7 @@ public class User {
     public boolean isScrapped(NewsLetter newsLetter) {
         return this.archives.stream()
             .filter(archive -> archive.getNewsLetterIds()
-	.contains(newsLetter.getNewsLetterId().getValue()))
+	.contains(newsLetter.getId().getValue()))
             .findFirst()
             .isPresent();
     }

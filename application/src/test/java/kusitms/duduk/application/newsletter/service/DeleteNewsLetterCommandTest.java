@@ -61,7 +61,7 @@ class DeleteNewsLetterCommandTest {
         NewsLetter savedNewsLetter = saveNewsLetterPort.create(newsLetter);
 
         // when
-        deleteNewsLetterUseCase.delete(savedNewsLetter.getNewsLetterId().getValue(),
+        deleteNewsLetterUseCase.delete(savedNewsLetter.getId().getValue(),
             user.getEmail().getValue());
 
         // then
@@ -80,7 +80,7 @@ class DeleteNewsLetterCommandTest {
 
         // when & then
         assertThatThrownBy(
-            () -> deleteNewsLetterUseCase.delete(savedNewsLetter.getNewsLetterId().getValue(),
+            () -> deleteNewsLetterUseCase.delete(savedNewsLetter.getId().getValue(),
 	user.getEmail().getValue())).isInstanceOf(IllegalArgumentException.class);
     }
 }

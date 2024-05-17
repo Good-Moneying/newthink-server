@@ -22,7 +22,7 @@ import lombok.Getter;
 @Builder(toBuilder = true)
 public class NewsLetter {
 
-    private Id newsLetterId;
+    private Id id;
     private Id editorId;
     private Thumbnail thumbnail;
     private Title title;

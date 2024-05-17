@@ -8,7 +8,6 @@ import kusitms.duduk.core.archive.port.input.RetrieveArchiveUseCase;
 import kusitms.duduk.core.newsletter.port.input.ArchiveNewsLetterUseCase;
 import kusitms.duduk.core.newsletter.port.output.DeleteNewsLetterPort;
 import kusitms.duduk.core.newsletter.port.output.SaveNewsLetterPort;
-import kusitms.duduk.core.term.dto.response.ArchiveTermResponse;
 import kusitms.duduk.core.term.port.input.ArchiveTermUseCase;
 import kusitms.duduk.core.term.port.output.DeleteTermPort;
 import kusitms.duduk.core.term.port.output.SaveTermPort;
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import kusitms.duduk.application.user.service.UserSteps;
-import kusitms.duduk.core.archive.dto.response.ArchiveResponse;
 import kusitms.duduk.core.user.port.output.DeleteUserPort;
 import kusitms.duduk.core.user.port.output.SaveUserPort;
 import kusitms.duduk.domain.global.Category;
@@ -86,7 +84,7 @@ public class RetrieveArchiveCommandTest {
         NewsLetter savedNewsLetter = saveNewsLetterPort.create(newsLetter);
 
         String email = savedUser.getEmail().getValue();
-        Long newsLetterId = savedNewsLetter.getNewsLetterId().getValue();
+        Long newsLetterId = savedNewsLetter.getId().getValue();
 
         archiveNewsLetterUseCase.archive(email,
             newsLetterId);

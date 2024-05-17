@@ -14,7 +14,7 @@ public record RetrieveArchivedNewsLetterResponse(List<ArchivedNewsLetter> newsLe
         return RetrieveArchivedNewsLetterResponse.builder()
             .newsLetters(newsLetters.stream()
 	.map(newsLetter -> ArchivedNewsLetter.of(
-                    newsLetter.getNewsLetterId().getValue(),
+                    newsLetter.getId().getValue(),
                     newsLetter.getTitle().getTitle(),
 	    newsLetter.getCategory().name(),
                     newsLetter.getCreatedAt()))

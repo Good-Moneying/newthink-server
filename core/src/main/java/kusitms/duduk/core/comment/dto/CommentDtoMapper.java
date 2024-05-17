@@ -15,7 +15,7 @@ public class CommentDtoMapper {
     public Comment toDomain(CreateCommentRequest request, User user, NewsLetter newsLetter) {
         return Comment.builder()
             .userId(user.getId())
-            .newsLetterId(newsLetter.getNewsLetterId())
+            .newsLetterId(newsLetter.getId())
             .content(Content.from(request.content()))
             .perspective(Perspective.from(request.perspective()))
             .isPrivate(request.isPrivate())
