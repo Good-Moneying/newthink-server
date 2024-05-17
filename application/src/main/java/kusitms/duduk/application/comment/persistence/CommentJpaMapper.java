@@ -1,15 +1,11 @@
 package kusitms.duduk.application.comment.persistence;
 
 import kusitms.duduk.application.comment.persistence.entity.CommentJpaEntity;
-import kusitms.duduk.application.newsletter.persistence.NewsLetterJpaMapper;
-import kusitms.duduk.application.user.persistence.UserJpaMapper;
 import kusitms.duduk.common.annotation.Mapper;
 import kusitms.duduk.domain.comment.Comment;
-import kusitms.duduk.domain.comment.vo.Content;
-import kusitms.duduk.domain.comment.vo.Perspective;
+import kusitms.duduk.domain.global.Sentence;
 import kusitms.duduk.domain.global.Count;
 import kusitms.duduk.domain.global.Id;
-import org.springframework.context.annotation.Lazy;
 
 @Mapper
 public class CommentJpaMapper {
@@ -19,7 +15,7 @@ public class CommentJpaMapper {
             .id(comment.getId() != null ? comment.getId().getValue() : null)
             .userId(comment.getUserId().getValue())
             .newsLetterId(comment.getNewsLetterId().getValue())
-            .content(comment.getContent().getSentence())
+            .content(comment.getSentence().getValue())
             .perspective(comment.getPerspective())
             .summarizedContent(null)
             .likeCount(Count.initial().getCount())
@@ -28,8 +24,8 @@ public class CommentJpaMapper {
 
     public CommentJpaEntity toJpaEntity(Comment comment, CommentJpaEntity persistedComment) {
         return persistedComment.builder()
-            .content(comment.getContent().getSentence())
-            .summarizedContent(comment.getSummarizedContent().getSentence())
+            .content(comment.getSentence().getValue())
+            .summarizedContent(comment.getSummarizedSentence().getValue())
             .likeCount(comment.getLikeCount().getCount())
             .build();
     }
@@ -39,8 +35,8 @@ public class CommentJpaMapper {
             .id(Id.of(commentJpaEntity.getId()))
             .userId(Id.of(commentJpaEntity.getUserId()))
             .newsLetterId(Id.of(commentJpaEntity.getNewsLetterId()))
-            .content(Content.from(commentJpaEntity.getContent()))
-            .summarizedContent(Content.from(commentJpaEntity.getSummarizedContent()))
+            .sentence(Sentence.from(commentJpaEntity.getContent()))
+            .summarizedSentence(Sentence.from(commentJpaEntity.getSummarizedContent()))
             .perspective(commentJpaEntity.getPerspective())
             .likeCount(Count.from(commentJpaEntity.getLikeCount()))
             .createdAt(commentJpaEntity.getCreatedAt())

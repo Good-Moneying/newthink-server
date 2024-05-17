@@ -14,12 +14,9 @@ import kusitms.duduk.domain.newsletter.NewsLetter;
 import kusitms.duduk.domain.newsletter.vo.Content;
 import kusitms.duduk.domain.newsletter.vo.Keywords;
 import kusitms.duduk.domain.newsletter.vo.Summary;
-import kusitms.duduk.domain.newsletter.vo.Thumbnail;
+import kusitms.duduk.domain.global.Thumbnail;
 import kusitms.duduk.domain.newsletter.vo.Title;
-import kusitms.duduk.domain.user.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 
 @RequiredArgsConstructor
 @Mapper
@@ -33,7 +30,7 @@ public class NewsLetterJpaMapper {
         }
 
         return NewsLetterJpaEntity.builder()
-            .id(newsLetter.getNewsLetterId() != null ? newsLetter.getNewsLetterId().getValue()
+            .id(newsLetter.getId() != null ? newsLetter.getId().getValue()
 	: null)
             .editorId(newsLetter.getEditorId() != null ? newsLetter.getEditorId().getValue() : null)
             // todo: 썸네일이 Null 이라면 대체 이미지를 집어넣어야함
@@ -83,7 +80,7 @@ public class NewsLetterJpaMapper {
         }
 
         return NewsLetter.builder()
-            .newsLetterId(Id.of(jpaEntity.getId()))
+            .id(Id.of(jpaEntity.getId()))
             .editorId(Id.of(jpaEntity.getEditorId()))
             .thumbnail(Thumbnail.from(jpaEntity.getThumbnail()))
             .title(Title.from(jpaEntity.getTitle()))

@@ -6,6 +6,9 @@ import kusitms.duduk.core.comment.port.output.LoadCommentPort;
 import kusitms.duduk.core.comment.port.output.UpdateCommentPort;
 import kusitms.duduk.core.newsletter.port.output.LoadNewsLetterPort;
 import kusitms.duduk.core.newsletter.port.output.UpdateNewsLetterPort;
+import kusitms.duduk.core.thinking.dto.request.CreateThinkingRequest;
+import kusitms.duduk.core.thinking.port.input.CreateThinkingUseCase;
+import kusitms.duduk.core.thinking.port.output.SaveThinkingPort;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
 import kusitms.duduk.core.user.port.output.UpdateUserPort;
 import kusitms.duduk.domain.comment.Comment;
@@ -31,28 +34,64 @@ public class SummarizedCommentEventListener {
     private final LoadNewsLetterPort loadNewsLetterPort;
     private final UpdateNewsLetterPort updateNewsLetterPort;
 
+    private final CreateThinkingUseCase createThinkingUseCase;
+
     @EventListener
     @Transactional
-    public void handleSummarizeCommentEvent(SummarizedCommentEvent event) {
-        Comment comment = loadCommentPort.findById(event.getId())
-            .orElseThrow(() -> new NotExistsException("Comment not existed. newsLetterId: " + event.getId()));
-
-        String summarizedContent = summarizeCommentUseCase.summarize(comment);
-        comment.addSummarizedContent(summarizedContent);
-        updateCommentPort.update(comment);
+    public void handleSummarizeCommentEvent(CreateCommentEvent event) {
+        Comment comment = findCommentById(event.getId());
+        String summarizedContent = summarizeComment(comment);
 
         User user = loadUserPort.findById(comment.getUserId().getValue())
             .orElseThrow(() -> new NotExistsException(
-	"User not existed. newsLetterId: " + comment.getUserId().getValue()));
+	"User not found. ID: " + comment.getUserId().getValue()));
+
         NewsLetter newsLetter = loadNewsLetterPort.findById(comment.getNewsLetterId().getValue())
             .orElseThrow(() -> new NotExistsException(
-	"NewsLetter not existed. newsLetterId: " + comment.getNewsLetterId().getValue()));
+	"Newsletter not found. ID: " + comment.getNewsLetterId().getValue()));
 
-        user.addComment(comment);
-        newsLetter.addComment(comment);
+        createThinkingWithComment(user, newsLetter, comment, summarizedContent);
 
-        updateUserPort.update(user);
-        updateNewsLetterPort.update(newsLetter);
+        // todo : Comment가 SummarizedSentence를 가지고 있을 이유가 있을까?
+        updateComment(comment, summarizedContent);
+        updateUser(user, comment);
+        updateNewsLetter(newsLetter, comment);
+    }
+
+    private void createThinkingWithComment(User user, NewsLetter newsLetter, Comment comment,
+        String summarizedContent) {
+        CreateThinkingRequest request = CreateThinkingRequest.builder()
+            .userId(user.getId().getValue())
+            .newsLetterId(newsLetter.getId().getValue())
+            .thumbnail(newsLetter.getThumbnail().getUrl())
+            .comment(comment.getSentence().getValue())
+            .summarizedComment(summarizedContent)
+            .build();
+
+        createThinkingUseCase.create(request);
+    }
+
+    private Comment findCommentById(Long commentId) {
+        return loadCommentPort.findById(commentId)
+            .orElseThrow(() -> new NotExistsException("Comment not found. ID: " + commentId));
+    }
+
+    private String summarizeComment(Comment comment) {
+        return summarizeCommentUseCase.summarize(comment);
+    }
+
+    private void updateComment(Comment comment, String summarizedContent) {
+        comment.addSummarizedContent(summarizedContent);
         updateCommentPort.update(comment);
+    }
+
+    private void updateUser(User user, Comment comment) {
+        user.addComment(comment);
+        updateUserPort.update(user);
+    }
+
+    private void updateNewsLetter(NewsLetter newsLetter, Comment comment) {
+        newsLetter.addComment(comment);
+        updateNewsLetterPort.update(newsLetter);
     }
 }

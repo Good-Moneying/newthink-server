@@ -80,7 +80,7 @@ public class NewsLetterPersistenceAdapter implements LoadNewsLetterPort, DeleteN
 
     @Override
     public Optional<NewsLetter> update(NewsLetter newsLetter) {
-        Long newsLetterId = newsLetter.getNewsLetterId().getValue();
+        Long newsLetterId = newsLetter.getId().getValue();
 
         return newsLetterRepository.findById(newsLetterId)
             .map(persistedNewsLetterData -> newsLetterJpaMapper.toJpaEntity(newsLetter, persistedNewsLetterData))

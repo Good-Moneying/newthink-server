@@ -47,7 +47,7 @@ public class ArchiveNewsLetterCommandTest {
         NewsLetter newsLetter = saveNewsLetterPort.create(NewsLetterSteps.AI_FINANCE_뉴스_레터_생성());
 
         String email = user.getEmail().getValue();
-        Long newsLetterId = newsLetter.getNewsLetterId().getValue();
+        Long newsLetterId = newsLetter.getId().getValue();
 
         // when
         archiveNewsLetterUseCase.archive(email, newsLetterId);

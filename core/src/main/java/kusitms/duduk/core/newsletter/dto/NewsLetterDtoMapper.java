@@ -11,7 +11,7 @@ import kusitms.duduk.domain.newsletter.NewsLetter;
 import kusitms.duduk.domain.newsletter.vo.Content;
 import kusitms.duduk.domain.newsletter.vo.Keywords;
 import kusitms.duduk.domain.newsletter.vo.Summary;
-import kusitms.duduk.domain.newsletter.vo.Thumbnail;
+import kusitms.duduk.domain.global.Thumbnail;
 import kusitms.duduk.domain.newsletter.vo.Title;
 import kusitms.duduk.domain.newsletter.vo.Type;
 
@@ -61,7 +61,7 @@ public class NewsLetterDtoMapper {
 
     public NewsLetterThumbnailResponse toThumbnailDto(NewsLetter newsLetter, boolean isScrapped) {
         return NewsLetterThumbnailResponse.builder()
-            .id(newsLetter.getNewsLetterId().getValue())
+            .id(newsLetter.getId().getValue())
             .thumbnail(newsLetter.getThumbnail().getUrl())
             .title(newsLetter.getTitle().getTitle())
             .createdAt(newsLetter.getCreatedAt())

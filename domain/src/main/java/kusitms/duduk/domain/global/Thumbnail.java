@@ -1,4 +1,4 @@
-package kusitms.duduk.domain.newsletter.vo;
+package kusitms.duduk.domain.global;
 
 import lombok.Getter;
 

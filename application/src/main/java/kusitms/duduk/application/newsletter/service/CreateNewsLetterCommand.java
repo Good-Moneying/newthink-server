@@ -4,7 +4,6 @@ import kusitms.duduk.application.newsletter.event.CreateSummaryEvent;
 import kusitms.duduk.common.exception.custom.NotExistsException;
 import kusitms.duduk.core.newsletter.dto.NewsLetterDtoMapper;
 import kusitms.duduk.core.newsletter.dto.request.CreateNewsLetterRequest;
-import kusitms.duduk.core.newsletter.dto.response.NewsLetterDetailResponse;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterResponse;
 import kusitms.duduk.core.newsletter.port.input.CreateNewsLetterUseCase;
 import kusitms.duduk.core.newsletter.port.output.LoadNewsLetterPort;
@@ -37,9 +36,9 @@ class CreateNewsLetterCommand implements CreateNewsLetterUseCase {
         log.info("Create NewsLetter By AI\n request: {}", request.toString());
         NewsLetter savedNewsLetter = saveNewsLetterPort.create(newsLetterDtoMapper.toDomain(request));
 
-        applicationEventPublisher.publishEvent(new CreateSummaryEvent(this, newsLetter.getNewsLetterId().getValue()));
+        applicationEventPublisher.publishEvent(new CreateSummaryEvent(this, newsLetter.getId().getValue()));
 
-        NewsLetter loadedNewsLetter = loadNewsLetterPort.findById(savedNewsLetter.getNewsLetterId().getValue())
+        NewsLetter loadedNewsLetter = loadNewsLetterPort.findById(savedNewsLetter.getId().getValue())
             .orElseThrow(() -> new NotExistsException("NewsLetter not found"));
 
         return newsLetterDtoMapper.toDto(loadedNewsLetter);
@@ -57,9 +56,9 @@ class CreateNewsLetterCommand implements CreateNewsLetterUseCase {
         NewsLetter savedNewsLetter = saveNewsLetterPort.create(newsLetterDtoMapper.toDomain(request, editor.getId()));
         log.info("Create NewsLetter By Editor\n request: {}", request.toString());
 
-        applicationEventPublisher.publishEvent(new CreateSummaryEvent(this, savedNewsLetter.getNewsLetterId().getValue()));
+        applicationEventPublisher.publishEvent(new CreateSummaryEvent(this, savedNewsLetter.getId().getValue()));
 
-        NewsLetter loadedNewsLetter = loadNewsLetterPort.findById(savedNewsLetter.getNewsLetterId().getValue())
+        NewsLetter loadedNewsLetter = loadNewsLetterPort.findById(savedNewsLetter.getId().getValue())
             .orElseThrow(() -> new NotExistsException("NewsLetter not found"));
 
         return newsLetterDtoMapper.toDto(loadedNewsLetter);

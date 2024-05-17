@@ -79,7 +79,7 @@ public class RetrieveNewsLetterCommandTest {
         // when
         NewsLetterDetailResponse response = retrieveNewsLetterQuery.retrieveNewsLetterDetail(
             savedEditor.getEmail().getValue(),
-            savedNewsLetter.getNewsLetterId().getValue());
+            savedNewsLetter.getId().getValue());
 
         // todo : NewsLetter Comment가 잘 불러오는지 확인해야됨
 
@@ -93,7 +93,7 @@ public class RetrieveNewsLetterCommandTest {
         // when
         NewsLetterDetailResponse response = retrieveNewsLetterQuery.retrieveNewsLetterDetail(
             savedUser.getEmail().getValue(),
-            aiNewsLetter.getNewsLetterId().getValue());
+            aiNewsLetter.getId().getValue());
 
         // then
         assertThat(response).isNotNull();

@@ -31,7 +31,7 @@ public class DeleteNewsLetterCommand implements DeleteNewsLetterUseCase {
             .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         if (newsLetter.isWrittenBy(user.getId())) {
-            deleteNewsLetterPort.deleteById(newsLetter.getNewsLetterId().getValue());
+            deleteNewsLetterPort.deleteById(newsLetter.getId().getValue());
         } else {
             throw new IllegalArgumentException("User is not the author of the newsLetter");
         }
