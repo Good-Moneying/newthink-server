@@ -19,7 +19,7 @@ public class Thinking {
     private Thumbnail thumbnail;
     private Sentence comment;
     private Sentence summarizedComment;
-    private boolean isExist;
+    private boolean isCloudExist;
     @Default
     private List<Sentence> thinkingCloud = new ArrayList<>();
 

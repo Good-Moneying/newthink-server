@@ -1,4 +1,4 @@
-package kusitms.duduk.application.comment.api;
+package kusitms.duduk.application.global.api;
 
 import kusitms.duduk.core.comment.dto.request.OpenAISummaryRequest;
 import kusitms.duduk.core.comment.dto.response.OpenAISummaryResponse;

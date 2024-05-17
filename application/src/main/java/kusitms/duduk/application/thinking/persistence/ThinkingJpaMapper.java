@@ -24,7 +24,7 @@ public class ThinkingJpaMapper {
             .thumbnail(Thumbnail.from(thinkingJpaEntity.getThumbnail()))
             .comment(Sentence.from(thinkingJpaEntity.getComment()))
             .summarizedComment(Sentence.from(thinkingJpaEntity.getSummarizedComment()))
-            .isExist(thinkingJpaEntity.isExist())
+            .isCloudExist(thinkingJpaEntity.isCloudExist())
             .thinkingCloud(thinkingJpaEntity.getThinkingCloud().stream()
 	.map(Sentence::from)
 	.collect(Collectors.toCollection(ArrayList::new)))
@@ -46,7 +46,7 @@ public class ThinkingJpaMapper {
             .summarizedComment(
 	thinking.getSummarizedComment() != null ? thinking.getSummarizedComment().getValue()
 	    : null)
-            .isExist(thinking.isExist())
+            .isCloudExist(thinking.isCloudExist())
             .thinkingCloud(thinking.getThinkingCloud().stream()
 	.map(Sentence::getValue)
 	.collect(Collectors.toCollection(ArrayList::new)))

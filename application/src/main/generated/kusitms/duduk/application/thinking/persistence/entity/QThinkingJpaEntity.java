@@ -20,11 +20,16 @@ public class QThinkingJpaEntity extends EntityPathBase<ThinkingJpaEntity> {
 
     public static final QThinkingJpaEntity thinkingJpaEntity = new QThinkingJpaEntity("thinkingJpaEntity");
 
+    public final kusitms.duduk.application.global.entity.QBaseEntity _super = new kusitms.duduk.application.global.entity.QBaseEntity(this);
+
     public final StringPath comment = createString("comment");
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final BooleanPath isExist = createBoolean("isExist");
+    public final BooleanPath isCloudExist = createBoolean("isCloudExist");
 
     public final NumberPath<Long> newsLetterId = createNumber("newsLetterId", Long.class);
 
@@ -33,6 +38,9 @@ public class QThinkingJpaEntity extends EntityPathBase<ThinkingJpaEntity> {
     public final ListPath<String, StringPath> thinkingCloud = this.<String, StringPath>createList("thinkingCloud", String.class, StringPath.class, PathInits.DIRECT2);
 
     public final StringPath thumbnail = createString("thumbnail");
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
     public final NumberPath<Long> userId = createNumber("userId", Long.class);
 

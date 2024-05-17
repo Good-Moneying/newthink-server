@@ -1,6 +1,7 @@
 package kusitms.duduk.application.newsletter.service;
 
 import java.util.List;
+import kusitms.duduk.application.newsletter.event.RetrieveNewsLetterEvent;
 import kusitms.duduk.core.comment.port.output.LoadCommentPort;
 import kusitms.duduk.core.newsletter.dto.NewsLetterDtoMapper;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterDetailResponse;
@@ -35,6 +36,9 @@ public class RetrieveNewsLetterCommand implements RetrieveNewsLetterQuery {
 
     @Override
     public NewsLetterDetailResponse retrieveNewsLetterDetail(String email, Long newsLetterId) {
+
+        applicationEventPublisher.publishEvent(new RetrieveNewsLetterEvent(email, newsLetterId));
+        
         // 유저를 불러와야 합니다.
         User user = loadUserPort.findByEmail(email)
             .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));

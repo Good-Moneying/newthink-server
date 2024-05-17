@@ -35,6 +35,14 @@ public class ThinkingPersistenceAdapter implements SaveThinkingPort, LoadThinkin
     }
 
     @Override
+    public List<Thinking> findAllOrderByIsExistAscAndCreatedAtAsc(Long userId) {
+        return thinkingRepository.findAllOrderByIsExistAscAndCreatedAtAsc(userId)
+            .stream()
+            .map(thinkingJpaMapper::toDomain)
+            .toList();
+    }
+
+    @Override
     public Thinking save(Thinking thinking) {
         ThinkingJpaEntity thinkingJpaEntity = thinkingJpaMapper.toJpaEntity(thinking);
         ThinkingJpaEntity thinkingSaved = thinkingRepository.save(thinkingJpaEntity);

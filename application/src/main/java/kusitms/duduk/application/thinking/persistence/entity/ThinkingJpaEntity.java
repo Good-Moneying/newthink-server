@@ -10,6 +10,7 @@ import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 import kusitms.duduk.application.global.converter.ListStringToStringConverter;
+import kusitms.duduk.application.global.entity.BaseEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +25,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "thinkings")
 @Builder(toBuilder = true)
-public class ThinkingJpaEntity {
+public class ThinkingJpaEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +48,7 @@ public class ThinkingJpaEntity {
     private String thumbnail;
 
     @Column(name = "is_exist")
-    private boolean isExist;
+    private boolean isCloudExist;
 
     @Convert(converter = ListStringToStringConverter.class)
     @Column(name = "thinking_cloud")

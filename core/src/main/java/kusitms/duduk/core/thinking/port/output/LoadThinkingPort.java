@@ -8,4 +8,6 @@ public interface LoadThinkingPort {
 
     Optional<Thinking> findById(Long id);
     List<Thinking> findAll();
+
+    List<Thinking> findAllOrderByIsExistAscAndCreatedAtAsc(Long userId);
 }

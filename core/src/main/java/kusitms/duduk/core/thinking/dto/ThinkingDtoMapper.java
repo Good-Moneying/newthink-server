@@ -18,7 +18,7 @@ public class ThinkingDtoMapper {
             .thumbnail(Thumbnail.from(request.thumbnail()))
             .comment(Sentence.from(request.comment()))
             .summarizedComment(Sentence.from(request.summarizedComment()))
-            .isExist(false)
+            .isCloudExist(false)
             .thinkingCloud(new ArrayList<>())
             .build();
     }
