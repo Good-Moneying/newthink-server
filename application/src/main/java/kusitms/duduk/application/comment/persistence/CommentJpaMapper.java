@@ -14,21 +14,11 @@ import org.springframework.context.annotation.Lazy;
 @Mapper
 public class CommentJpaMapper {
 
-    private NewsLetterJpaMapper newsLetterJpaMapper;
-    private UserJpaMapper userJpaMapper;
-
-    public CommentJpaMapper(
-        @Lazy NewsLetterJpaMapper newsLetterJpaMapper,
-        @Lazy UserJpaMapper userJpaMapper) {
-        this.newsLetterJpaMapper = newsLetterJpaMapper;
-        this.userJpaMapper = userJpaMapper;
-    }
-
     public CommentJpaEntity toJpaEntity(Comment comment) {
         return CommentJpaEntity.builder()
             .id(comment.getId() != null ? comment.getId().getValue() : null)
-            .user(userJpaMapper.toJpaEntity(comment.getUser()))
-            .newsLetter(newsLetterJpaMapper.toJpaEntity(comment.getNewsLetter()))
+            .userId(comment.getUserId().getValue())
+            .newsLetterId(comment.getNewsLetterId().getValue())
             .content(comment.getContent().getSentence())
             .perspective(comment.getPerspective())
             .summarizedContent(null)
@@ -47,8 +37,8 @@ public class CommentJpaMapper {
     public Comment toDomain(CommentJpaEntity commentJpaEntity) {
         return Comment.builder()
             .id(Id.of(commentJpaEntity.getId()))
-            .user(userJpaMapper.toDomain(commentJpaEntity.getUser()))
-            .newsLetter(newsLetterJpaMapper.toDomain(commentJpaEntity.getNewsLetter()))
+            .userId(Id.of(commentJpaEntity.getUserId()))
+            .newsLetterId(Id.of(commentJpaEntity.getNewsLetterId()))
             .content(Content.from(commentJpaEntity.getContent()))
             .summarizedContent(Content.from(commentJpaEntity.getSummarizedContent()))
             .perspective(commentJpaEntity.getPerspective())

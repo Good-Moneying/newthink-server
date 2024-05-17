@@ -40,7 +40,7 @@ public class NewsLetterJpaMapper {
             .thumbnail(
 	newsLetter.getThumbnail() != null ? newsLetter.getThumbnail().getUrl() : null)
             .title(newsLetter.getTitle().getTitle())
-            .content(newsLetter.getContent().getContent())
+            .content(newsLetter.getContent() != null ? newsLetter.getContent().getContent() : null)
             .comments(newsLetter.getComments() == null ? new ArrayList<>()
 	: getCommentJpaEntities(newsLetter))
             .keywords(newsLetter.getKeywords().toSentence())
@@ -55,7 +55,7 @@ public class NewsLetterJpaMapper {
     private List<CommentJpaEntity> getCommentJpaEntities(NewsLetter newsLetter) {
         return newsLetter.getComments().stream()
             .map(comment -> commentJpaMapper.toJpaEntity(comment))
-            .collect(Collectors.toList());
+            .collect(Collectors.toCollection(ArrayList::new)); // 변경 가능한 리스트 반환
     }
 
     public NewsLetterJpaEntity toJpaEntity(NewsLetter newsLetter,
@@ -103,13 +103,13 @@ public class NewsLetterJpaMapper {
     public List<NewsLetter> toDomainList(List<NewsLetterJpaEntity> newsLetters) {
         return newsLetters.stream()
             .map(this::toDomain)
-            .toList();
+            .collect(Collectors.toCollection(ArrayList::new)); // 변경 가능한 리스트 반환
     }
 
     // todo 중복되는데 나중에 분리하자
     private List<Comment> mapComments(List<CommentJpaEntity> comments) {
         return comments.stream()
             .map(commentJpaEntity -> commentJpaMapper.toDomain(commentJpaEntity))
-            .toList();
+            .collect(Collectors.toCollection(ArrayList::new)); // 변경 가능한 리스트 반환
     }
 }

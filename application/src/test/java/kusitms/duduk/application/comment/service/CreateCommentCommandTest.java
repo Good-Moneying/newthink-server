@@ -9,17 +9,19 @@ import kusitms.duduk.core.comment.dto.request.CreateCommentRequest;
 import kusitms.duduk.core.comment.dto.response.CommentResponse;
 import kusitms.duduk.core.comment.port.input.CreateCommentUseCase;
 import kusitms.duduk.core.newsletter.port.output.DeleteNewsLetterPort;
+import kusitms.duduk.core.newsletter.port.output.LoadNewsLetterPort;
 import kusitms.duduk.core.newsletter.port.output.SaveNewsLetterPort;
 import kusitms.duduk.core.user.port.output.DeleteUserPort;
+import kusitms.duduk.core.user.port.output.LoadUserPort;
 import kusitms.duduk.core.user.port.output.SaveUserPort;
 import kusitms.duduk.domain.newsletter.NewsLetter;
 import kusitms.duduk.domain.user.User;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 class CreateCommentCommandTest {
@@ -38,6 +40,12 @@ class CreateCommentCommandTest {
 
     @Autowired
     private DeleteNewsLetterPort deleteNewsLetterPort;
+
+    @Autowired
+    private LoadUserPort loadUserPort;
+
+    @Autowired
+    private LoadNewsLetterPort loadNewsLetterPort;
 
     private User savedUser;
     private NewsLetter savedNewsLetter;
@@ -58,11 +66,13 @@ class CreateCommentCommandTest {
     }
 
     @Test
+    @Transactional
     void 코멘트를_생성한다() {
         // given
         CreateCommentRequest request = CreateCommentRequest.builder()
             .content("코멘트 내용")
             .perspective("POSITIVE")
+            .isPrivate(false)
             .build();
 
         String email = savedUser.getEmail().getValue();
@@ -72,11 +82,17 @@ class CreateCommentCommandTest {
         CommentResponse response = createCommentUseCase.create(email, newsLetterId, request);
 
         // then
-        assertThat(response.email()).isEqualTo(savedUser.getEmail().getValue());
+
+        User loadedUser = loadUserPort.findByEmail(email).get();
+        NewsLetter loadedNewsLetter = loadNewsLetterPort.findById(newsLetterId).get();
+
         assertThat(response.newsLetterId())
             .isEqualTo(savedNewsLetter.getNewsLetterId().getValue());
         assertThat(response.content()).isEqualTo("코멘트 내용");
         assertThat(response.perspective()).isEqualTo("POSITIVE");
+        assertThat(loadedUser.getComments().get(0).getContent().getSentence()).isEqualTo("코멘트 내용");
+        assertThat(loadedNewsLetter.getComments().get(0).getContent().getSentence()).isEqualTo(
+            "코멘트 내용");
     }
 
     @Test

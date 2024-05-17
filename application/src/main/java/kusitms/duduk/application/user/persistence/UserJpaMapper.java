@@ -8,7 +8,6 @@ import kusitms.duduk.application.archive.persistence.ArchiveJpaMapper;
 import kusitms.duduk.application.archive.persistence.entity.ArchiveJpaEntity;
 import kusitms.duduk.application.comment.persistence.CommentJpaMapper;
 import kusitms.duduk.application.comment.persistence.entity.CommentJpaEntity;
-import kusitms.duduk.application.newsletter.persistence.NewsLetterJpaMapper;
 import kusitms.duduk.application.user.persistence.entity.UserJpaEntity;
 import kusitms.duduk.common.annotation.Mapper;
 import kusitms.duduk.domain.archive.Archive;
@@ -111,12 +110,12 @@ public class UserJpaMapper {
     private List<Archive> mapArchives(List<ArchiveJpaEntity> archives) {
         return archives.stream()
             .map(archiveJpaEntity -> archiveJpaMapper.toDomain(archiveJpaEntity))
-            .toList();
+            .collect(Collectors.toCollection(ArrayList::new)); // 변경 가능한 리스트 반환
     }
 
     private List<Comment> mapComments(List<CommentJpaEntity> comments) {
         return comments.stream()
             .map(commentJpaEntity -> commentJpaMapper.toDomain(commentJpaEntity))
-            .toList();
+            .collect(Collectors.toCollection(ArrayList::new)); // 변경 가능한 리스트 반환
     }
 }

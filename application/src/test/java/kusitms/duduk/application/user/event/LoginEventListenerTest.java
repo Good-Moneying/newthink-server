@@ -1,6 +1,5 @@
-package kusitms.duduk.apiserver.user.event;
+package kusitms.duduk.application.user.event;
 
-import kusitms.duduk.application.user.event.LoginUserEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

@@ -1,7 +1,5 @@
-package kusitms.duduk.apiserver.newsletter.event;
+package kusitms.duduk.application.newsletter.event;
 
-import kusitms.duduk.application.newsletter.event.ArchiveNewsLetterEvent;
-import kusitms.duduk.application.newsletter.event.RetrieveNewsLetterEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

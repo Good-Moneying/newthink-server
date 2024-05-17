@@ -8,6 +8,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class NewsLetterJpaEntity extends BaseEntity {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "content")
+    @Column(name = "content", length = 2000)
     private String content;
 
     @Column(name = "keywords")
@@ -66,7 +67,8 @@ public class NewsLetterJpaEntity extends BaseEntity {
     @Column(name = "scrap_count")
     private Integer scrapCount;
 
-    @OneToMany(mappedBy = "newsLetter", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "news_letter_id")
     @Builder.Default
     private List<CommentJpaEntity> comments = new ArrayList<>();
 }
