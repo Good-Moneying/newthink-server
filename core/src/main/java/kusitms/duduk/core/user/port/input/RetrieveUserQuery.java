@@ -1,13 +1,12 @@
 package kusitms.duduk.core.user.port.input;
 
 import kusitms.duduk.core.user.dto.response.RetrieveHomeResponse;
-import kusitms.duduk.core.user.dto.response.RetrieveMypageResponse;
-import kusitms.duduk.core.user.dto.response.UserResponse;
+import kusitms.duduk.core.user.dto.response.RetrieveMyPageResponse;
 
 public interface RetrieveUserQuery {
     boolean isUserRegisteredByEmail(String email);
 
     RetrieveHomeResponse home(String email);
 
-    RetrieveMypageResponse mypage(String email);
+    RetrieveMyPageResponse mypage(String email);
 }

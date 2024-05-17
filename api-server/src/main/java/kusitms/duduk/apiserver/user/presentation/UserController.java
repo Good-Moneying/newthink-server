@@ -6,27 +6,23 @@ import java.util.List;
 import kusitms.duduk.apiserver.security.infrastructure.CustomUserDetails;
 import kusitms.duduk.core.attendance.dto.WeeklyAttendanceResponse;
 import kusitms.duduk.core.attendance.dto.WeeklyAttendanceResponse.DailyAttendance;
-import kusitms.duduk.core.newsletter.dto.response.ArchiveNewsLetterResponse;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterThumbnailResponse;
-import kusitms.duduk.core.newsletter.port.input.ArchiveNewsLetterUseCase;
-import kusitms.duduk.core.term.dto.response.ArchiveTermResponse;
 import kusitms.duduk.core.term.dto.response.RetrieveTermResponse;
-import kusitms.duduk.core.term.port.input.ArchiveTermUseCase;
 import kusitms.duduk.core.user.dto.request.CreateUserRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserEmailRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserNicknameRequest;
 import kusitms.duduk.core.user.dto.response.RetrieveHomeResponse;
-import kusitms.duduk.core.user.dto.response.RetrieveMypageResponse;
+import kusitms.duduk.core.user.dto.response.RetrieveMyPageResponse;
 import kusitms.duduk.core.user.dto.response.UserResponse;
 import kusitms.duduk.core.user.port.input.RegisterUserUseCase;
 import kusitms.duduk.core.user.port.input.RetrieveUserQuery;
 import kusitms.duduk.core.user.port.input.ValidateDuplicatedUserQuery;
+import kusitms.duduk.domain.global.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,7 +62,7 @@ public class UserController implements UserControllerDocs {
     }
 
     @GetMapping("/mypage")
-    public ResponseEntity<RetrieveMypageResponse> mypage(
+    public ResponseEntity<RetrieveMyPageResponse> mypage(
         @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         return new ResponseEntity<>(retrieveUserQuery.mypage(customUserDetails.getEmail()),
             HttpStatus.OK);
@@ -159,10 +155,10 @@ public class UserController implements UserControllerDocs {
     }
 
     @GetMapping("/mypage/test")
-    public ResponseEntity<RetrieveMypageResponse> mypageTest(
+    public ResponseEntity<RetrieveMyPageResponse> mypageTest(
         @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         return new ResponseEntity<>(
-            RetrieveMypageResponse.builder()
+            RetrieveMyPageResponse.builder()
 	.nickname("백건도리")
 	.reward(3)
 	.attendances(
@@ -180,6 +176,24 @@ public class UserController implements UserControllerDocs {
 	        )
 	        .build()
 	)
+	.counts(List.of(
+	    RetrieveMyPageResponse.ArchiveNewsLetterCount.builder()
+	        .category(Category.POLICY)
+	        .count(2)
+	        .build(),
+	    RetrieveMyPageResponse.ArchiveNewsLetterCount.builder()
+	        .category(Category.FINANCE)
+	        .count(1)
+	        .build(),
+	    RetrieveMyPageResponse.ArchiveNewsLetterCount.builder()
+	        .category(Category.REAL_ESTATE)
+	        .count(5)
+	        .build(),
+	    RetrieveMyPageResponse.ArchiveNewsLetterCount.builder()
+	        .category(Category.SECURITIES)
+	        .count(8)
+	        .build()
+	))
 	.build(),
             HttpStatus.OK);
     }

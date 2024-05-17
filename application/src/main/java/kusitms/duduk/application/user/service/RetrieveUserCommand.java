@@ -1,11 +1,13 @@
 package kusitms.duduk.application.user.service;
 
+import java.util.List;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterThumbnailResponse;
 import kusitms.duduk.core.newsletter.port.input.RetrieveNewsLetterQuery;
 import kusitms.duduk.core.term.dto.response.RetrieveTermResponse;
 import kusitms.duduk.core.term.port.input.RetrieveTermQuery;
 import kusitms.duduk.core.user.dto.response.RetrieveHomeResponse;
-import kusitms.duduk.core.user.dto.response.RetrieveMypageResponse;
+import kusitms.duduk.core.user.dto.response.RetrieveMyPageResponse;
+import kusitms.duduk.core.user.dto.response.RetrieveMyPageResponse.ArchiveNewsLetterCount;
 import kusitms.duduk.core.user.port.input.AttendUserUseCase;
 import kusitms.duduk.core.user.port.input.RetrieveUserQuery;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
@@ -46,14 +48,20 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
     }
 
     @Override
-    public RetrieveMypageResponse mypage(String email) {
+    public RetrieveMyPageResponse mypage(String email) {
         User user = loadUserPort.findByEmail(email)
             .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
 
-        return RetrieveMypageResponse.builder()
+        List<ArchiveNewsLetterCount> archivesCount = user.getArchives().stream()
+            .map(archive -> new ArchiveNewsLetterCount(archive.getCategory(),
+	archive.getNewsLetterIds().size()))
+            .toList();
+
+        return RetrieveMyPageResponse.builder()
             .nickname(user.getNickname().getValue())
-            .reward(5)
+            .reward(user.getReward().getCount())
             .attendances(attendUserUseCase.calculateAttendance(email))
+            .counts(archivesCount)
             .build();
     }
 }
