@@ -4,15 +4,17 @@ import static org.assertj.core.api.Assertions.*;
 
 import kusitms.duduk.application.newsletter.service.NewsLetterSteps;
 import kusitms.duduk.application.user.service.UserSteps;
+import kusitms.duduk.core.newsletter.port.output.DeleteNewsLetterPort;
 import kusitms.duduk.core.newsletter.port.output.SaveNewsLetterPort;
 import kusitms.duduk.core.thinking.dto.request.CreateThinkingRequest;
 import kusitms.duduk.core.thinking.port.input.CreateThinkingUseCase;
 import kusitms.duduk.core.thinking.port.output.SaveThinkingPort;
+import kusitms.duduk.core.user.port.output.DeleteUserPort;
 import kusitms.duduk.core.user.port.output.SaveUserPort;
 import kusitms.duduk.domain.newsletter.NewsLetter;
 import kusitms.duduk.domain.thinking.Thinking;
 import kusitms.duduk.domain.user.User;
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,10 @@ public class CreateThinkingCommandTest {
     private SaveNewsLetterPort saveNewsLetterPort;
 
     @Autowired
-    private SaveThinkingPort saveThinkingPort;
+    private DeleteUserPort deleteUserPort;
+
+    @Autowired
+    private DeleteNewsLetterPort deleteNewsLetterPort;
 
     private User savedUser;
     private NewsLetter savedNewsLetter;
@@ -45,6 +50,11 @@ public class CreateThinkingCommandTest {
         savedNewsLetter = saveNewsLetterPort.create(newsLetter);
     }
 
+    @AfterEach
+    void cleanUp() {
+        deleteUserPort.deleteAll();
+        deleteNewsLetterPort.deleteAll();
+    }
 
     @Test
     void 생각을_생성한다() {

@@ -4,7 +4,10 @@ import java.util.List;
 import lombok.Builder;
 
 @Builder
-public record CreateThinkingRequest(Long userId, Long newsLetterId, String comment,
-		    String summarizedComment, String thumbnail) {
+public record CreateThinkingRequest(Long userId,
+		    Long newsLetterId,
+		    String comment,
+		    String summarizedComment,
+		    String thumbnail) {
 
 }

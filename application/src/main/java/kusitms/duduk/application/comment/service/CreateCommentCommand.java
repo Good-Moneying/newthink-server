@@ -1,6 +1,6 @@
 package kusitms.duduk.application.comment.service;
 
-import kusitms.duduk.application.comment.event.SummarizedCommentEvent;
+import kusitms.duduk.application.comment.event.CreateCommentEvent;
 import kusitms.duduk.common.exception.custom.NotExistsException;
 import kusitms.duduk.core.comment.dto.CommentDtoMapper;
 import kusitms.duduk.core.comment.dto.request.CreateCommentRequest;
@@ -8,9 +8,7 @@ import kusitms.duduk.core.comment.dto.response.CommentResponse;
 import kusitms.duduk.core.comment.port.input.CreateCommentUseCase;
 import kusitms.duduk.core.comment.port.output.SaveCommentPort;
 import kusitms.duduk.core.newsletter.port.output.LoadNewsLetterPort;
-import kusitms.duduk.core.newsletter.port.output.UpdateNewsLetterPort;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
-import kusitms.duduk.core.user.port.output.UpdateUserPort;
 import kusitms.duduk.domain.comment.Comment;
 import kusitms.duduk.domain.newsletter.NewsLetter;
 import kusitms.duduk.domain.user.User;
@@ -46,7 +44,7 @@ public class CreateCommentCommand implements CreateCommentUseCase {
             commentDtoMapper.toDomain(request, user, newsLetter));
 
         applicationEventPublisher.publishEvent(
-            new SummarizedCommentEvent(this, savedComment.getId().getValue()));
+            new CreateCommentEvent(this, savedComment.getId().getValue()));
 
         return commentDtoMapper.toDto(savedComment);
     }
