@@ -1,4 +1,4 @@
-package kusitms.duduk.application.thinking.persistence;
+package kusitms.duduk.application.thinking.persistence.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -30,6 +30,24 @@ public class ThinkingJpaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "thinking_id")
     private Long id;
+
+    @Column(name = "user_id")
+    private Long userId;
+
+    @Column(name = "news_letter_id")
+    private Long newsLetterId;
+
+    @Column(name = "summarized_comment")
+    private String summarizedComment;
+
+    @Column(name = "comment")
+    private String comment;
+
+    @Column(name = "thumbnail")
+    private String thumbnail;
+
+    @Column(name = "is_exist")
+    private boolean isExist;
 
     @Convert(converter = ListStringToStringConverter.class)
     @Column(name = "thinking_cloud")

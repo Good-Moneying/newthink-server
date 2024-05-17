@@ -9,7 +9,7 @@ import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.newsletter.vo.Content;
 import kusitms.duduk.domain.newsletter.vo.Keywords;
 import kusitms.duduk.domain.newsletter.vo.Summary;
-import kusitms.duduk.domain.newsletter.vo.Thumbnail;
+import kusitms.duduk.domain.global.Thumbnail;
 import kusitms.duduk.domain.newsletter.vo.Title;
 import kusitms.duduk.domain.newsletter.vo.Type;
 import lombok.AccessLevel;

@@ -89,8 +89,8 @@ class CreateCommentCommandTest {
             .isEqualTo(savedNewsLetter.getId().getValue());
         assertThat(response.content()).isEqualTo("코멘트 내용");
         assertThat(response.perspective()).isEqualTo("POSITIVE");
-        assertThat(loadedUser.getComments().get(0).getContent().getSentence()).isEqualTo("코멘트 내용");
-        assertThat(loadedNewsLetter.getComments().get(0).getContent().getSentence()).isEqualTo(
+        assertThat(loadedUser.getComments().get(0).getSentence().getValue()).isEqualTo("코멘트 내용");
+        assertThat(loadedNewsLetter.getComments().get(0).getSentence().getValue()).isEqualTo(
             "코멘트 내용");
     }
 

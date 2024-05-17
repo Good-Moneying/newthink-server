@@ -76,7 +76,7 @@ public class RetrieveNewsLetterCommand implements RetrieveNewsLetterQuery {
             .comments(comments.stream()
 	.map(comment -> NewsLetterDetailResponse.Comment.builder()
 	    .userId(comment.getUserId().getValue())
-	    .content(comment.getContent().getSentence())
+	    .content(comment.getSentence().getValue())
 	    .likeCount(comment.getLikeCount().getCount())
 	    .build())
                 .toList())
