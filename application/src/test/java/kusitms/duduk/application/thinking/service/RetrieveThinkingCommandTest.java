@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 import kusitms.duduk.application.user.service.UserSteps;
+import kusitms.duduk.core.thinking.dto.response.RetrieveThinkingHomeResponse;
 import kusitms.duduk.core.thinking.port.output.DeleteThinkingPort;
 import kusitms.duduk.core.thinking.port.output.LoadThinkingPort;
 import kusitms.duduk.core.thinking.port.output.SaveThinkingPort;
@@ -53,22 +54,22 @@ class RetrieveThinkingCommandTest {
     void 생각_더하기_홈을_조회한다() {
         // given
         ThinkingSteps.홈_생각_목록_조회_객체_생성(
-            savedUser.getId().getValue())
+	savedUser.getId().getValue())
             .forEach(
-                thinking -> saveThinkingPort.save(thinking)
+	thinking -> saveThinkingPort.save(thinking)
             );
 
         // when
-        List<Thinking> response = retrieveThinkingCommand.retrieveThinkingHome(
+        RetrieveThinkingHomeResponse response = retrieveThinkingCommand.retrieveThinkingHome(
             savedUser.getEmail().getValue());
 
         // then
-        assertThat(response).hasSize(2);
+        assertThat(response).isNotNull();
+        assertThat(response.thinkingDetails().size()).isEqualTo(2);
 
         // 생각 구름이 작성 되지 않은 순으로 정렬 되는 것을 테스트 한다
-        assertThat(response.get(0).isCloudExist()).isFalse();
-        assertThat(response.get(1).isCloudExist()).isTrue();
+        assertThat(response.thinkingDetails().get(0).isCloudExist()).isFalse();
+        assertThat(response.thinkingDetails().get(1).isCloudExist()).isTrue();
     }
-
 
 }

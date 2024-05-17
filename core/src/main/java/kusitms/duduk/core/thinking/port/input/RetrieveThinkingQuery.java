@@ -1,9 +1,11 @@
 package kusitms.duduk.core.thinking.port.input;
 
-import java.util.List;
-import kusitms.duduk.domain.thinking.Thinking;
+import kusitms.duduk.core.thinking.dto.response.RetrieveThinkingDetailResponse;
+import kusitms.duduk.core.thinking.dto.response.RetrieveThinkingHomeResponse;
 
 public interface RetrieveThinkingQuery {
 
-    List<Thinking> retrieveThinkingHome(String email);
+    RetrieveThinkingHomeResponse retrieveThinkingHome(final String email);
+
+    RetrieveThinkingDetailResponse retrieveThinkingDetail(final Long thinkingId);
 }
