@@ -62,6 +62,7 @@ fi
 #sed -i "s/$OTHER_SERVICE/$TARGET_SERVICE/" $NGINX_CONF
 #sed -i "s/$OTHER_PORT/$TARGET_PORT/" $NGINX_CONF
 docker-compose -f /home/ec2-user/docker-compose.yml restart nginx
+docker-compose -f /home/ec2-user/docker-compose.yml restart selenium
 
 # Stop the other service
 #docker-compose -f /home/ec2-user/docker-compose.yml stop $OTHER_SERVICE
