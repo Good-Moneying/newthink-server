@@ -52,3 +52,18 @@ crawling:
 open-ai:
   end-point: "https://api.openai.com/v1/chat/completions"
   secret-key: "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"
+
+
+cloud:
+  aws:
+    s3:
+      bucket: "goodmoneying"
+    stack.auto: false
+    region.static: ap-northeast-2
+    credentials:
+      accessKey: "AKIAYS2NV5RSG2UYIRSY"
+      secretKey: "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"
+
+naver:
+  client-id: iboe5ch6oi
+  client-secret: 35GkUOob92lG6b1uipAf5gUW5JaETGCPTAf7ax9Z
