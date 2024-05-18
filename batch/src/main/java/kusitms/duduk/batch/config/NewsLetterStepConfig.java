@@ -43,6 +43,7 @@ public class NewsLetterStepConfig {
                         (contribution, chunkContext) -> {
                             //커멘드 패턴을 활용한 다형성 구현 방식 적용
                             log.debug("crawlingNewsStep 실행");
+
                             for(NewsCrawler newsCrawler : newsCrawlerList) {
                                 CrawlingNewsResponse crawlingNews = newsCrawler.crawl();
                                 String imageUrl = s3FileUploadPort.uploadFile(crawlingNews.getThumbnailURL());
