@@ -36,7 +36,7 @@ public class CreateNewsLetterCommand implements CreateNewsLetterUseCase {
         log.info("Create NewsLetter By AI\n request: {}", request.toString());
         NewsLetter savedNewsLetter = saveNewsLetterPort.create(newsLetterDtoMapper.toDomain(request));
 
-        applicationEventPublisher.publishEvent(new CreateSummaryEvent(this, newsLetter.getId().getValue()));
+        applicationEventPublisher.publishEvent(new CreateSummaryEvent(this, savedNewsLetter.getId().getValue()));
 
         NewsLetter loadedNewsLetter = loadNewsLetterPort.findById(savedNewsLetter.getId().getValue())
             .orElseThrow(() -> new NotExistsException("NewsLetter not found"));
