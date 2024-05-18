@@ -23,7 +23,7 @@ public class DeleteNewsLetterCommand implements DeleteNewsLetterUseCase {
 
     @Override
     public void delete(Long newsLetterId, String email) {
-        log.info("delete newsLetterId: {}", newsLetterId);
+        log.info("Delete newsLetterId: {}", newsLetterId);
         NewsLetter newsLetter = loadNewsLetterPort.findById(newsLetterId)
             .orElseThrow(() -> new IllegalArgumentException("NewsLetter not found"));
 

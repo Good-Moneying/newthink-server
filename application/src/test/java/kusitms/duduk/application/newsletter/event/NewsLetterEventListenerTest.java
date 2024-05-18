@@ -1,5 +1,6 @@
 package kusitms.duduk.application.newsletter.event;
 
+import groovy.util.logging.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -22,7 +23,6 @@ public class NewsLetterEventListenerTest {
 
     @BeforeEach
     public void setup() {
-        // Ensure correct initialization
         MockitoAnnotations.initMocks(this);
     }
 

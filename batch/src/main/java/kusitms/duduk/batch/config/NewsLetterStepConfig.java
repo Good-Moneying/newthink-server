@@ -49,7 +49,10 @@ public class NewsLetterStepConfig {
                                 String imageUrl = s3FileUploadPort.uploadFile(crawlingNews.getThumbnailURL());
 
                                 OpenAIResponse openAIResponse = aiClientPort.retrieveAiResponse(crawlingNews);
+                                log.debug("openAIResponse: {}", openAIResponse.getContent());
+
                                 ParsedAiContentResponse parsedAiContent = parsingAiContent.getParsingResult(openAIResponse.getContent());
+                                log.debug("parsedAiContent: {}", parsedAiContent.toString());
 
                                 createNewsLetterUseCase.create(
                                         new CreateNewsLetterRequest(

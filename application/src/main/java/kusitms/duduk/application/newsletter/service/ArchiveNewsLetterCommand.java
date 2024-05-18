@@ -10,10 +10,12 @@ import kusitms.duduk.core.user.port.output.UpdateUserPort;
 import kusitms.duduk.domain.newsletter.NewsLetter;
 import kusitms.duduk.domain.user.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -26,16 +28,16 @@ public class ArchiveNewsLetterCommand implements ArchiveNewsLetterUseCase {
 
     @Override
     public ArchiveNewsLetterResponse archive(String email, Long newsLetterId) {
+        log.info("Archive email: {}, newsLetterId: {}", email, newsLetterId);
+
         User user = loadUserPort.findByEmail(email)
             .orElseThrow(() -> new NotExistsException("User not found"));
 
         NewsLetter newsLetter = loadNewsLetterPort.findById(newsLetterId)
             .orElseThrow(() -> new NotExistsException("NewsLetter not found"));
 
-        // 아카이브 이벤트를 발행한다
         applicationEventPublisher.publishEvent(new ArchiveNewsLetterEvent(this, newsLetterId));
 
-        // 유저의 아카이브에 추가한다
         user.archiveNewsLetter(newsLetter);
         updateUserPort.update(user);
         return new ArchiveNewsLetterResponse(newsLetterId);
