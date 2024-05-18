@@ -15,8 +15,8 @@ public class S3FileDeleteCommand implements S3FileDeletePort {
     private final AmazonS3Client amazonS3Client;
     private String urlHeader;
 
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
+//    @Value("${cloud.aws.s3.bucket}")
+    private String bucket = "goodmoneying";
 
     @Override
     public void deleteImage(String url) {

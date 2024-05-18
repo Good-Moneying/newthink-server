@@ -22,8 +22,8 @@ public class S3FileUploadCommand implements S3FileUploadPort {
 
     private final AmazonS3Client amazonS3Client;
 
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
+//    @Value("${cloud.aws.s3.bucket}")
+    private String bucket = "goodmoneying";
 
     @Override
     public String uploadFile(String url) {
