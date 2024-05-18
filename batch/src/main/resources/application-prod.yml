@@ -10,7 +10,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop # create-drop, update, validate, none
+      ddl-auto: create # create-drop, update, validate, none
     properties:
       hibernate:
         format_sql: true # SQL 포맷팅
