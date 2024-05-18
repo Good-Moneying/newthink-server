@@ -1,21 +1,9 @@
 spring:
-#  datasource:
-#    driver-class-name: org.h2.Driver
-#    username: sa
-#    password:
-#    url: jdbc:h2:~/test;MODE=MySQL
-
   datasource:
-    url: "jdbc:mysql://db-good-moneying.c9g0uuc6uk51.ap-northeast-2.rds.amazonaws.com/newthink"
-    username: "admin"
-    password: "good1234"
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    dbcp2:
-      validation-query: select 1
-  sql:
-    init:
-      platform: mysql
-
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    url: jdbc:h2:mem:testdb
 
   batch:
     jdbc:
