@@ -26,9 +26,9 @@ public class CrawlingJobConfig {
     private final JobRepository jobRepository;
     private final Step stepConfig;
 
-    @Bean
-    public Job generateNewsLetter(){
-        return new JobBuilder("generateNewsLetterJob",jobRepository)
+    @Bean(name = "generateNewsLetterJob")
+    public Job generateNewsLetterJob() {
+        return new JobBuilder("generateNewsLetterJob", jobRepository)
                 .start(stepConfig)
                 .incrementer(new RunIdIncrementer())
                 .build();

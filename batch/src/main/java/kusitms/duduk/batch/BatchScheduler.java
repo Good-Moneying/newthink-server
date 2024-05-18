@@ -21,7 +21,7 @@ public class BatchScheduler {
     private final JobLauncher jobLauncher;
 
     @Qualifier("generateNewsLetterJob")
-    private final Job generateNewsLetter;
+    private final Job generateNewsLetterJob;
 
     //@Scheduled(fixedRate = 5000)
     //@Scheduled(cron = "0 */1 * * *")
@@ -29,6 +29,6 @@ public class BatchScheduler {
     public void scheduledTask() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
         log.info("News letter batch service started");
 
-        jobLauncher.run(generateNewsLetter,new JobParametersBuilder().toJobParameters());
+        jobLauncher.run(generateNewsLetterJob, new JobParametersBuilder().toJobParameters());
     }
 }

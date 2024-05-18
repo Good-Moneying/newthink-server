@@ -26,7 +26,7 @@ public class CrawlingProcessor implements ItemProcessor<CrawlingNewsResponse, Cr
 
         return new CreateNewsLetterRequest(
                 item.getThumbnailURL(),
-                parsedAiContentResponse.headline(),
+                parsedAiContentResponse.title(),
                 parsedAiContentResponse.content(),
                 parsedAiContentResponse.keywords(),
                 parsedAiContentResponse.category(),

@@ -14,7 +14,7 @@ public class ParsingAiContent {
         String category  =response.substring(response.indexOf("카테고리: ") + 6).trim();
 
         return ParsedAiContentResponse.builder()
-                .headline(headline)
+                .title(headline)
                 .content(content)
                 .keywords(keywords)
                 .category(category)
