@@ -1,5 +1,8 @@
 package kusitms.duduk.core.newsletter.port.output;
 
-public interface UpdateNewsLetterPort {
+import java.util.Optional;
+import kusitms.duduk.domain.newsletter.NewsLetter;
 
+public interface UpdateNewsLetterPort {
+    Optional<NewsLetter> update(NewsLetter newsLetter);
 }

@@ -40,6 +40,12 @@ public class UserPersistenceAdapter implements UpdateUserPort, LoadUserPort, Sav
     }
 
     @Override
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id)
+            .map(userJpaMapper::toDomain);
+    }
+
+    @Override
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email)
             .map(userJpaMapper::toDomain);
@@ -73,8 +79,8 @@ public class UserPersistenceAdapter implements UpdateUserPort, LoadUserPort, Sav
     }
 
     @Override
-    public void deleteById(Id userId) {
-        userRepository.deleteById(userId.getValue());
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
 
     @Override

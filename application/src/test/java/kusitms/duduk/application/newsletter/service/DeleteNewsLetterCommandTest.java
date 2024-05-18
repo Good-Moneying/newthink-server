@@ -56,12 +56,12 @@ class DeleteNewsLetterCommandTest {
         User user = UserSteps.ROLE_EDITOR_생성_요청();
         User savedUser = saveUserPort.create(user);
 
-        CreateNewsLetterRequest request = NewsLetterSteps.뉴스_레터_생성_요청();
+        CreateNewsLetterRequest request = NewsLetterSteps.AI_뉴스_레터_생성_요청();
         NewsLetter newsLetter = newsLetterDtoMapper.toDomain(request, savedUser.getId());
-        NewsLetter savedNewsLetter = saveNewsLetterPort.save(newsLetter);
+        NewsLetter savedNewsLetter = saveNewsLetterPort.create(newsLetter);
 
         // when
-        deleteNewsLetterUseCase.delete(savedNewsLetter.getNewsLetterId().getValue(),
+        deleteNewsLetterUseCase.delete(savedNewsLetter.getId().getValue(),
             user.getEmail().getValue());
 
         // then
@@ -74,13 +74,13 @@ class DeleteNewsLetterCommandTest {
         User user = UserSteps.ROLE_EDITOR_생성_요청();
         saveUserPort.create(user);
 
-        CreateNewsLetterRequest request = NewsLetterSteps.뉴스_레터_생성_요청();
+        CreateNewsLetterRequest request = NewsLetterSteps.AI_뉴스_레터_생성_요청();
         NewsLetter newsLetter = newsLetterDtoMapper.toDomain(request, Id.of(99L));
-        NewsLetter savedNewsLetter = saveNewsLetterPort.save(newsLetter);
+        NewsLetter savedNewsLetter = saveNewsLetterPort.create(newsLetter);
 
         // when & then
         assertThatThrownBy(
-            () -> deleteNewsLetterUseCase.delete(savedNewsLetter.getNewsLetterId().getValue(),
+            () -> deleteNewsLetterUseCase.delete(savedNewsLetter.getId().getValue(),
 	user.getEmail().getValue())).isInstanceOf(IllegalArgumentException.class);
     }
 }

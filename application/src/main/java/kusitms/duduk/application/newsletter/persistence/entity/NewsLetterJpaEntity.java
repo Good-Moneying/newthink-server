@@ -1,5 +1,6 @@
 package kusitms.duduk.application.newsletter.persistence.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -7,7 +8,12 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
+import kusitms.duduk.application.comment.persistence.entity.CommentJpaEntity;
 import kusitms.duduk.application.global.entity.BaseEntity;
 import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.newsletter.vo.Type;
@@ -16,10 +22,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
+@ToString
 @Entity
 @Table(name = "news_letter")
 @Builder(toBuilder = true)
@@ -38,7 +46,7 @@ public class NewsLetterJpaEntity extends BaseEntity {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "content")
+    @Column(name = "content", length = 2000)
     private String content;
 
     @Column(name = "keywords")
@@ -58,4 +66,9 @@ public class NewsLetterJpaEntity extends BaseEntity {
 
     @Column(name = "scrap_count")
     private Integer scrapCount;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "news_letter_id")
+    @Builder.Default
+    private List<CommentJpaEntity> comments = new ArrayList<>();
 }

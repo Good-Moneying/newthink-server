@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+      #    url: jdbc:h2:tcp://localhost/~/database/kusitms
+      url: jdbc:h2:mem:test;MODE=MySQL
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop # create-drop, update, validate, none
+    properties:
+      hibernate:
+        format_sql: true # SQL 포맷팅
+        show_sql: true # SQL 출력
+
+jwt:
+  secret-key: NiOeyFbN1Gqo10bPgUyTFsRMkJpGLXSvGP04eFqj5B30r5TcrtlSXfQ7TndvYjNvfkEKLqILn0j1SmKODO1Yw3JpBBgI3nVPEahqxeY8qbPSFGyzyEVxnl4AQcrnVneI
+  issuer: duduk.shop
+  access:
+    expiration: 3600000 # 1시간 (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
+    header: Authorization
+  refresh:
+    expiration: 1209600000 # 2주 (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루) * 14(2주))
+    header: Authorization-refresh
+
+naver:
+  client-id: iboe5ch6oi
+  client-secret: 35GkUOob92lG6b1uipAf5gUW5JaETGCPTAf7ax9Z

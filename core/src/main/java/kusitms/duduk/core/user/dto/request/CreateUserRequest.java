@@ -25,7 +25,7 @@ public record CreateUserRequest(
     @Schema(description = "인증 제공자 ex) google, kakao, naver", example = "kakao", required = true)
     @NotNull String provider,
 
-    @Schema(description = "사용자 관심사 ex) stock, fund, crypto, estate", example = "stock", required = true)
+    @Schema(description = "사용자 관심사 ex) stock, fund, crypto, estate", example = "finance", required = true)
     @NotNull String category,
 
     @Schema(description = "사용자의 앱 사용 목표 ex) everyday, one_to_two, three_to_four", example = "everyday", required = true)

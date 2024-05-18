@@ -13,9 +13,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import kusitms.duduk.core.user.dto.request.CreateUserRequest;
 import kusitms.duduk.domain.global.Category;
-import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.user.User;
 import kusitms.duduk.domain.user.vo.Email;
+import kusitms.duduk.domain.user.vo.ExperiencePoint;
 import kusitms.duduk.domain.user.vo.Gender;
 import kusitms.duduk.domain.user.vo.Goal;
 import kusitms.duduk.domain.user.vo.Nickname;
@@ -42,7 +42,6 @@ public class UserSteps {
         String email = "test@test.com";
 
         User user = User.builder()
-//            .id(Id.of(1L))
             .email(Email.from(email))
             .nickname(Nickname.from("tester"))
             .refreshToken(RefreshToken.of("12345"))
@@ -50,8 +49,10 @@ public class UserSteps {
             .gender(Gender.MALE)
             .birthday(LocalDate.of(1990, 1, 1))
             .provider(Provider.KAKAO)
+            .experiencePoint(ExperiencePoint.initial())
             .role(Role.EDITOR)
             .archives(new ArrayList<>())
+            .comments(new ArrayList<>())
             .build();
 
         return user;
@@ -69,7 +70,10 @@ public class UserSteps {
             .birthday(LocalDate.of(1990, 1, 1))
             .provider(Provider.KAKAO)
             .role(Role.USER)
+            .experiencePoint(ExperiencePoint.initial())
             .archives(new ArrayList<>())
+            .comments(new ArrayList<>())
+            .category(Category.FINANCE)
             .build();
 
         return user;

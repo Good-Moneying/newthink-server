@@ -1,5 +1,6 @@
 package kusitms.duduk.apiserver.config;
 
+import kusitms.duduk.apiserver.security.infrastructure.AuthenticationService;
 import kusitms.duduk.apiserver.security.infrastructure.filter.JwtAuthenticationFilter;
 import kusitms.duduk.application.security.service.JwtTokenProvider;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
@@ -31,16 +32,17 @@ public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
     private final LoadUserPort loadUserPort;
     private final SaveUserPort saveUserPort;
+    private final AuthenticationService authenticationService;
 
     private static final String[] RESOURCE_LIST = {
         "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/admin/img/**", "/css/**",
         "/js/**",
         "/favicon.ico", "/error/**", "/webjars/**", "/h2-console/**", "/api-docs/**",
-        "/api/healthcheck"
+        "/api/healthcheck", "/api/users/home"
     };
 
     private static final String[] AUTH_WHITELIST = {
-        "/api/oauth/**", "/api/users/validate/**"
+        "/api/oauth/**", "/api/users/validate/**", "/api/newsletters/**"
     };
 
     @Bean
@@ -51,7 +53,7 @@ public class SecurityConfig {
             .cors(cors -> cors.disable())
             .headers(headers -> headers.disable())
             // Spring Security에서 제공하는 기본 로그인 페이지를 비활성화 합니다.
-            // Request 헤더에 id, password를 담아서 요청하는 방식을 사용하는 방식은 보안적으로 취약합니다.
+            // Request 헤더에 newsLetterId, password를 담아서 요청하는 방식을 사용하는 방식은 보안적으로 취약합니다.
             .httpBasic(AbstractHttpConfigurer::disable)
             .formLogin(form -> form.disable())
             // JWT 방식은 세션을 사용하지 않습니다.
@@ -62,9 +64,10 @@ public class SecurityConfig {
 	.requestMatchers(AUTH_WHITELIST).permitAll()
 	// 회원가입 API는 인증 없이 접근 가능합니다.
 	.requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-	.anyRequest().authenticated())
+	// todo : 개발 완료 후 수정 예정
+	.anyRequest().permitAll())
             .addFilterBefore(
-	new JwtAuthenticationFilter(jwtTokenProvider, loadUserPort, saveUserPort),
+	new JwtAuthenticationFilter(jwtTokenProvider, loadUserPort, saveUserPort, authenticationService),
 	UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

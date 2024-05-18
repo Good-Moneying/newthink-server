@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 public class Archive {
 
+    // todo : Id VO 객체로 바꾸자
     private Long id;
     private Category category;
     @Default

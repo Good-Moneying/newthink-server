@@ -28,7 +28,7 @@ public class ArchiveJpaMapper {
             : archive.getTermIds();
     }
 
-    public Archive toDomainEntity(ArchiveJpaEntity archiveJpaEntity) {
+    public Archive toDomain(ArchiveJpaEntity archiveJpaEntity) {
         return Archive.builder()
             .id(archiveJpaEntity.getId())
             .category(archiveJpaEntity.getCategory())

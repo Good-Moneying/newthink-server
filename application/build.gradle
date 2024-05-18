@@ -38,6 +38,34 @@ dependencies {
 
     //amazon-s3
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+    // QueryDsl
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+    annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
+    annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
+}
+
+def querydslSrcDir = 'src/main/generated'
+
+sourceSets {
+    main {
+        java {
+            srcDirs += [ querydslSrcDir ]
+        }
+    }
+}
+
+compileJava {
+    options.compilerArgs << '-Aquerydsl.generatedAnnotationClass=javax.annotation.Generated'
+}
+
+tasks.withType(JavaCompile) {
+    options.generatedSourceOutputDirectory = file(querydslSrcDir)
+}
+
+clean {
+    delete file(querydslSrcDir)
 }
 
 tasks.named('test') {

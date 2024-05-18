@@ -3,7 +3,7 @@ package kusitms.duduk.domain.newsletter.vo;
 import java.util.Arrays;
 
 public enum Type {
-    Editor, AI;
+    EDITOR, AI;
 
     public static Type from(String type) {
         return Arrays.stream(Type.values())

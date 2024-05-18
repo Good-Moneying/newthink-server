@@ -29,4 +29,15 @@ public class TermDtoMapper {
             .category(term.getTermCategory().name())
             .build();
     }
+
+    public RetrieveTermResponse toResponse(Term term, boolean isScrapped) {
+        return RetrieveTermResponse.builder()
+            .termId(term.getId().getValue())
+            .englishName(term.getEnglishName().getValue())
+            .koreanName(term.getKoreanName().getValue())
+            .description(term.getDescription().getValue())
+            .category(term.getTermCategory().name())
+            .isScrapped(isScrapped)
+            .build();
+    }
 }

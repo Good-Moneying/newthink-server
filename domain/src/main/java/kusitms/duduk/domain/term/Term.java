@@ -1,5 +1,6 @@
 package kusitms.duduk.domain.term;
 
+import java.time.LocalDateTime;
 import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.term.vo.TermCategory;
 import kusitms.duduk.domain.term.vo.Description;
@@ -19,4 +20,6 @@ public class Term {
     private Name englishName;
     private TermCategory termCategory;
     private Description description;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

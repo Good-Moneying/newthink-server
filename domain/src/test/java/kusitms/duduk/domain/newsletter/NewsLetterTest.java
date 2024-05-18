@@ -7,7 +7,7 @@ import kusitms.duduk.domain.global.Count;
 import kusitms.duduk.domain.newsletter.vo.Content;
 import kusitms.duduk.domain.newsletter.vo.Keywords;
 import kusitms.duduk.domain.newsletter.vo.Summary;
-import kusitms.duduk.domain.newsletter.vo.Thumbnail;
+import kusitms.duduk.domain.global.Thumbnail;
 import kusitms.duduk.domain.newsletter.vo.Title;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

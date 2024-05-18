@@ -15,9 +15,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @DisplayName("CreateNewsLetterCommandTest 테스트")
+@ActiveProfiles("test")
 public class CreateNewsLetterCommandTest {
 
     @Autowired
@@ -37,7 +39,7 @@ public class CreateNewsLetterCommandTest {
     @Test
     void 뉴스_레터를_생성한다() {
         // given
-        CreateNewsLetterRequest request = NewsLetterSteps.뉴스_레터_생성_요청();
+        CreateNewsLetterRequest request = NewsLetterSteps.AI_뉴스_레터_생성_요청();
         User user = UserSteps.ROLE_EDITOR_생성_요청();
         saveUserPort.create(user);
 
@@ -53,7 +55,7 @@ public class CreateNewsLetterCommandTest {
     @Test
     void 편집_권한이_없으면_뉴스_레터를_생성할_수_없다() {
         // given
-        CreateNewsLetterRequest request = NewsLetterSteps.뉴스_레터_생성_요청();
+        CreateNewsLetterRequest request = NewsLetterSteps.AI_뉴스_레터_생성_요청();
         User user = UserSteps.ROLE_USER_생성_요청();
         saveUserPort.create(user);
 

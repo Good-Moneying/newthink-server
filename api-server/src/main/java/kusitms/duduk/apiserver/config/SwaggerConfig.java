@@ -1,8 +1,11 @@
 package kusitms.duduk.apiserver.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -21,6 +24,15 @@ import org.springframework.context.annotation.Configuration;
         @Server(url = "https://goodmoneying.shop/", description = "Production Server")
     }
 )
+@SecuritySchemes({
+    @SecurityScheme(
+        name = "Bearer Token",
+        type = SecuritySchemeType.HTTP,
+        bearerFormat = "JWT",
+        scheme = "Bearer",
+        description = "JWT Bearer Token.."
+    )
+})
 @Configuration
 public class SwaggerConfig {
 

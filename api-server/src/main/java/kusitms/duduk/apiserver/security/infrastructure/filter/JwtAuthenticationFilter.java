@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Optional;
+import kusitms.duduk.apiserver.security.infrastructure.AuthenticationService;
 import kusitms.duduk.apiserver.security.infrastructure.CustomUserDetails;
 import kusitms.duduk.application.security.service.JwtTokenProvider;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
@@ -18,23 +19,27 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Slf4j
+@Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final LoadUserPort loadUserPort;
     private final SaveUserPort saveUserPort;
+    private final AuthenticationService authenticationService;
 
     public static final String BEARER_PREFIX = "Bearer ";
-    @Value("${jwt.access.header}")
-    private String accessTokenHeader;
+    //    @Value("${jwt.access.header}")
+    private String accessTokenHeader = "Authorization";
 
-    @Value("${jwt.refresh.header}")
-    private String refreshTokenHeader;
+    //    @Value("${jwt.refresh.header}")
+    private String refreshTokenHeader = "Authorization-refresh";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -76,8 +81,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
              * AccessToken 마저 없다면 403 에러를 반환합니다.
              */
             if (refreshToken == null) {
+	log.debug("No refresh token provided");
 	verifyAccessTokenAndSaveAuthentication(request, response, filterChain);
-                return;
+	return;
             }
         } catch (Exception e) {
             log.info("RefreshToken is not valid");
@@ -104,12 +110,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return reIssuedRefreshToken;
     }
 
-    private void verifyAccessTokenAndSaveAuthentication(HttpServletRequest request,
+    public void verifyAccessTokenAndSaveAuthentication(HttpServletRequest request,
         HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
+        log.info("verifyAccessTokenAndSaveAuthentication() start\n");
         Optional<String> accessToken = extractAccessToken(request);
 
-        if(accessToken.isEmpty()){
+        if (accessToken.isEmpty()) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -119,39 +126,42 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
          * 해당 정보를 사용해서 UserDetails 혹은 OAuth2User를 만든다면 위 클래스에서 진행하는 것이 나을 수 있습니다.
          * 현재 경우에는 accessToken에 담겨 있는 email, Authorities 정보로 Authentication 객체를 생성합니다.
          */
-        if(jwtTokenProvider.isTokenValid(accessToken.get())){
+        if (jwtTokenProvider.isTokenValid(accessToken.get())) {
             jwtTokenProvider.getSubject(accessToken.get())
-	.ifPresent(email -> loadUserPort.findByEmail(email)
-	    .ifPresent(this::saveAuthentication));
+	.ifPresent(authenticationService::verifyAndAuthenticate);
         }
 
         filterChain.doFilter(request, response);
     }
 
-    private void saveAuthentication(User user) {
-        CustomUserDetails userDetails = new CustomUserDetails(user);
-        Authentication authentication =
-            new UsernamePasswordAuthenticationToken(userDetails, null,
-	userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-    }
+//    private void saveAuthentication(User user) {
+//        log.info("saveAuthentication() start\n");
+//        CustomUserDetails userDetails = new CustomUserDetails(user);
+//        Authentication authentication =
+//            new UsernamePasswordAuthenticationToken(userDetails, null,
+//	userDetails.getAuthorities());
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//    }
 
     private Optional<String> extractAccessToken(HttpServletRequest request) {
-        return Optional.ofNullable(request.getHeader(accessTokenHeader))
-            .filter(refreshToken -> StringUtils.hasText(refreshToken))
-            .filter(
-	refreshToken -> refreshToken.startsWith(BEARER_PREFIX))  // 토큰이 'Bearer '로 시작하는지 확인
-            .map(refreshToken -> refreshToken.substring(
-	BEARER_PREFIX.length()));  // 'Bearer ' 접두어 제거
+        String header = request.getHeader(accessTokenHeader);
+        if (!StringUtils.hasText(header) || !header.startsWith(BEARER_PREFIX)) {
+            return Optional.empty(); // 유효하지 않은 헤더를 즉시 처리
+        }
+        return Optional.of(header.substring(BEARER_PREFIX.length())); // 'Bearer ' 접두어 제거
     }
 
     private Optional<String> extractRefreshToken(HttpServletRequest request) {
-        return Optional.ofNullable(request.getHeader(refreshTokenHeader))
-            .filter(StringUtils::hasText)  // StringUtils.hasText()를 이용하여 텍스트가 실제로 존재하는지 확인
-            .filter(
-	refreshToken -> refreshToken.startsWith(BEARER_PREFIX))  // 토큰이 'Bearer '로 시작하는지 확인
-            .map(refreshToken -> refreshToken.substring(
-	BEARER_PREFIX.length()));  // 'Bearer ' 접두어 제거
+        String header = null;
+        try {
+            header = request.getHeader(refreshTokenHeader);
+        } catch (Exception e) {
+            log.info("No refresh token provided");
+        }
+        if (!StringUtils.hasText(header) || !header.startsWith(BEARER_PREFIX)) {
+            return Optional.empty(); // 유효하지 않은 헤더를 즉시 처리
+        }
+        return Optional.of(header.substring(BEARER_PREFIX.length())); // 'Bearer ' 접두어 제거
     }
 
     private Optional<String> extractOAuthToken(HttpServletRequest request) {

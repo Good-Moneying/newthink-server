@@ -1,12 +1,15 @@
 package kusitms.duduk.domain.newsletter;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import kusitms.duduk.domain.comment.Comment;
 import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.global.Count;
 import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.newsletter.vo.Content;
 import kusitms.duduk.domain.newsletter.vo.Keywords;
 import kusitms.duduk.domain.newsletter.vo.Summary;
-import kusitms.duduk.domain.newsletter.vo.Thumbnail;
+import kusitms.duduk.domain.global.Thumbnail;
 import kusitms.duduk.domain.newsletter.vo.Title;
 import kusitms.duduk.domain.newsletter.vo.Type;
 import lombok.AccessLevel;
@@ -19,7 +22,7 @@ import lombok.Getter;
 @Builder(toBuilder = true)
 public class NewsLetter {
 
-    private Id newsLetterId;
+    private Id id;
     private Id editorId;
     private Thumbnail thumbnail;
     private Title title;
@@ -28,10 +31,29 @@ public class NewsLetter {
     private Category category;
     private Type type;
     private Summary summary;
+    private List<Comment> comments;
     private Count viewCount;
     private Count scrapCount;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public boolean isWrittenBy(Id id) {
         return editorId.equals(id);
+    }
+
+    public void increaseViewCount() {
+        this.viewCount.increase();
+    }
+
+    public void increaseScrapCount() {
+        this.scrapCount.increase();
+    }
+
+    public void addComment(Comment savedComment) {
+        this.comments.add(savedComment);
+    }
+
+    public void addSummary(String summary) {
+        this.summary = Summary.from(summary);
     }
 }

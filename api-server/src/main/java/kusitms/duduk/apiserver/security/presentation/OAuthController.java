@@ -1,5 +1,6 @@
 package kusitms.duduk.apiserver.security.presentation;
 
+import kusitms.duduk.apiserver.security.infrastructure.CustomUserDetails;
 import kusitms.duduk.core.security.dto.response.OAuthLoginResponse;
 import kusitms.duduk.core.security.port.input.LoginOAuthUseCase;
 import kusitms.duduk.domain.user.vo.Provider;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -29,5 +31,12 @@ public class OAuthController implements OAuthControllerDocs {
         log.info("oAuthLogin() start \n provider: {}, accessToken: {}\n", provider, accessToken);
         return new ResponseEntity<>(loginOAuthUseCase.process(Provider.from(provider), accessToken),
             HttpStatus.OK);
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<String> test(@AuthenticationPrincipal
+    CustomUserDetails customUserDetails) {
+        return new ResponseEntity<>(customUserDetails.getEmail()
+            , HttpStatus.OK);
     }
 }
