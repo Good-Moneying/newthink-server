@@ -2,8 +2,7 @@ package kusitms.duduk.apiserver.thinking.presentation;
 
 import kusitms.duduk.apiserver.security.infrastructure.CustomUserDetails;
 import kusitms.duduk.core.comment.dto.request.OpenAISummaryRequest;
-import kusitms.duduk.core.comment.dto.response.OpenAISummaryResponse;
-import kusitms.duduk.core.comment.port.output.OpenAISummaryClientPort;
+import kusitms.duduk.core.openai.port.output.OpenAISummaryClientPort;
 import kusitms.duduk.core.thinking.dto.request.CreateThinkingCloudRequest;
 import kusitms.duduk.core.thinking.dto.response.RetrieveThinkingDetailResponse;
 import kusitms.duduk.core.thinking.dto.response.RetrieveThinkingHomeResponse;
@@ -45,10 +44,10 @@ public class ThinkingController implements ThinkingControllerDocs {
     }
 
     @PostMapping("/summary")
-    public ResponseEntity<OpenAISummaryResponse> summaryThinking(
+    public ResponseEntity<String> summaryThinking(
         @RequestBody final OpenAISummaryRequest request
     ) {
-        return ResponseEntity.ok(openAISummaryClientPort.create(request));
+        return ResponseEntity.ok(openAISummaryClientPort.summarize(request));
     }
 
     @PostMapping("/{thinkingId}")

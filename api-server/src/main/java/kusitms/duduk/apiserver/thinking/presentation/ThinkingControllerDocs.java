@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kusitms.duduk.apiserver.security.infrastructure.CustomUserDetails;
 import kusitms.duduk.core.comment.dto.request.OpenAISummaryRequest;
-import kusitms.duduk.core.comment.dto.response.OpenAISummaryResponse;
 import kusitms.duduk.core.thinking.dto.request.CreateThinkingCloudRequest;
 import kusitms.duduk.core.thinking.dto.response.RetrieveThinkingDetailResponse;
 import kusitms.duduk.core.thinking.dto.response.RetrieveThinkingHomeResponse;
@@ -61,7 +60,7 @@ public interface ThinkingControllerDocs {
             )
         )
     )
-    ResponseEntity<OpenAISummaryResponse> summaryThinking(
+    ResponseEntity<String> summaryThinking(
         @RequestBody final OpenAISummaryRequest request
     );
 

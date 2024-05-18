@@ -85,7 +85,7 @@ public class UserController implements UserControllerDocs {
 	NewsLetterThumbnailResponse.builder()
 	    .id(2L)
 	    .title("기술 섹터 동향")
-	    .type("analysis")
+	    .type("editor")
 	    .keywords("애플, 삼성, 최신 기술")
 	    .thumbnail("https://image.shutterstock.com/image-photo/technology-trends.jpg")
 	    .isScrapped(true)

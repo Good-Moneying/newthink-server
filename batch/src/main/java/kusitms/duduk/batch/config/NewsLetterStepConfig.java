@@ -30,10 +30,6 @@ public class NewsLetterStepConfig {
 
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
-
-//    private final CrawlingReader crawlingReader;
-//    private final CrawlingProcessor crawlingProcessor;
-//    private final CrawlingWriter crawlingWriter;
     private final List<NewsCrawler> newsCrawlerList;
     private final AiClientPort aiClientPort;
     private final ParsingAiContent parsingAiContent;
@@ -43,13 +39,10 @@ public class NewsLetterStepConfig {
     @Bean
     public Step crawlingNewsStep() {
         return new StepBuilder("crawlingNewsStep", jobRepository)
-//                .<CrawlingNewsResponse, CreateNewsLetterRequest>chunk(1,transactionManager)
-//                .reader(crawlingReader)
-//                .processor(crawlingProcessor)
-//                .writer(crawlingWriter)
                 .tasklet(
                         (contribution, chunkContext) -> {
                             //커멘드 패턴을 활용한 다형성 구현 방식 적용
+                            log.debug("crawlingNewsStep 실행");
                             for(NewsCrawler newsCrawler : newsCrawlerList) {
                                 CrawlingNewsResponse crawlingNews = newsCrawler.crawl();
                                 String imageUrl = s3FileUploadPort.uploadFile(crawlingNews.getThumbnailURL());

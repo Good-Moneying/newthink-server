@@ -38,7 +38,7 @@ public class RetrieveNewsLetterCommand implements RetrieveNewsLetterQuery {
     public NewsLetterDetailResponse retrieveNewsLetterDetail(String email, Long newsLetterId) {
 
         applicationEventPublisher.publishEvent(new RetrieveNewsLetterEvent(email, newsLetterId));
-        
+
         // 유저를 불러와야 합니다.
         User user = loadUserPort.findByEmail(email)
             .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
@@ -68,7 +68,8 @@ public class RetrieveNewsLetterCommand implements RetrieveNewsLetterQuery {
             .summary(newsLetter.getSummary().toSentence())
 
             // Todo : AI 뉴스레터 body 값을 어떻게 할 것인지 논의해야 합니다.
-            .body(newsLetter.getContent().getContent() != null ? parseNewsLetterCommand.parseContentToBlocks(newsLetter)
+            .body(newsLetter.getContent().getContent() != null
+	? parseNewsLetterCommand.parseContentToBlocks(newsLetter)
 	: null)
 
             .editor(editor != null ?
@@ -78,13 +79,24 @@ public class RetrieveNewsLetterCommand implements RetrieveNewsLetterQuery {
 	    .build() : null)
 
             .comments(comments.stream()
-	.map(comment -> NewsLetterDetailResponse.Comment.builder()
-	    .userId(comment.getUserId().getValue())
-	    .content(comment.getSentence().getValue())
-	    .likeCount(comment.getLikeCount().getCount())
-	    .build())
-                .toList())
+	.map(comment -> {
+	    User loadUser = loadUser(comment.getUserId().getValue());
+	    return NewsLetterDetailResponse.Comment.builder()
+	        .userLevel(user.getLevel().name()) // user의 level
+	        .userNickname(user.getNickname().getValue()) // user의 nickname
+	        .userProfileUrl(user.getLevel().getProfileUrl()) // user의 profile URL
+	        .perspective(comment.getPerspective().getDescription())
+	        .content(comment.getSentence().getValue())
+	        .likeCount(comment.getLikeCount().getCount())
+	        .build();
+	})
+	.toList())
             .build();
+    }
+
+    private User loadUser(Long userId) {
+        return loadUserPort.findById(userId)
+            .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
     }
 
     public NewsLetterThumbnailResponse retrieveLatestNewsLetter(User user) {

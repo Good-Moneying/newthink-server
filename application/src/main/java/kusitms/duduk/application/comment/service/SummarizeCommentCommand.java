@@ -2,7 +2,7 @@ package kusitms.duduk.application.comment.service;
 
 import kusitms.duduk.core.comment.dto.request.OpenAISummaryRequest;
 import kusitms.duduk.core.comment.port.input.SummarizeCommentUseCase;
-import kusitms.duduk.core.comment.port.output.OpenAISummaryClientPort;
+import kusitms.duduk.core.openai.port.output.OpenAISummaryClientPort;
 import kusitms.duduk.domain.comment.Comment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,16 +18,12 @@ public class SummarizeCommentCommand implements SummarizeCommentUseCase {
     @Override
     public String summarize(Comment comment) {
         OpenAISummaryRequest request = createSummaryRequest(comment);
-        return fetchSummarizedComment(request);
+        return summaryClientPort.summarize(request);
     }
 
     private OpenAISummaryRequest createSummaryRequest(Comment comment) {
         return OpenAISummaryRequest.builder()
             .comment(comment.getSentence().getValue())
             .build();
-    }
-
-    private String fetchSummarizedComment(OpenAISummaryRequest request) {
-        return summaryClientPort.create(request).summarizedComment();
     }
 }

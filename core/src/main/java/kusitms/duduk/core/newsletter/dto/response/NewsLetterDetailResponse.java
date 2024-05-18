@@ -2,17 +2,15 @@ package kusitms.duduk.core.newsletter.dto.response;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import kusitms.duduk.domain.newsletter.vo.Summary;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Value;
 
 @Builder(toBuilder = true)
 public record NewsLetterDetailResponse(String title,
 		       Editor editor,
 		       LocalDateTime publishedAt,
-                                       String summary,
+		       String summary,
 		       List<Block> body,
 		       List<Comment> comments,
 		       boolean isCommented) {
@@ -40,7 +38,11 @@ public record NewsLetterDetailResponse(String title,
     @Builder
     public static class Comment {
 
-        private Long userId;
+        // user 레벨, user nickname, user profileUrl, perspective
+        private String userLevel;
+        private String userNickname;
+        private String userProfileUrl;
+        private String perspective;
         private String content;
         private int likeCount;
     }

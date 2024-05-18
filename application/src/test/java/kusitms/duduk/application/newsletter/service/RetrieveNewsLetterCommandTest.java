@@ -86,6 +86,7 @@ public class RetrieveNewsLetterCommandTest {
         // then
         assertThat(response).isNotNull();
         assertThat(response.title()).isEqualTo(savedNewsLetter.getTitle().getTitle());
+        assertThat(response.editor().getNickname()).isEqualTo(savedEditor.getNickname().getValue());
     }
 
     @Test
