@@ -12,7 +12,7 @@ server:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop # create-drop, update, validate, none
+      ddl-auto: update # create-drop, update, validate, none
     properties:
       hibernate:
         format_sql: true # SQL 포맷팅
