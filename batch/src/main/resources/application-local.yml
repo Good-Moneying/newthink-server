@@ -1,24 +1,28 @@
 spring:
+spring:
   datasource:
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-    url: jdbc:h2:mem:testdb
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://db-good-moneying.c9g0uuc6uk51.ap-northeast-2.rds.amazonaws.com/newthink
+    username: admin
+    password: good1234
+  sql:
+    init:
+      platform: mysql
+
+  jpa:
+    hibernate:
+      ddl-auto: create # create-drop, update, validate, none
+    properties:
+      hibernate:
+        format_sql: true # SQL 포맷팅
+        show_sql: true # SQL 출력
+        dialect: org.hibernate.dialect.MySQL8Dialect
 
   batch:
     jdbc:
       initialize-schema:
     job:
       enabled: true
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        format_sql: true
-        show_sql: true
-
 jwt:
   secret-key: NiOeyFbN1Gqo10bPgUyTFsRMkJpGLXSvGP04eFqj5B30r5TcrtlSXfQ7TndvYjNvfkEKLqILn0j1SmKODO1Yw3JpBBgI3nVPEahqxeY8qbPSFGyzyEVxnl4AQcrnVneI
   issuer: duduk.shop
