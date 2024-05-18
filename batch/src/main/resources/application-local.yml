@@ -49,3 +49,7 @@ crawling:
   driver_path: "/Users/kwonminhyeok/Downloads/chromedriver_mac_arm64/chromedriver"
   target-url: "https://www.hankyung.com/all-news"
 
+open-ai:
+  end-point: "https://api.openai.com/v1/chat/completions"
+  secret-key: "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"
+
