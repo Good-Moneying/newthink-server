@@ -17,11 +17,10 @@ import java.util.List;
 @Slf4j
 @Component
 public class KoreaEconomyNewsCrawler implements NewsCrawler{
-    @Value("${selenium.url}")
-    private String CRAWLING_DRIVER_URL;
+    private String CRAWLING_DRIVER_URL = "http://selenium:4444/wd/hub";
 
-    @Value("${crawling.target-url}")
-    private String TARGET_URL;
+//    @Value("${crawling.target-url}")
+    private String TARGET_URL = "https://www.hankyung.com/all-news";
 
     @Override
     public CrawlingNewsResponse crawl() throws InterruptedException, MalformedURLException {

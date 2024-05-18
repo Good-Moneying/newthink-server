@@ -16,8 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CrawlingReader implements ItemReader<CrawlingNewsResponse> {
 
-    @Value("${crawling.target-url}")
-    private String TARGET_URL;
+    private String TARGET_URL = "https://www.hankyung.com/all-news";
 
     private final KoreaEconomyNewsCrawler koreaEconomyNewsCrawler;
 
