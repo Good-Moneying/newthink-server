@@ -1,13 +1,25 @@
 spring:
+#  datasource:
+#    driver-class-name: org.h2.Driver
+#    username: sa
+#    password:
+#    url: jdbc:h2:~/test;MODE=MySQL
+
   datasource:
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-    url: jdbc:h2:~/test;MODE=MySQL
+    url: "jdbc:mysql://db-good-moneying.c9g0uuc6uk51.ap-northeast-2.rds.amazonaws.com/newthink"
+    username: "admin"
+    password: "good1234"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    dbcp2:
+      validation-query: select 1
+  sql:
+    init:
+      platform: mysql
+
 
   batch:
     jdbc:
-      initialize-schema: embedded
+      initialize-schema:
     job:
       enabled: true
 
@@ -31,6 +43,11 @@ jwt:
   refresh:
     expiration: 1209600000 # 2주 (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루) * 14(2주))
     header: Authorization-refresh
+
+
+crawling:
+  driver_path: "/Users/kwonminhyeok/Downloads/chromedriver_mac_arm64/chromedriver"
+  target-url: "https://www.hankyung.com/all-news"
 
 
 

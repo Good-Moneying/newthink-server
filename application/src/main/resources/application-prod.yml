@@ -43,3 +43,19 @@ jwt:
   refresh:
     expiration: 1209600000 # 2주 (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루) * 14(2주))
     header: Authorization-refresh
+
+
+open-ai:
+  end-point: "https://api.openai.com/v1/chat/completions"
+  secret-key: "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"
+
+
+cloud:
+  aws:
+    s3:
+      bucket: "goodmoneying"
+    stack.auto: false
+    region.static: ap-northeast-2
+    credentials:
+      accessKey: "AKIAYS2NV5RSG2UYIRSY"
+      secretKey: "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"
