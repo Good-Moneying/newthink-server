@@ -37,8 +37,6 @@ public class NewsLetterController implements NewsLetterControllerDocs {
             .publishedAt(LocalDate.now())
             .editor("Amy")
             .blocks(new ArrayList<>(Arrays.asList(
-	new NewsLetterTestResponse.Block("headline", "테슬라 주가 갑자기 오른 이유는?"),
-	new NewsLetterTestResponse.Block("summary", "물가상승률\n급격한 기준 금리 인상\n이민자 증가"),
 	new NewsLetterTestResponse.Block("paragraph", "불과 몇 주 사이에 미국 통화 정책을 ..."),
 	new NewsLetterTestResponse.Block("paragraph", "지난 16일(현지시간) 제롬 파월 미국 ..."),
 	new NewsLetterTestResponse.Block("photo",
