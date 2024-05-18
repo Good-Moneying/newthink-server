@@ -10,7 +10,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 @Slf4j
@@ -40,19 +39,15 @@ public class KoreaEconomyNewsCrawler implements NewsCrawler {
 
             // 뉴스 리스트 가져오기
             WebElement webElementNewsList = driver.findElement(By.cssSelector(".economyDiv"));
-            List<WebElement> newsList = webElementNewsList.findElements(
-	By.cssSelector(".txt-cont"));
+            List<WebElement> newsList = webElementNewsList.findElements(By.cssSelector(".txt-cont"));
             List<WebElement> thumbList = webElementNewsList.findElements(By.cssSelector(".thumb"));
 
             // dto 매핑
             CrawlingNewsResponse crawlingNews = CrawlingNewsResponse.builder()
-	.title(newsList.get(0).findElement(By.cssSelector(".news-tit"))
-	    .getAttribute("innerText"))
-	.content(
-	    newsList.get(0).findElement(By.cssSelector(".lead")).getAttribute("innerText"))
-	.thumbnailURL(
-	    thumbList.get(0).findElement(By.cssSelector("img")).getAttribute("src"))
-	.build();
+                .title(newsList.get(0).findElement(By.cssSelector(".news-tit")).getAttribute("innerText"))
+                .content(newsList.get(0).findElement(By.cssSelector(".lead")).getAttribute("innerText"))
+                .thumbnailURL(thumbList.get(0).findElement(By.cssSelector("img")).getAttribute("src"))
+                .build();
 
             return crawlingNews;
         } catch (MalformedURLException e) {

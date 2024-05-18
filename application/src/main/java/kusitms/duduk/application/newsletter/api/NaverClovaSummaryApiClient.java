@@ -7,25 +7,24 @@ import kusitms.duduk.core.newsletter.dto.response.NaverClovaSummaryResponse;
 import kusitms.duduk.core.newsletter.port.output.NaverClovaSummaryClientPort;
 import kusitms.duduk.domain.newsletter.NewsLetter;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
-@Slf4j
 @RequiredArgsConstructor
 @Component
 public class NaverClovaSummaryApiClient implements NaverClovaSummaryClientPort {
 
+//    @Value("${naver.client-id}")
     private String clientId = "iboe5ch6oi";
+
+//    @Value("${naver.client-secret}")
     private String clientSecret = "35GkUOob92lG6b1uipAf5gUW5JaETGCPTAf7ax9Z";
 
     private static final String NAVER_CLOVA_BASE_URL = "https://naveropenapi.apigw.ntruss.com";
 
     private WebClient webClient;
-
     @PostConstruct
     private void init() {
         this.webClient = WebClient.builder()
@@ -37,8 +36,6 @@ public class NaverClovaSummaryApiClient implements NaverClovaSummaryClientPort {
     }
 
     public NaverClovaSummaryResponse summarize(NewsLetter newsLetter) {
-        log.debug("Naver Clova Summarize NewsLetter Start : {}", newsLetter.getTitle());
-
         Assert.notNull(newsLetter.getTitle(), "제목은 null 일 수 없습니다.");
         Assert.notNull(newsLetter.getContent(), "내용은 null 일 수 없습니다.");
 
