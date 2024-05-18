@@ -58,6 +58,6 @@ public class MoneyTodayNewsCrawler implements NewsCrawler{
                 driver.quit();
             }
         }
-        return null;
+        return crawlingNewsResponse;
     }
 }
