@@ -9,7 +9,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,7 +19,6 @@ public class KoreaEconomyNewsCrawler implements NewsCrawler {
 
     private String CRAWLING_DRIVER_URL = "http://selenium:4444/wd/hub";
 
-    //    @Value("${crawling.target-url}")
     private String TARGET_URL = "https://www.hankyung.com/all-news";
 
     @Override
@@ -61,10 +59,9 @@ public class KoreaEconomyNewsCrawler implements NewsCrawler {
             log.error(e.getMessage());
         } finally {
             if (driver != null) {
-	driver.quit();
+                driver.quit();
             }
         }
-
         return null;
     }
 }
