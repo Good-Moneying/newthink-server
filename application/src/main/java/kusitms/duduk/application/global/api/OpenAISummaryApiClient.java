@@ -34,6 +34,4 @@ public class OpenAISummaryApiClient implements OpenAISummaryClientPort {
             .map(OpenAiSummaryResponse::extractContent)
             .block();
     }
-
-
 }
