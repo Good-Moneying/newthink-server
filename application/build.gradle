@@ -36,6 +36,9 @@ dependencies {
     // H2 Database
     runtimeOnly 'com.mysql:mysql-connector-j'
 
+    //amazon-s3
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
     // QueryDsl
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
