@@ -41,14 +41,16 @@ public class NewsLetterStepConfig {
         return new StepBuilder("crawlingNewsStep", jobRepository)
                 .tasklet(
                         (contribution, chunkContext) -> {
-                            //커멘드 패턴을 활용한 다형성 구현 방식 적용
-                            log.debug("crawlingNewsStep 실행");
+                            log.debug("crawlingNewsStep() Start");
                             for(NewsCrawler newsCrawler : newsCrawlerList) {
                                 CrawlingNewsResponse crawlingNews = newsCrawler.crawl();
                                 String imageUrl = s3FileUploadPort.uploadFile(crawlingNews.getThumbnailURL());
 
                                 OpenAIResponse openAIResponse = aiClientPort.retrieveAiResponse(crawlingNews);
+                                log.debug("openAIResponse: {}", openAIResponse.getContent());
+
                                 ParsedAiContentResponse parsedAiContent = parsingAiContent.getParsingResult(openAIResponse.getContent());
+                                log.debug("parsedAiContent: {}", parsedAiContent.toString());
 
                                 createNewsLetterUseCase.create(
                                         new CreateNewsLetterRequest(

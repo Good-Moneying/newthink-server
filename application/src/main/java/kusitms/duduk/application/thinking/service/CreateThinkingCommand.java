@@ -25,6 +25,7 @@ public class CreateThinkingCommand implements CreateThinkingUseCase {
 
     @Override
     public Thinking create(CreateThinkingRequest request) {
+        log.debug("CreateThinkingRequest: {}", request.toString());
         Thinking thinking = thinkingDtoMapper.create(request);
 
         return saveThinkingPort.save(thinking);
@@ -32,6 +33,7 @@ public class CreateThinkingCommand implements CreateThinkingUseCase {
 
     @Override
     public void createThinkingCloud(Long thinkingId, CreateThinkingCloudRequest request) {
+        log.debug("CreateThinkingCloudRequest: {}", request.toString());
         Thinking thinking = loadThinkingPort.findById(thinkingId)
             .orElseThrow(() -> new NotExistsException("해당 생각을 찾을 수 없습니다."));
 

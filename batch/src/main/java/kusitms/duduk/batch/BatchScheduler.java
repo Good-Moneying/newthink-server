@@ -26,10 +26,10 @@ public class BatchScheduler {
 
     //@Scheduled(fixedRate = 5000)
     //@Scheduled(cron = "0 */1 * * *")
-    @Scheduled(cron = "1 * * * * *")
+    @Scheduled(cron = "0 */15 * * * *")
     public void scheduledTask()
         throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
-        log.info("News letter batch service started");
+        log.debug("News letter batch service started");
 
         JobParameters jobParameters = new JobParametersBuilder()
             .addLong("time", System.currentTimeMillis())

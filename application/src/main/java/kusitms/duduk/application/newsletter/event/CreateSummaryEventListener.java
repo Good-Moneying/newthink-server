@@ -7,9 +7,11 @@ import kusitms.duduk.core.newsletter.port.output.NaverClovaSummaryClientPort;
 import kusitms.duduk.core.newsletter.port.output.UpdateNewsLetterPort;
 import kusitms.duduk.domain.newsletter.NewsLetter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class CreateSummaryEventListener {
@@ -20,13 +22,16 @@ public class CreateSummaryEventListener {
 
     @EventListener
     public void createSummary(CreateSummaryEvent event) {
+        log.debug("CreateSummaryEventListener Start(). Request : {}", event.toString());
+
         NewsLetter newsLetter = loadNewsLetterPort.findById(event.getNewsLetterId())
             .orElseThrow(() -> new NotExistsException("NewsLetter not found"));
 
         NaverClovaSummaryResponse response = naverClovaSummaryClientPort.summarize(newsLetter);
         newsLetter.addSummary(response.summary());
 
-//        newsLetter.addSummary("섬머리된 정보");
+        log.debug("NaverClovaSummaryResponse : {}", response.summary());
+
         updateNewsLetterPort.update(newsLetter);
     }
 

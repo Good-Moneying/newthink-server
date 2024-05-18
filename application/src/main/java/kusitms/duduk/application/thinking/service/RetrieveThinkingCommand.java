@@ -12,10 +12,12 @@ import kusitms.duduk.core.user.port.output.LoadUserPort;
 import kusitms.duduk.domain.thinking.Thinking;
 import kusitms.duduk.domain.user.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -40,14 +42,15 @@ public class RetrieveThinkingCommand implements RetrieveThinkingQuery {
             .builder()
             .thinkingDetails(response)
             .build();
-
     }
 
     @Override
     public RetrieveThinkingDetailResponse retrieveThinkingDetail(Long thinkingId) {
+        log.debug("RetrieveThinkingDetailRequest: {}", thinkingId);
         Thinking thinking = loadThinkingPort.findById(thinkingId)
             .orElseThrow(() -> new NotExistsException("해당 생각을 찾을 수 없습니다."));
 
+        log.debug("RetrieveThinkingDetailResponse: {}", thinking.toString());
         return thinkingDtoMapper.toDto(thinking);
     }
 }

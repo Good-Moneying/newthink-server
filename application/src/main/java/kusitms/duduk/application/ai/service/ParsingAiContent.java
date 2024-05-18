@@ -1,12 +1,15 @@
 package kusitms.duduk.application.ai.service;
 
 import kusitms.duduk.core.ai.dto.response.ParsedAiContentResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class ParsingAiContent {
 
     public ParsedAiContentResponse getParsingResult(String response){
+        log.info("Parsing AI Content Response: {}", response);
 
         String content = response.substring(response.indexOf("본문: ") + 4, response.indexOf("\n제목:")).trim();
         String headline = response.substring(response.indexOf("제목: ") + 4, response.indexOf("\n키워드: ")).trim();

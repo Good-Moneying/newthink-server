@@ -36,30 +36,35 @@ public class RetrieveNewsLetterCommand implements RetrieveNewsLetterQuery {
 
     @Override
     public NewsLetterDetailResponse retrieveNewsLetterDetail(String email, Long newsLetterId) {
+        log.debug("RetrieveNewsLetterDetail Start()\n");
 
         applicationEventPublisher.publishEvent(new RetrieveNewsLetterEvent(email, newsLetterId));
 
-        // 유저를 불러와야 합니다.
         User user = loadUserPort.findByEmail(email)
             .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
+        log.debug("RetrieveNewsLetterDetail user : {}\n", user);
 
         NewsLetter newsLetter = loadNewsLetterPort.findById(newsLetterId)
             .orElseThrow(() -> new IllegalArgumentException("해당 뉴스레터를 찾을 수 없습니다."));
 
-        // 에디터의 정보를 불러옵니다.
+        log.debug("RetrieveNewsLetterDetail newsLetter : {}\n", newsLetter);
+
         User editor = null;
         if (newsLetter.getEditorId().getValue() != null) {
+            log.debug("RetrieveNewsLetterDetail editorId : {}\n", newsLetter.getEditorId().getValue());
+
             editor = loadUserPort.findById(newsLetter.getEditorId().getValue())
 	.orElseThrow(() -> new IllegalArgumentException("해당 에디터를 찾을 수 없습니다."));
         }
 
-        // 추가로 해당 뉴스레터에 대한 코멘트를 다 불러옵니다. 불러오는 조건을 좋아요 수로 합시다
         List<Comment> comments = loadCommentPort.findByNewsLetterIdOrderByLikeCountDesc(
             newsLetterId);
+        log.debug("RetrieveNewsLetterDetail comments size : {}\n", comments.size());
 
-        // 코멘트 작성 여부를 확인합니다.
         boolean isCommented = loadCommentPort.isExistByNewsLetterIdAndUserId(newsLetterId,
             user.getId().getValue());
+
+        log.debug("RetrieveNewsLetterDetail isCommented {}\n", isCommented);
 
         return NewsLetterDetailResponse.builder()
             .title(newsLetter.getTitle().getTitle())
@@ -67,7 +72,6 @@ public class RetrieveNewsLetterCommand implements RetrieveNewsLetterQuery {
             .isCommented(isCommented)
             .summary(newsLetter.getSummary().toSentence())
 
-            // Todo : AI 뉴스레터 body 값을 어떻게 할 것인지 논의해야 합니다.
             .body(newsLetter.getContent().getContent() != null
 	? parseNewsLetterCommand.parseContentToBlocks(newsLetter)
 	: null)

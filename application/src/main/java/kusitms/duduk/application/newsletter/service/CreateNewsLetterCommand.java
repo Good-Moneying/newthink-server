@@ -33,7 +33,8 @@ public class CreateNewsLetterCommand implements CreateNewsLetterUseCase {
     @Override
     public NewsLetterResponse create(CreateNewsLetterRequest request) {
         NewsLetter newsLetter = newsLetterDtoMapper.toDomain(request);
-        log.info("Create NewsLetter By AI\n request: {}", request.toString());
+        log.debug("Create NewsLetter By AI\n request: {}", request.toString());
+
         NewsLetter savedNewsLetter = saveNewsLetterPort.create(newsLetterDtoMapper.toDomain(request));
 
         applicationEventPublisher.publishEvent(new CreateSummaryEvent(this, savedNewsLetter.getId().getValue()));
