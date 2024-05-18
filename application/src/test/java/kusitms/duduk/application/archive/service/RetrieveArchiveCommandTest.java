@@ -26,10 +26,12 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @DisplayName("RetrieveArchiveCommand 테스트")
+@ActiveProfiles("test")
 public class RetrieveArchiveCommandTest {
 
     @Autowired

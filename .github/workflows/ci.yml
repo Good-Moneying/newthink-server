@@ -31,7 +31,5 @@ jobs:
 
       - name: Run tests with Gradle
         env:
-          SPRING_DATASOURCE_URL: jdbc:mysql://db-good-moneying.c9g0uuc6uk51.ap-northeast-2.rds.amazonaws.com/newthink
-          SPRING_DATASOURCE_USERNAME: admin
-          SPRING_DATASOURCE_PASSWORD: good1234
+          SPRING_PROFILES_ACTIVE: test
         run: ./gradlew test
