@@ -31,9 +31,6 @@ spring:
         format_sql: true
         show_sql: true
 
-  config:
-    import: "application-secret.yml"
-
 jwt:
   secret-key: NiOeyFbN1Gqo10bPgUyTFsRMkJpGLXSvGP04eFqj5B30r5TcrtlSXfQ7TndvYjNvfkEKLqILn0j1SmKODO1Yw3JpBBgI3nVPEahqxeY8qbPSFGyzyEVxnl4AQcrnVneI
   issuer: duduk.shop

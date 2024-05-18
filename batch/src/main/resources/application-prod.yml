@@ -63,7 +63,3 @@ cloud:
     credentials:
       accessKey: "AKIAYS2NV5RSG2UYIRSY"
       secretKey: "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"
-
-naver:
-  client-id: iboe5ch6oi
-  client-secret: 35GkUOob92lG6b1uipAf5gUW5JaETGCPTAf7ax9Z
