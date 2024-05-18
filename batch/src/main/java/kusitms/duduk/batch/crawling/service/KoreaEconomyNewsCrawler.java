@@ -1,7 +1,9 @@
 package kusitms.duduk.batch.crawling.service;
 
 import kusitms.duduk.core.crawler.dto.response.CrawlingNewsResponse;
+import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class KoreaEconomyNewsCrawler implements NewsCrawler{
 
     @Value("${crawling.driver_path}")
@@ -20,16 +23,12 @@ public class KoreaEconomyNewsCrawler implements NewsCrawler{
     @Value("${crawling.target-url}")
     private String TARGET_URL;
 
+    private final WebDriver driver;
+
     @Override
     public CrawlingNewsResponse crawl() throws InterruptedException {
-        ChromeDriver driver = new ChromeDriver();
 
-        // 현재 package의 workspace 경로
-        Path path = Paths.get(CRAWLING_DRIVER_PATH);
-
-        // WebDriver 경로 설정
-        // EC2에 어떻게 올릴지
-        System.setProperty("webdriver.chrome.driver", path.toString());
+        System.setProperty("webdriver.chrome.driver", TARGET_URL);
 
         // 브라우저 드라이버 실행
         driver.get(TARGET_URL);
