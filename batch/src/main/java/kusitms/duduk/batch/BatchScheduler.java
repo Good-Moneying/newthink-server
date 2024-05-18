@@ -3,6 +3,7 @@ package kusitms.duduk.batch;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -26,9 +27,14 @@ public class BatchScheduler {
     //@Scheduled(fixedRate = 5000)
     //@Scheduled(cron = "0 */1 * * *")
     @Scheduled(cron = "1 * * * * *")
-    public void scheduledTask() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
+    public void scheduledTask()
+        throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
         log.info("News letter batch service started");
 
-        jobLauncher.run(generateNewsLetterJob, new JobParametersBuilder().toJobParameters());
+        JobParameters jobParameters = new JobParametersBuilder()
+            .addLong("time", System.currentTimeMillis())
+            .toJobParameters();
+
+        jobLauncher.run(generateNewsLetterJob, jobParameters);
     }
 }
