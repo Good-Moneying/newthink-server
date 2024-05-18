@@ -63,3 +63,6 @@ cloud:
     credentials:
       accessKey: "AKIAYS2NV5RSG2UYIRSY"
       secretKey: "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"
+
+selenium:
+  url: "http://selenium:4444/wd/hub"
