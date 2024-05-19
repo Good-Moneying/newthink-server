@@ -46,7 +46,7 @@ public class NewsLetterJpaEntity extends BaseEntity {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "content", length = 2000)
+    @Column(name = "content", length = 3000)
     private String content;
 
     @Column(name = "keywords")

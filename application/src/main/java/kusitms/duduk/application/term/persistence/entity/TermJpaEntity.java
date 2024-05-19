@@ -2,12 +2,12 @@ package kusitms.duduk.application.term.persistence.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotNull;
 import kusitms.duduk.application.global.entity.BaseEntity;
 import kusitms.duduk.domain.term.vo.TermCategory;
@@ -39,7 +39,7 @@ public class TermJpaEntity extends BaseEntity {
     @NotNull
     private String description;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private TermCategory termCategory;
 }
 

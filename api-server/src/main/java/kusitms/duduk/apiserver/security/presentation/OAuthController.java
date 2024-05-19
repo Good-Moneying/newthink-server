@@ -1,5 +1,6 @@
 package kusitms.duduk.apiserver.security.presentation;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import kusitms.duduk.apiserver.security.infrastructure.CustomUserDetails;
 import kusitms.duduk.core.security.dto.response.OAuthLoginResponse;
 import kusitms.duduk.core.security.port.input.LoginOAuthUseCase;

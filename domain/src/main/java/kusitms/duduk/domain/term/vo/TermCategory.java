@@ -5,8 +5,9 @@ import lombok.Getter;
 
 @Getter
 public enum TermCategory {
-    COMPANY("기업"),
-    ENVIRONMENT("환경");
+    FINANCE("금융"),
+    ECONOMY("경제"),
+    COMPANY("기업");
 
     private final String description;
 
