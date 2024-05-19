@@ -10,6 +10,7 @@ import kusitms.duduk.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -21,6 +22,7 @@ public class RegisterUserCommand implements RegisterUserUseCase {
     private final UserDtoMapper userDtoMapper;
 
     @Override
+    @Transactional
     public UserResponse register(CreateUserRequest request) {
         log.info("register() start\n");
         User user = userDtoMapper.toDomain(request);

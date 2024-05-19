@@ -22,7 +22,7 @@ public class CreateSummaryEventListener {
 
     @EventListener
     public void createSummary(CreateSummaryEvent event) {
-        log.debug("CreateSummaryEventListener Start(). Request : {}", event.toString());
+        log.info("CreateSummaryEventListener Start(). Request : {}", event.toString());
 
         NewsLetter newsLetter = loadNewsLetterPort.findById(event.getNewsLetterId())
             .orElseThrow(() -> new NotExistsException("NewsLetter not found"));
@@ -30,7 +30,7 @@ public class CreateSummaryEventListener {
         NaverClovaSummaryResponse response = naverClovaSummaryClientPort.summarize(newsLetter);
         newsLetter.addSummary(response.summary());
 
-        log.debug("NaverClovaSummaryResponse : {}", response.summary());
+        log.info("NaverClovaSummaryResponse : {}", response.summary());
 
         updateNewsLetterPort.update(newsLetter);
     }

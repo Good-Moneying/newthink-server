@@ -46,11 +46,11 @@ public class RetrieveThinkingCommand implements RetrieveThinkingQuery {
 
     @Override
     public RetrieveThinkingDetailResponse retrieveThinkingDetail(Long thinkingId) {
-        log.debug("RetrieveThinkingDetailRequest: {}", thinkingId);
+        log.info("RetrieveThinkingDetailRequest: {}", thinkingId);
         Thinking thinking = loadThinkingPort.findById(thinkingId)
             .orElseThrow(() -> new NotExistsException("해당 생각을 찾을 수 없습니다."));
 
-        log.debug("RetrieveThinkingDetailResponse: {}", thinking.toString());
+        log.info("RetrieveThinkingDetailResponse: {}", thinking.toString());
         return thinkingDtoMapper.toDto(thinking);
     }
 }

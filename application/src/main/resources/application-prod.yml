@@ -7,6 +7,8 @@ spring:
   sql:
     init:
       platform: mysql
+      # application 시작 시 data.sql에 작성된 코드로 database를 초기화 하도록 지정
+#      mode: always
 
   jpa:
     hibernate:
@@ -17,6 +19,9 @@ spring:
         show_sql: true # SQL 출력
         dialect: org.hibernate.dialect.MySQL8Dialect
 
+logging:
+  level:
+    root: debug
 
 springdoc:
   swagger-ui:

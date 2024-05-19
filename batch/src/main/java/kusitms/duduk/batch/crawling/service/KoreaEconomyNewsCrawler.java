@@ -22,7 +22,7 @@ public class KoreaEconomyNewsCrawler implements NewsCrawler {
 
     @Override
     public CrawlingNewsResponse crawl() throws InterruptedException, MalformedURLException {
-        log.debug("크롤링을 진행합니다.");
+        log.info("크롤링을 진행합니다.");
         WebDriver driver = null;
 
         try {

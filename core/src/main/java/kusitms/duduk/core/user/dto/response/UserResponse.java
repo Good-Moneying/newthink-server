@@ -4,7 +4,7 @@ import java.util.List;
 import lombok.Builder;
 
 @Builder(toBuilder = true)
-public record UserResponse(String email, String nickname, List<Long> archives
+public record UserResponse(Long userId, String email, String nickname, List<Long> archives
 ) {
 
 }

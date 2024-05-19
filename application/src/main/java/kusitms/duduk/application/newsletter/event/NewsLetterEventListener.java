@@ -15,13 +15,13 @@ public class NewsLetterEventListener {
 
     @EventListener
     public void increaseViewCount(RetrieveNewsLetterEvent event) {
-        log.debug("RetrieveNewsLetterEvent increaseViewCount: {}", event.getId());
+        log.info("RetrieveNewsLetterEvent increaseViewCount: {}", event.getId());
         interactNewsLetterUseCase.increaseViewCount(event.getId());
     }
 
     @EventListener
     public void increaseScrapCount(ArchiveNewsLetterEvent event) {
-        log.debug("RetrieveNewsLetterEvent increaseScrapCount: {}", event.getId());
+        log.info("RetrieveNewsLetterEvent increaseScrapCount: {}", event.getId());
         interactNewsLetterUseCase.increaseScrapCount(event.getId());
     }
 }

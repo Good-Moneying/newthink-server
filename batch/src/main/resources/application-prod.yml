@@ -57,7 +57,6 @@ open-ai:
   end-point: "https://api.openai.com/v1/chat/completions"
   secret-key: "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"
 
-
 cloud:
   aws:
     s3:

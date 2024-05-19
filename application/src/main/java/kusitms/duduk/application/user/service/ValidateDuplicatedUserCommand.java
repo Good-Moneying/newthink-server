@@ -18,17 +18,16 @@ public class ValidateDuplicatedUserCommand implements ValidateDuplicatedUserQuer
 
     @Override
     public void validateDuplicatedEmail(ValidateUserEmailRequest request) {
-        log.info("Attempt to signup with duplicated email: {}\n", request.email());
-
         if (loadUserPort.existsUserByEmail(request.email())) {
+            log.info("Attempt to signup with duplicated email: {}\n", request.email());
             throw new AlreadyExistsException("이미 존재하는 이메일입니다.");
         }
     }
 
     @Override
     public void validateDuplicatedNickname(ValidateUserNicknameRequest request) {
-        log.info("Attempt to signup with duplicated nickname: {}", request.nickname());
         if (loadUserPort.existsUserByNickname(request.nickname())) {
+            log.info("Attempt to signup with duplicated nickname: {}", request.nickname());
             throw new AlreadyExistsException("이미 존재하는 닉네임입니다.");
         }
     }

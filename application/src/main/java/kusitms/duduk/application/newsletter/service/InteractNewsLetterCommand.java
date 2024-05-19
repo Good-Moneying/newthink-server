@@ -18,7 +18,7 @@ public class InteractNewsLetterCommand implements InteractNewsLetterUseCase {
 
     @Override
     public void increaseViewCount(Long id) {
-        log.debug("IncreaseViewCount Start() id : {}", id);
+        log.info("IncreaseViewCount Start() id : {}", id);
         loadNewsLetterPort.findById(id).ifPresent(newsLetter -> {
             newsLetter.increaseViewCount();
             saveNewsLetterPort.saveAndFlush(newsLetter);
@@ -28,7 +28,7 @@ public class InteractNewsLetterCommand implements InteractNewsLetterUseCase {
 
     @Override
     public void increaseScrapCount(Long id) {
-        log.debug("IncreaseScrapCount Start() id : {}", id);
+        log.info("IncreaseScrapCount Start() id : {}", id);
         loadNewsLetterPort.findById(id).ifPresent(newsLetter -> {
             newsLetter.increaseScrapCount();
             saveNewsLetterPort.saveAndFlush(newsLetter);

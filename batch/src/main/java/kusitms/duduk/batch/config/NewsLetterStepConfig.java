@@ -39,34 +39,35 @@ public class NewsLetterStepConfig {
     @Bean
     public Step crawlingNewsStep() {
         return new StepBuilder("crawlingNewsStep", jobRepository)
-            .tasklet(
-                (contribution, chunkContext) -> {
-                    //커멘드 패턴을 활용한 다형성 구현 방식 적용
-                    log.debug("crawlingNewsStep 실행");
+                .tasklet(
+                        (contribution, chunkContext) -> {
+                            log.info("crawlingNewsStep() Start");
+                            for(NewsCrawler newsCrawler : newsCrawlerList) {
+                                CrawlingNewsResponse crawlingNews = newsCrawler.crawl();
+                                String imageUrl = s3FileUploadPort.uploadFile(crawlingNews.getThumbnailURL());
 
-                    for(NewsCrawler newsCrawler : newsCrawlerList) {
-                        CrawlingNewsResponse crawlingNews = newsCrawler.crawl();
-                        String imageUrl = s3FileUploadPort.uploadFile(crawlingNews.getThumbnailURL());
+                                OpenAIResponse openAIResponse = aiClientPort.retrieveAiResponse(crawlingNews);
+                                log.info("openAIResponse: {}", openAIResponse.getContent());
 
-                        OpenAIResponse openAIResponse = aiClientPort.retrieveAiResponse(crawlingNews);
-                        ParsedAiContentResponse parsedAiContent = parsingAiContent.getParsingResult(openAIResponse.getContent());
+                                ParsedAiContentResponse parsedAiContent = parsingAiContent.getParsingResult(openAIResponse.getContent());
+                                log.info("parsedAiContent: {}", parsedAiContent.toString());
 
-                        createNewsLetterUseCase.create(
-                            new CreateNewsLetterRequest(
-                                imageUrl,
-                                parsedAiContent.title(),
-                                parsedAiContent.content(),
-                                parsedAiContent.keywords(),
-                                parsedAiContent.category(),
-                                "미정",
-                                "AI"
-                            )
-                        );
-                    }
-                    return RepeatStatus.FINISHED;
-                }, transactionManager
-            )
-            .allowStartIfComplete(true)
-            .build();
+                                createNewsLetterUseCase.create(
+                                        new CreateNewsLetterRequest(
+                                                imageUrl,
+                                                parsedAiContent.title(),
+                                                parsedAiContent.content(),
+                                                parsedAiContent.keywords(),
+                                                parsedAiContent.category(),
+                                                "미정",
+                                                "AI"
+                                        )
+                                );
+                            }
+                            return RepeatStatus.FINISHED;
+                        }, transactionManager
+                )
+                .allowStartIfComplete(true)
+                .build();
     }
 }

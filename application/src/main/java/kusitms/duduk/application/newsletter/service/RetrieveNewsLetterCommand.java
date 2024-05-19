@@ -2,6 +2,7 @@ package kusitms.duduk.application.newsletter.service;
 
 import java.util.List;
 import kusitms.duduk.application.newsletter.event.RetrieveNewsLetterEvent;
+import kusitms.duduk.common.exception.custom.NotExistsException;
 import kusitms.duduk.core.comment.port.output.LoadCommentPort;
 import kusitms.duduk.core.newsletter.dto.NewsLetterDtoMapper;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterDetailResponse;
@@ -36,22 +37,22 @@ public class RetrieveNewsLetterCommand implements RetrieveNewsLetterQuery {
 
     @Override
     public NewsLetterDetailResponse retrieveNewsLetterDetail(String email, Long newsLetterId) {
-        log.debug("RetrieveNewsLetterDetail Start()\n");
+        log.info("RetrieveNewsLetterDetail Start()\n");
 
         applicationEventPublisher.publishEvent(new RetrieveNewsLetterEvent(email, newsLetterId));
 
         User user = loadUserPort.findByEmail(email)
-            .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
-        log.debug("RetrieveNewsLetterDetail user : {}\n", user);
+            .orElseThrow(() -> new NotExistsException("해당 유저를 찾을 수 없습니다."));
+        log.info("RetrieveNewsLetterDetail user : {}\n", user);
 
         NewsLetter newsLetter = loadNewsLetterPort.findById(newsLetterId)
-            .orElseThrow(() -> new IllegalArgumentException("해당 뉴스레터를 찾을 수 없습니다."));
+            .orElseThrow(() -> new NotExistsException("해당 뉴스레터를 찾을 수 없습니다."));
 
-        log.debug("RetrieveNewsLetterDetail newsLetter : {}\n", newsLetter);
+        log.info("RetrieveNewsLetterDetail newsLetter : {}\n", newsLetter);
 
         User editor = null;
         if (newsLetter.getEditorId().getValue() != null) {
-            log.debug("RetrieveNewsLetterDetail editorId : {}\n", newsLetter.getEditorId().getValue());
+            log.info("RetrieveNewsLetterDetail editorId : {}\n", newsLetter.getEditorId().getValue());
 
             editor = loadUserPort.findById(newsLetter.getEditorId().getValue())
 	.orElseThrow(() -> new IllegalArgumentException("해당 에디터를 찾을 수 없습니다."));
@@ -59,12 +60,12 @@ public class RetrieveNewsLetterCommand implements RetrieveNewsLetterQuery {
 
         List<Comment> comments = loadCommentPort.findByNewsLetterIdOrderByLikeCountDesc(
             newsLetterId);
-        log.debug("RetrieveNewsLetterDetail comments size : {}\n", comments.size());
+        log.info("RetrieveNewsLetterDetail comments size : {}\n", comments.size());
 
         boolean isCommented = loadCommentPort.isExistByNewsLetterIdAndUserId(newsLetterId,
             user.getId().getValue());
 
-        log.debug("RetrieveNewsLetterDetail isCommented {}\n", isCommented);
+        log.info("RetrieveNewsLetterDetail isCommented {}\n", isCommented);
 
         return NewsLetterDetailResponse.builder()
             .title(newsLetter.getTitle().getTitle())

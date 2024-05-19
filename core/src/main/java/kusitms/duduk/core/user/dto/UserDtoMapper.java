@@ -39,6 +39,7 @@ public class UserDtoMapper {
 
     public UserResponse toDto(User user) {
         return UserResponse.builder()
+            .userId(user.getId().getValue())
             .email(user.getEmail().getValue())
             .nickname(user.getNickname().getValue())
             .archives(user.getArchives().stream()

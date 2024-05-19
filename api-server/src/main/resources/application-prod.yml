@@ -1,6 +1,7 @@
 server:
   port: 8080
 
+spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://db-good-moneying.c9g0uuc6uk51.ap-northeast-2.rds.amazonaws.com/newthink

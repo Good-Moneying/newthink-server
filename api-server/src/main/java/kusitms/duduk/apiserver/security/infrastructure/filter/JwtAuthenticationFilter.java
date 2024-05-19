@@ -81,7 +81,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
              * AccessToken 마저 없다면 403 에러를 반환합니다.
              */
             if (refreshToken == null) {
-	log.debug("No refresh token provided");
+	log.info("No refresh token provided");
 	verifyAccessTokenAndSaveAuthentication(request, response, filterChain);
 	return;
             }
@@ -116,7 +116,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         log.info("verifyAccessTokenAndSaveAuthentication() start\n");
         Optional<String> accessToken = extractAccessToken(request);
 
-        if (accessToken.isEmpty()) {
+        if (accessToken == null || accessToken.isEmpty()) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -133,15 +133,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
-
-//    private void saveAuthentication(User user) {
-//        log.info("saveAuthentication() start\n");
-//        CustomUserDetails userDetails = new CustomUserDetails(user);
-//        Authentication authentication =
-//            new UsernamePasswordAuthenticationToken(userDetails, null,
-//	userDetails.getAuthorities());
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//    }
 
     private Optional<String> extractAccessToken(HttpServletRequest request) {
         String header = request.getHeader(accessTokenHeader);
