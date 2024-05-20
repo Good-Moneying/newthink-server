@@ -8,7 +8,6 @@ import kusitms.duduk.core.newsletter.port.output.LoadNewsLetterPort;
 import kusitms.duduk.core.newsletter.port.output.UpdateNewsLetterPort;
 import kusitms.duduk.core.thinking.dto.request.CreateThinkingRequest;
 import kusitms.duduk.core.thinking.port.input.CreateThinkingUseCase;
-import kusitms.duduk.core.thinking.port.output.SaveThinkingPort;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
 import kusitms.duduk.core.user.port.output.UpdateUserPort;
 import kusitms.duduk.domain.comment.Comment;
@@ -21,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Component
-public class SummarizedCommentEventListener {
+public class CreateCommentEventListener {
 
     private final SummarizeCommentUseCase summarizeCommentUseCase;
 
@@ -38,7 +37,7 @@ public class SummarizedCommentEventListener {
 
     @EventListener
     @Transactional
-    public void handleSummarizeCommentEvent(CreateCommentEvent event) {
+    public void handleCreateCommentEvent(CreateCommentEvent event) {
         Comment comment = findCommentById(event.getId());
         String summarizedContent = summarizeComment(comment);
 

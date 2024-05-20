@@ -48,7 +48,7 @@ public class RetrieveNewsLetterCommand implements RetrieveNewsLetterQuery {
         NewsLetter newsLetter = loadNewsLetterPort.findById(newsLetterId)
             .orElseThrow(() -> new NotExistsException("해당 뉴스레터를 찾을 수 없습니다."));
 
-        log.info("RetrieveNewsLetterDetail newsLetter : {}\n", newsLetter);
+        log.info("RetrieveNewsLetterDetail newsLetter : {}\n", newsLetter.toString());
 
         User editor = null;
         if (newsLetter.getEditorId().getValue() != null) {

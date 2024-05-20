@@ -12,5 +12,4 @@ public class RetrieveNewsLetterEvent extends ApplicationEvent {
         super(source);
         this.id = id;
     }
-
 }
