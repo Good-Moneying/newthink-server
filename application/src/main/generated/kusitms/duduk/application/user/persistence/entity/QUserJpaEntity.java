@@ -49,6 +49,8 @@ public class QUserJpaEntity extends EntityPathBase<UserJpaEntity> {
 
     public final StringPath refreshToken = createString("refreshToken");
 
+    public final NumberPath<Integer> reward = createNumber("reward", Integer.class);
+
     public final EnumPath<kusitms.duduk.domain.user.vo.Role> role = createEnum("role", kusitms.duduk.domain.user.vo.Role.class);
 
     //inherited

@@ -67,6 +67,9 @@ public class UserJpaEntity extends BaseEntity {
     @Column
     private int experiencePoint;
 
+    @Column
+    private int reward;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private Role role;

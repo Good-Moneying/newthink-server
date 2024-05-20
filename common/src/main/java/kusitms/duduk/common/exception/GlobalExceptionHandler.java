@@ -17,7 +17,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(AlreadyExistsException.class)
     public ResponseEntity<ErrorResponse> handleDuplicateException(
         final AlreadyExistsException exception) {
-        log.error("Duplicated User Information: {}", exception.getMessage());
+        log.error("Already Exists Exception: {}", exception.getMessage());
 
         return ResponseEntity.status(HttpStatus.CONFLICT)
             .body(new ErrorResponse(HttpStatus.CONFLICT.value(), exception.getMessage()));
@@ -26,7 +26,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(NotExistsException.class)
     public ResponseEntity<ErrorResponse> handleDuplicateException(
         final NotExistsException exception) {
-        log.error("Duplicated User Information: {}", exception.getMessage());
+        log.error("Not Exists Exception: {}", exception.getMessage());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
             .body(new ErrorResponse(HttpStatus.NOT_FOUND.value(), exception.getMessage()));

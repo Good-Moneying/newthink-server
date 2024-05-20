@@ -13,6 +13,7 @@ import kusitms.duduk.common.annotation.Mapper;
 import kusitms.duduk.domain.archive.Archive;
 import kusitms.duduk.domain.comment.Comment;
 import kusitms.duduk.domain.global.Category;
+import kusitms.duduk.domain.global.Count;
 import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.user.User;
 import kusitms.duduk.domain.user.vo.Email;
@@ -38,6 +39,7 @@ public class UserJpaMapper {
             .email(user.getEmail().getValue())
             .nickname(user.getNickname().getValue())
             .refreshToken(user.getRefreshToken().getValue())
+            .reward(user.getReward().getCount())
             .gender(user.getGender())
             .birthday(user.getBirthday())
             .role(user.getRole())
@@ -70,6 +72,7 @@ public class UserJpaMapper {
             .birthday(user.getBirthday())
             .category(user.getCategory())
             .experiencePoint(user.getLevel().getExperiencePoint())
+            .reward(user.getReward().getCount())
             .archives(getArchiveJpaEntities(user))
             .comments(getCommentJpaEntities(user))
             .build();
@@ -96,6 +99,7 @@ public class UserJpaMapper {
             .gender(userJpaEntity.getGender())
             .birthday(userJpaEntity.getBirthday())
             .role(userJpaEntity.getRole())
+            .reward(Count.from(userJpaEntity.getReward()))
             .provider(userJpaEntity.getProvider())
             .category(userJpaEntity.getCategory())
             .level(Level.of(userJpaEntity.getExperiencePoint()))

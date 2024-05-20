@@ -6,6 +6,7 @@ import kusitms.duduk.common.annotation.Mapper;
 import kusitms.duduk.core.user.dto.request.CreateUserRequest;
 import kusitms.duduk.core.user.dto.response.UserResponse;
 import kusitms.duduk.domain.global.Category;
+import kusitms.duduk.domain.global.Count;
 import kusitms.duduk.domain.user.User;
 import kusitms.duduk.domain.user.vo.Email;
 import kusitms.duduk.domain.user.vo.ExperiencePoint;
@@ -28,6 +29,7 @@ public class UserDtoMapper {
             .refreshToken(RefreshToken.of(request.refreshToken()))
             .gender(Gender.from(request.gender()))
             .birthday(request.birthDay())
+            .reward(Count.initial())
             .role(Role.USER)
             .provider(Provider.from(request.provider()))
             .category(Category.from(request.category()))

@@ -71,6 +71,7 @@ public class UserPersistenceAdapter implements UpdateUserPort, LoadUserPort, Sav
 
     @Override
     public Optional<User> update(User user) {
+        log.info("SaveUserPort#update() : {} \n", user.toString());
         Long userId = user.getId().getValue();
 
         return userRepository.findById(userId)
