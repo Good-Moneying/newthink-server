@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import kusitms.duduk.core.user.dto.request.CreateUserRequest;
 import kusitms.duduk.domain.global.Category;
+import kusitms.duduk.domain.global.Count;
 import kusitms.duduk.domain.user.User;
 import kusitms.duduk.domain.user.vo.Email;
 import kusitms.duduk.domain.user.vo.ExperiencePoint;
@@ -47,6 +48,7 @@ public class UserSteps {
             .refreshToken(RefreshToken.of("12345"))
             .goal(Goal.EVERYDAY)
             .gender(Gender.MALE)
+            .reward(Count.initial())
             .birthday(LocalDate.of(1990, 1, 1))
             .provider(Provider.KAKAO)
             .experiencePoint(ExperiencePoint.initial())
@@ -70,6 +72,7 @@ public class UserSteps {
             .birthday(LocalDate.of(1990, 1, 1))
             .provider(Provider.KAKAO)
             .role(Role.USER)
+            .reward(Count.initial())
             .experiencePoint(ExperiencePoint.initial())
             .archives(new ArrayList<>())
             .comments(new ArrayList<>())
