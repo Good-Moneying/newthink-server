@@ -33,7 +33,7 @@ public class InfomaxNewsCrawler implements NewsCrawlingPort {
             driver.get(TARGET_URL);
             Thread.sleep(3000);
 
-            List<WebElement> webElementList = driver.findElements(By.cssSelector("ul.type2>li"));
+            List<WebElement> webElementList = driver.findElements(By.cssSelector("ul.latest_news_list li"));
 
             for (WebElement webElement : webElementList) {
                 try {

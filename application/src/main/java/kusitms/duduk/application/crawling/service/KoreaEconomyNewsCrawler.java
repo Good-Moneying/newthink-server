@@ -22,7 +22,6 @@ import java.util.List;
 public class KoreaEconomyNewsCrawler implements NewsCrawlingPort {
 
     private String CRAWLING_DRIVER_URL = "http://selenium:4444/wd/hub";
-
     private String TARGET_URL = "https://www.hankyung.com/all-news";
 
     @Override

@@ -16,10 +16,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class OpenAISummaryCommentApiClient implements
     OpenAiClientPort<OpenAiSummaryCommentRequest, String> {
 
-    @Value("${openai.base-url}")
-    private String OPENAI_BASE_URL;
+    //@Value("${openai.base-url}")
+    private String OPENAI_BASE_URL = "";
 
-    @Value("${openai.api-key}")
+    //@Value("${openai.api-key}")
     private String OPENAI_API_KEY;
 
     private WebClient webClient;
