@@ -1,6 +1,7 @@
 package kusitms.duduk.application.user.service;
 
 import java.util.List;
+import kusitms.duduk.common.exception.custom.NotExistsException;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterThumbnailResponse;
 import kusitms.duduk.core.newsletter.port.input.RetrieveNewsLetterQuery;
 import kusitms.duduk.core.term.dto.response.RetrieveTermResponse;
@@ -69,11 +70,16 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
     @Override
     public RetrieveMyPageResponse mypage(String email) {
         User user = loadUserPort.findByEmail(email)
-            .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
+            .orElseThrow(() -> new NotExistsException("해당 유저를 찾을 수 없습니다."));
 
-        List<ArchiveNewsLetterCount> archivesCount = user.getArchives().stream()
-            .map(archive -> new ArchiveNewsLetterCount(archive.getCategory(),
+        List<ArchiveNewsLetterCount> archivesCount = user.getArchives()
+            .stream()
+            .filter(archive -> !archive.getCategory().name().equals("WORD"))
+            .map(archive -> new ArchiveNewsLetterCount(
+                archive.getCategory(),
 	archive.getNewsLetterIds().size()))
+            .sorted((a, b) -> Integer.compare(b.getCount(), a.getCount()))
+            .limit(4)
             .toList();
 
         return RetrieveMyPageResponse.builder()

@@ -19,8 +19,7 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 public class Archive {
 
-    // todo : Id VO 객체로 바꾸자
-    private Long id;
+    private Id id;
     private Category category;
     @Default
     private List<Long> newsLetterIds = new ArrayList<>();
@@ -30,7 +29,7 @@ public class Archive {
     public static Archive create(Long id, Category category, List<Long> newsLetterIds,
         List<Long> termIds) {
         return Archive.builder()
-            .id(id)
+            .id(Id.of(id))
             .category(category)
             .newsLetterIds(newsLetterIds)
             .termIds(termIds)

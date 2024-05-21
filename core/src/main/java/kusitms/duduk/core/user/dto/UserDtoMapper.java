@@ -45,7 +45,7 @@ public class UserDtoMapper {
             .email(user.getEmail().getValue())
             .nickname(user.getNickname().getValue())
             .archives(user.getArchives().stream()
-                .map(archive -> archive.getId())
+                .map(archive -> archive.getId().getValue())
                 .collect(Collectors.toList()))
             .build();
     }
