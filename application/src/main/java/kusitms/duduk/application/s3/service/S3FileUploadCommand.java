@@ -22,8 +22,8 @@ public class S3FileUploadCommand implements S3FileUploadPort {
 
     private final AmazonS3Client amazonS3Client;
 
-//    @Value("${cloud.aws.s3.bucket}")
-    private String bucket = "goodmoneying";
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     @Override
     public String uploadFile(String url) {
@@ -31,7 +31,8 @@ public class S3FileUploadCommand implements S3FileUploadPort {
             byte[] imageData = getImageDataFromUrl(url);
             String key = LocalDateTime.now() + ".jpg";
 
-            amazonS3Client.putObject(bucket, key, new ByteArrayInputStream(imageData), new ObjectMetadata());
+            amazonS3Client.putObject(bucket, key, new ByteArrayInputStream(imageData),
+	new ObjectMetadata());
             return amazonS3Client.getResourceUrl(bucket, key);
 
         } catch (Exception e) {

@@ -6,6 +6,7 @@ import kusitms.duduk.core.openai.dto.request.OpenAiSummaryNewsLetterRequest;
 import kusitms.duduk.core.openai.dto.response.OpenAiResponse;
 import kusitms.duduk.core.openai.dto.response.OpenAiSummaryNewsLetterResponse;
 import kusitms.duduk.core.openai.port.output.OpenAiClientPort;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -15,8 +16,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class OpenAiSummaryNewsLetterApiClient implements OpenAiClientPort<OpenAiSummaryNewsLetterRequest, OpenAiSummaryNewsLetterResponse> {
 
-    private final String OPENAI_BASE_URL = "https://api.openai.com/v1/chat/completions";
-    private final String OPENAI_API_KEY = "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";
+    @Value("${openai.base-url}")
+    private String OPENAI_BASE_URL;
+
+    @Value("${openai.api-key}")
+    private String OPENAI_API_KEY;
     private WebClient webClient;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private static final String PROMPT = "다음으로 주어지는 뉴스를 300자에서 500자 이내로 요약한 뉴스 레터를 작성 해줘. "

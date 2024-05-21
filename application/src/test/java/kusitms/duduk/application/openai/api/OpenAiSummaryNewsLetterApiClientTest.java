@@ -8,8 +8,10 @@ import kusitms.duduk.core.openai.port.output.OpenAiClientPort;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
+@ActiveProfiles("test")
 class OpenAiSummaryNewsLetterApiClientTest {
 
     @Autowired
@@ -31,7 +33,5 @@ class OpenAiSummaryNewsLetterApiClientTest {
         assertThat(response.keywords()).isNotEmpty();
         assertThat(response.category()).isNotEmpty();
         assertThat(response.content()).isNotEmpty();
-
     }
-
 }

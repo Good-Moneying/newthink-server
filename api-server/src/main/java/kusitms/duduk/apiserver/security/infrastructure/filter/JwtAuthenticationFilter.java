@@ -35,10 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final AuthenticationService authenticationService;
 
     public static final String BEARER_PREFIX = "Bearer ";
-    //    @Value("${jwt.access.header}")
     private String accessTokenHeader = "Authorization";
-
-    //    @Value("${jwt.refresh.header}")
     private String refreshTokenHeader = "Authorization-refresh";
 
     @Override
