@@ -1,5 +1,7 @@
 package kusitms.duduk.application.user.service;
 
+import static kusitms.duduk.common.exception.ErrorMessage.*;
+
 import java.util.List;
 import kusitms.duduk.common.exception.custom.NotExistsException;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterThumbnailResponse;
@@ -42,22 +44,12 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
     @Override
     public RetrieveHomeResponse home(String email) {
         User user = loadUserPort.findByEmail(email)
-            .orElseThrow(() -> new NotExistsException("해당 유저를 찾을 수 없습니다."));
+            .orElseThrow(() -> new NotExistsException(USER_NOT_FOUND.getMessage()));
 
-        NewsLetterThumbnailResponse todayNewsLetter = retrieveNewsLetterQuery.retrieveLatestNewsLetter(
-            user);
-        log.info("오늘의 뉴스레터를 가져온다 : {}", todayNewsLetter);
-
-        List<NewsLetterThumbnailResponse> realtimeTrendNewsLetter = retrieveNewsLetterQuery.retrieveRealtimeTrendNewsLetter(
-            user);
-        log.info("실시간 트렌드 뉴스레터를 가져온다 : {}", realtimeTrendNewsLetter);
-
-        List<NewsLetterThumbnailResponse> customizeNewsLetter = retrieveNewsLetterQuery.retrieveCustomizeNewsLetter(
-            user);
-        log.info("커스터마이징 뉴스레터를 가져온다 : {}", customizeNewsLetter);
-
-        RetrieveTermResponse todayTerm = retrieveTermQuery.retrieveLatestTerm(user);
-        log.info("오늘의 단어를 가져온다 : {}", todayTerm);
+        NewsLetterThumbnailResponse todayNewsLetter = retrieveTodayNewsLetter(user);
+        List<NewsLetterThumbnailResponse> realtimeTrendNewsLetter = retrieveRealtimeTrendNewsLetter(user);
+        List<NewsLetterThumbnailResponse> customizeNewsLetter = retrieveCustomizeNewsLetter(user);
+        RetrieveTermResponse todayTerm = retrieveTodayTerm(user);
 
         return RetrieveHomeResponse.builder()
             .todayNewsLetter(todayNewsLetter)
@@ -67,20 +59,36 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
             .build();
     }
 
+    private NewsLetterThumbnailResponse retrieveTodayNewsLetter(User user) {
+        NewsLetterThumbnailResponse todayNewsLetter = retrieveNewsLetterQuery.retrieveLatestNewsLetter(user);
+        log.info("오늘의 뉴스레터를 조회한다 : {}", todayNewsLetter);
+        return todayNewsLetter;
+    }
+
+    private List<NewsLetterThumbnailResponse> retrieveRealtimeTrendNewsLetter(User user) {
+        List<NewsLetterThumbnailResponse> realtimeTrendNewsLetter = retrieveNewsLetterQuery.retrieveRealtimeTrendNewsLetter(user);
+        log.info("실시간 트렌드 뉴스레터를 조회한다 : {}", realtimeTrendNewsLetter);
+        return realtimeTrendNewsLetter;
+    }
+
+    private List<NewsLetterThumbnailResponse> retrieveCustomizeNewsLetter(User user) {
+        List<NewsLetterThumbnailResponse> customizeNewsLetter = retrieveNewsLetterQuery.retrieveCustomizeNewsLetter(user);
+        log.info("추천 뉴스레터를 조회한다 : {}", customizeNewsLetter);
+        return customizeNewsLetter;
+    }
+
+    private RetrieveTermResponse retrieveTodayTerm(User user) {
+        RetrieveTermResponse todayTerm = retrieveTermQuery.retrieveLatestTerm(user);
+        log.info("오늘의 단어를 조회한다 : {}", todayTerm);
+        return todayTerm;
+    }
+
     @Override
     public RetrieveMyPageResponse mypage(String email) {
         User user = loadUserPort.findByEmail(email)
-            .orElseThrow(() -> new NotExistsException("해당 유저를 찾을 수 없습니다."));
+            .orElseThrow(() -> new NotExistsException(USER_NOT_FOUND.getMessage()));
 
-        List<ArchiveNewsLetterCount> archivesCount = user.getArchives()
-            .stream()
-            .filter(archive -> !archive.getCategory().name().equals("WORD"))
-            .map(archive -> new ArchiveNewsLetterCount(
-                archive.getCategory(),
-	archive.getNewsLetterIds().size()))
-            .sorted((a, b) -> Integer.compare(b.getCount(), a.getCount()))
-            .limit(4)
-            .toList();
+        List<ArchiveNewsLetterCount> archivesCount = getTop4Archives(user);
 
         return RetrieveMyPageResponse.builder()
             .nickname(user.getNickname().getValue())
@@ -88,5 +96,16 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
             .attendances(attendUserUseCase.calculateAttendance(email))
             .counts(archivesCount)
             .build();
+    }
+
+    private List<ArchiveNewsLetterCount> getTop4Archives(User user) {
+        return user.getArchives().stream()
+            .filter(archive -> !archive.getCategory().name().equals("WORD"))
+            .map(archive -> new ArchiveNewsLetterCount(
+                archive.getCategory(),
+                archive.getNewsLetterIds().size()))
+            .sorted((a, b) -> Integer.compare(b.getCount(), a.getCount()))
+            .limit(4)
+            .toList();
     }
 }
