@@ -17,7 +17,6 @@ import java.util.List;
 public class KoreaEconomyNewsCrawler implements NewsCrawler {
 
     private String CRAWLING_DRIVER_URL = "http://selenium:4444/wd/hub";
-
     private String TARGET_URL = "https://www.hankyung.com/all-news";
 
     @Override
@@ -43,13 +42,13 @@ public class KoreaEconomyNewsCrawler implements NewsCrawler {
             List<WebElement> thumbList = webElementNewsList.findElements(By.cssSelector(".thumb"));
 
             // dto 매핑
-            CrawlingNewsResponse crawlingNews = CrawlingNewsResponse.builder()
+
+            return CrawlingNewsResponse.builder()
                 .title(newsList.get(0).findElement(By.cssSelector(".news-tit")).getAttribute("innerText"))
                 .content(newsList.get(0).findElement(By.cssSelector(".lead")).getAttribute("innerText"))
                 .thumbnailURL(thumbList.get(0).findElement(By.cssSelector("img")).getAttribute("src"))
                 .build();
 
-            return crawlingNews;
         } catch (MalformedURLException e) {
             log.error(e.getMessage());
         } finally {
