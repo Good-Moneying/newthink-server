@@ -1,7 +1,5 @@
 package kusitms.duduk.batch.crawling.service;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import kusitms.duduk.core.crawler.dto.response.CrawlingNewsResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -10,14 +8,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.stereotype.Component;
-import java.util.List;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 @Slf4j
 @Component
-public class KoreaEconomyNewsCrawler implements NewsCrawler {
+public class InfomaxNewsCrawler implements NewsCrawler{
 
     private String CRAWLING_DRIVER_URL = "http://selenium:4444/wd/hub";
-    private String TARGET_URL = "https://www.hankyung.com/all-news";
+    private String TARGET_URL = "https://news.einfomax.co.kr/news/articleList.html?sc_section_code=S1N2&view_type=sm";
 
     @Override
     public CrawlingNewsResponse crawl() throws InterruptedException, MalformedURLException {
@@ -30,24 +30,17 @@ public class KoreaEconomyNewsCrawler implements NewsCrawler {
             driver.get(TARGET_URL);
             Thread.sleep(3000);
 
-            // 경제 파트로 이동
-            WebElement webElement = driver.findElement(By.cssSelector("a[data-menu-id='economy']"));
-            webElement.click();
+            WebElement webElement = driver.findElements(By.cssSelector("ul.type2>li")).get(0);
 
-            Thread.sleep(5000);
-
-            // 뉴스 리스트 가져오기
-            WebElement webElementNewsList = driver.findElement(By.cssSelector(".economyDiv"));
-            List<WebElement> newsList = webElementNewsList.findElements(By.cssSelector(".txt-cont"));
-            List<WebElement> thumbList = webElementNewsList.findElements(By.cssSelector(".thumb"));
-
-            // dto 매핑
+            String thumbnailUrl = webElement.findElement(By.cssSelector("a>img")).getAttribute("src");
+            String title = webElement.findElement(By.cssSelector("div>h4>a")).getText();
+            String content = webElement.findElement(By.cssSelector("div>p>a")).getText();
 
             return CrawlingNewsResponse.builder()
-                .title(newsList.get(0).findElement(By.cssSelector(".news-tit")).getAttribute("innerText"))
-                .content(newsList.get(0).findElement(By.cssSelector(".lead")).getAttribute("innerText"))
-                .thumbnailURL(thumbList.get(0).findElement(By.cssSelector("img")).getAttribute("src"))
-                .build();
+                    .title(title)
+                    .content(content)
+                    .thumbnailURL(thumbnailUrl)
+                    .build();
 
         } catch (MalformedURLException e) {
             log.error(e.getMessage());
