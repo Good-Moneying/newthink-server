@@ -6,11 +6,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Level {
-    LV1(100, "https://duduk.kusitms.club/images/level1.png"),
-    LV2(200, "https://duduk.kusitms.club/images/level2.png"),
-    LV3(300, "https://duduk.kusitms.club/images/level3.png"),
-    LV4(400, "https://duduk.kusitms.club/images/level4.png"),
-    LV5(500, "https://duduk.kusitms.club/images/level5.png");
+    LV1(100, "https://goodmoneying.s3.ap-northeast-2.amazonaws.com/user_character/character_L1.jpg"),
+    LV2(200, "https://goodmoneying.s3.ap-northeast-2.amazonaws.com/user_character/character_L2.jpg"),
+    LV3(300, "https://goodmoneying.s3.ap-northeast-2.amazonaws.com/user_character/character_L3.jpg"),
+    LV4(400, "https://goodmoneying.s3.ap-northeast-2.amazonaws.com/user_character/character_L4.jpg"),
+    LV5(500, "https://goodmoneying.s3.ap-northeast-2.amazonaws.com/user_character/character_L5.jpg");
 
     private final int experiencePoint;
     private final String profileUrl;

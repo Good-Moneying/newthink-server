@@ -8,13 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.stereotype.Component;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 @Slf4j
@@ -47,13 +44,13 @@ public class KoreaEconomyNewsCrawler implements NewsCrawlingPort {
             List<WebElement> thumbList = webElementNewsList.findElements(By.cssSelector(".thumb"));
 
             // dto 매핑
-            CrawlingNewsResponse crawlingNews = CrawlingNewsResponse.builder()
+
+            return CrawlingNewsResponse.builder()
                 .title(newsList.get(0).findElement(By.cssSelector(".news-tit")).getAttribute("innerText"))
                 .content(newsList.get(0).findElement(By.cssSelector(".lead")).getAttribute("innerText"))
                 .thumbnailURL(thumbList.get(0).findElement(By.cssSelector("img")).getAttribute("src"))
                 .build();
 
-            return crawlingNews;
         } catch (MalformedURLException e) {
             log.error(e.getMessage());
         } finally {
