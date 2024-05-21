@@ -4,5 +4,5 @@ import java.net.MalformedURLException;
 import kusitms.duduk.core.crawling.dto.response.CrawlingNewsResponse;
 
 public interface NewsCrawlingPort {
-    public CrawlingNewsResponse crawl() throws InterruptedException, MalformedURLException;
+    CrawlingNewsResponse crawl() throws InterruptedException, MalformedURLException;
 }

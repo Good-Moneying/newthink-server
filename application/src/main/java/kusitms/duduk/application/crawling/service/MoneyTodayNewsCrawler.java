@@ -6,19 +6,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.stereotype.Component;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Slf4j
-@Component
+//@Component
 public class MoneyTodayNewsCrawler implements NewsCrawlingPort {
 
     private String CRAWLING_DRIVER_URL = "http://selenium:4444/wd/hub";
-    private String TARGET_URL = "https://news.einfomax.co.kr/news/articleList.html?sc_section_code=S1N15&view_type=sm";
+    private String TARGET_URL = "https://news.mt.co.kr/newsList.html?pDepth1=finance&pDepth2=Ftotal";
 
     @Override
     public CrawlingNewsResponse crawl() throws InterruptedException, MalformedURLException {
@@ -61,4 +64,5 @@ public class MoneyTodayNewsCrawler implements NewsCrawlingPort {
         }
         return crawlingNewsResponse;
     }
+
 }

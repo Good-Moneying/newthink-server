@@ -29,14 +29,14 @@ public class UserSteps {
     public static CreateUserRequest createUserRequest_생성() {
 
         return new CreateUserRequest(
-            EMAIL,
-            NICKNAME,
-            REFRESH_TOKEN,
-            GENDER_TEXT,
-            BIRTHDAY,
-            PROVIDER.name(),
-            CATEGORY_FINANCE.name(),
-            GOAL_EVERYDAY.name()
+                EMAIL,
+                NICKNAME,
+                REFRESH_TOKEN,
+                GENDER_TEXT,
+                BIRTHDAY,
+                PROVIDER.name(),
+                CATEGORY_FINANCE.name(),
+                GOAL_EVERYDAY.name()
         );
     }
 
@@ -44,19 +44,19 @@ public class UserSteps {
         String email = "test@test.com";
 
         User user = User.builder()
-            .email(Email.from(email))
-            .nickname(Nickname.from("tester"))
-            .refreshToken(RefreshToken.of("12345"))
-            .goal(Goal.EVERYDAY)
-            .gender(Gender.MALE)
-            .reward(Count.initial())
-            .birthday(LocalDate.of(1990, 1, 1))
-            .provider(Provider.KAKAO)
-            .experiencePoint(ExperiencePoint.initial())
-            .role(Role.EDITOR)
-            .archives(new ArrayList<>())
-            .comments(new ArrayList<>())
-            .build();
+                .email(Email.from(email))
+                .nickname(Nickname.from("tester"))
+                .refreshToken(RefreshToken.of("12345"))
+                .goal(Goal.EVERYDAY)
+                .gender(Gender.MALE)
+                .reward(Count.initial())
+                .birthday(LocalDate.of(1990, 1, 1))
+                .provider(Provider.KAKAO)
+                .experiencePoint(ExperiencePoint.initial())
+                .role(Role.EDITOR)
+                .archives(new ArrayList<>())
+                .comments(new ArrayList<>())
+                .build();
 
         return user;
     }
@@ -65,20 +65,20 @@ public class UserSteps {
         String email = "test1@test.com";
 
         User user = User.builder()
-            .email(Email.from(email))
-            .nickname(Nickname.from("tester1"))
-            .refreshToken(RefreshToken.of("123456"))
-            .goal(Goal.EVERYDAY)
-            .gender(Gender.MALE)
-            .birthday(LocalDate.of(1990, 1, 1))
-            .provider(Provider.KAKAO)
-            .role(Role.USER)
-            .reward(Count.initial())
-            .experiencePoint(ExperiencePoint.initial())
-            .archives(new ArrayList<>())
-            .comments(new ArrayList<>())
-            .category(Category.FINANCE)
-            .build();
+                .email(Email.from(email))
+                .nickname(Nickname.from("tester1"))
+                .refreshToken(RefreshToken.of("123456"))
+                .goal(Goal.EVERYDAY)
+                .gender(Gender.MALE)
+                .birthday(LocalDate.of(1990, 1, 1))
+                .provider(Provider.KAKAO)
+                .role(Role.USER)
+                .reward(Count.initial())
+                .experiencePoint(ExperiencePoint.initial())
+                .archives(new ArrayList<>())
+                .comments(new ArrayList<>())
+                .category(Category.FINANCE)
+                .build();
 
         return user;
     }

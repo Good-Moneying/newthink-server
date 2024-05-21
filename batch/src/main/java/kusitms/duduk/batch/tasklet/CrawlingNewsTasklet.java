@@ -29,6 +29,7 @@ public class CrawlingNewsTasklet implements Tasklet {
         for (NewsCrawlingPort newsCrawler : newsCrawlerList) {
             CrawlingNewsResponse response = newsCrawler.crawl();
             crawlingNewsResponses.add(response);
+            System.out.println(response.toString());
         }
         chunkContext.getStepContext().getStepExecution().getJobExecution()
             .getExecutionContext().put("crawlingNewsResponses", crawlingNewsResponses);

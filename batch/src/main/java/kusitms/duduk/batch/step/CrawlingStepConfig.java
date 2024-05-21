@@ -31,10 +31,31 @@ public class CrawlingStepConfig {
     public Step crawlingNewsStep() {
         return new StepBuilder("crawlingNewsStep", jobRepository)
             .tasklet(crawlingNewsTasklet, transactionManager)
-            .tasklet(uploadImageTasklet, transactionManager)
-            .tasklet(parseNewsContentTasklet, transactionManager)
-            .tasklet(createNewsletterTasklet, transactionManager)
             .allowStartIfComplete(true)
             .build();
+    }
+
+    @Bean
+    public Step UploadImageStep() {
+        return new StepBuilder("crawlingNewsStep", jobRepository)
+                .tasklet(uploadImageTasklet, transactionManager)
+                .allowStartIfComplete(true)
+                .build();
+    }
+
+    @Bean
+    public Step SummarizeNewsStep() {
+        return new StepBuilder("crawlingNewsStep", jobRepository)
+                .tasklet(parseNewsContentTasklet, transactionManager)
+                .allowStartIfComplete(true)
+                .build();
+    }
+
+    @Bean
+    public Step CreateNewsStep() {
+        return new StepBuilder("crawlingNewsStep", jobRepository)
+                .tasklet(createNewsletterTasklet, transactionManager)
+                .allowStartIfComplete(true)
+                .build();
     }
 }
