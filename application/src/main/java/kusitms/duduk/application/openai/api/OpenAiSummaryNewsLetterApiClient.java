@@ -16,11 +16,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class OpenAiSummaryNewsLetterApiClient implements OpenAiClientPort<OpenAiSummaryNewsLetterRequest, OpenAiSummaryNewsLetterResponse> {
 
-    @Value("${openai.base-url}")
-    private String OPENAI_BASE_URL;
+    //@Value("${openai.base-url}")
+    private String OPENAI_BASE_URL = "https://api.openai.com/v1/chat/completions";
 
-    @Value("${openai.api-key}")
-    private String OPENAI_API_KEY;
+    //@Value("${openai.api-key}")
+    private String OPENAI_API_KEY = "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";
     private WebClient webClient;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private static final String PROMPT = "다음으로 주어지는 뉴스를 300자에서 500자 이내로 요약한 뉴스 레터를 작성 해줘. "

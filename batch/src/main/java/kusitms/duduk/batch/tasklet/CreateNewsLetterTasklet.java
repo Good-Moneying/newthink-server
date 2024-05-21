@@ -35,10 +35,10 @@ public class CreateNewsLetterTasklet implements Tasklet {
             createNewsLetterUseCase.create(
 	new CreateNewsLetterRequest(
 	    imageUrl,
-	    aiResponse.content(),
-	    aiResponse.content(),
-	    aiResponse.keywords(),
-	    aiResponse.category(),
+	    aiResponse.getContent(),
+	    aiResponse.getContent(),
+	    aiResponse.getKeywords(),
+	    aiResponse.getCategory(),
 	    null,
 	    TYPE_AI
 	)
