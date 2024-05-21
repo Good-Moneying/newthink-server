@@ -12,10 +12,10 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class LoginEventListenerTest {
+public class UserEventListenerTest {
 
     @MockBean
-    private LoginEventListener loginEventListener;
+    private UserEventListener loginEventListener;
 
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;

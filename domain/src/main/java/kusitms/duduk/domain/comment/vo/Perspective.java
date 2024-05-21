@@ -1,6 +1,6 @@
 package kusitms.duduk.domain.comment.vo;
 
-import kusitms.duduk.common.exception.custom.NotExistsException;
+import java.util.Arrays;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +15,9 @@ public enum Perspective {
     private final String description;
 
     public static Perspective from(String name) {
-        for (Perspective perspective : values()) {
-            if (perspective.name().equalsIgnoreCase(name)) {
-	return perspective;
-            }
-        }
-        throw new NotExistsException("해당하는 관점이 없습니다. name: " + name);
+        return Arrays.stream(Perspective.values())
+            .filter(p -> p.name().equalsIgnoreCase(name))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 관점입니다."));
     }
 }

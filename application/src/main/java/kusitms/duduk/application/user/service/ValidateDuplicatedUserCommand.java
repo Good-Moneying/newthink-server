@@ -1,5 +1,7 @@
 package kusitms.duduk.application.user.service;
 
+import static kusitms.duduk.common.exception.ErrorMessage.*;
+
 import kusitms.duduk.common.exception.custom.AlreadyExistsException;
 import kusitms.duduk.core.user.dto.request.ValidateUserEmailRequest;
 import kusitms.duduk.core.user.dto.request.ValidateUserNicknameRequest;
@@ -19,16 +21,14 @@ public class ValidateDuplicatedUserCommand implements ValidateDuplicatedUserQuer
     @Override
     public void validateDuplicatedEmail(ValidateUserEmailRequest request) {
         if (loadUserPort.existsUserByEmail(request.email())) {
-            log.info("Attempt to signup with duplicated email: {}\n", request.email());
-            throw new AlreadyExistsException("이미 존재하는 이메일입니다.");
+            throw new AlreadyExistsException(EXIST_EMAIL.getMessage());
         }
     }
 
     @Override
     public void validateDuplicatedNickname(ValidateUserNicknameRequest request) {
         if (loadUserPort.existsUserByNickname(request.nickname())) {
-            log.info("Attempt to signup with duplicated nickname: {}", request.nickname());
-            throw new AlreadyExistsException("이미 존재하는 닉네임입니다.");
+            throw new AlreadyExistsException(EXIST_NICKNAME.getMessage());
         }
     }
 }
