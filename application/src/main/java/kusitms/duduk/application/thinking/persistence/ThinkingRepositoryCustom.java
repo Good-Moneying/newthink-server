@@ -4,5 +4,5 @@ import java.util.List;
 import kusitms.duduk.application.thinking.persistence.entity.ThinkingJpaEntity;
 
 public interface ThinkingRepositoryCustom {
-    List<ThinkingJpaEntity> findAllOrderByIsExistAscAndCreatedAtAsc(Long userId);
+    List<ThinkingJpaEntity> findAllOrderByIsExistAscAndCreatedAtDesc(Long userId);
 }

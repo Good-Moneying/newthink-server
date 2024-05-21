@@ -16,11 +16,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class OpenAiSummaryNewsLetterApiClient implements OpenAiClientPort<OpenAiSummaryNewsLetterRequest, OpenAiSummaryNewsLetterResponse> {
 
-    //@Value("${openai.base-url}")
-    private String OPENAI_BASE_URL = "https://api.openai.com/v1/chat/completions";
+    @Value("${openai.base-url}")
+    private String OPENAI_BASE_URL;
 
-    //@Value("${openai.api-key}")
-    private String OPENAI_API_KEY = "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";
+    @Value("${openai.api-key}")
+    private String OPENAI_API_KEY;
     private WebClient webClient;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private static final String PROMPT = "다음으로 주어지는 뉴스를 300자에서 500자 이내로 요약한 뉴스 레터를 작성 해줘. "
@@ -43,8 +43,8 @@ public class OpenAiSummaryNewsLetterApiClient implements OpenAiClientPort<OpenAi
         + "추가적으로 해당 내용에 대한 키워드와 카테고리를 추출해줘."
         + "키워드는 3가지로 제한하고 , 로 구분하면 돼"
         + "카테고리는 FINANCE, POLICY, REAL_ESTATE, SECURITIES, COMPANY, TECH, LIFE, POLICY 중에 뉴스 내용과 가장 연관성이 있다고 생각하는 것을 하나 골라줘."
-        + "응답 JSON 형식은 다음과 같아."
-        + "{ keywords = \"keyword1, keyword2, keyword3\", category = \"category\", content = \"content\" }"
+        + "응답 JSON 형식은 무조건 다음과 같이 보내줘!!"
+        + "{ \"keywords\": \"keyword1, keyword2, keyword3\", \"category\": \"category\", \"content\": \"content\" }"
         + "요약할 뉴스 본문은 다음과 같아.";
 
     @PostConstruct

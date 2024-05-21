@@ -35,8 +35,8 @@ public class ThinkingPersistenceAdapter implements SaveThinkingPort, LoadThinkin
     }
 
     @Override
-    public List<Thinking> findAllOrderByIsExistAscAndCreatedAtAsc(Long userId) {
-        return thinkingRepository.findAllOrderByIsExistAscAndCreatedAtAsc(userId)
+    public List<Thinking> findAllOrderByIsExistAscAndCreatedAtDesc(Long userId) {
+        return thinkingRepository.findAllOrderByIsExistAscAndCreatedAtDesc(userId)
             .stream()
             .map(thinkingJpaMapper::toDomain)
             .toList();

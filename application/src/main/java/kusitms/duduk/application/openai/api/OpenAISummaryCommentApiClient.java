@@ -16,14 +16,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class OpenAISummaryCommentApiClient implements
     OpenAiClientPort<OpenAiSummaryCommentRequest, String> {
 
-    //@Value("${openai.base-url}")
-    private String OPENAI_BASE_URL = "";
+    @Value("${openai.base-url}")
+    private String OPENAI_BASE_URL;
 
-    //@Value("${openai.api-key}")
+    @Value("${openai.api-key}")
     private String OPENAI_API_KEY;
 
     private WebClient webClient;
-    private static final String PROMPT = "다음으로 주어지는 댓글을 한줄로 요약해줘. String 값을 반환하면 돼";
+    private static final String PROMPT = "다음으로 주어지는 댓글을 12자 이내의 짧은 단어로 요약 해줘. 예를 들어, 테슬라 기술 혁신 등. String 값을 반환 하면 돼. 쉼표는 쓰지 말고 와나 과로 연결해줘";
 
     @PostConstruct
     private void init() {
@@ -36,6 +36,8 @@ public class OpenAISummaryCommentApiClient implements
 
     @Override
     public String chat(OpenAiSummaryCommentRequest request) {
+        log.info("Requesting OpenAI to summarize comment: {}", request.comment());
+
         return webClient.post()
             .bodyValue(new OpenAiRequest(PROMPT + request.comment()))
             .retrieve()

@@ -15,11 +15,11 @@ public class ThinkingRepositoryImpl implements ThinkingRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<ThinkingJpaEntity> findAllOrderByIsExistAscAndCreatedAtAsc(Long userId) {
+    public List<ThinkingJpaEntity> findAllOrderByIsExistAscAndCreatedAtDesc(Long userId) {
         QThinkingJpaEntity thinking = QThinkingJpaEntity.thinkingJpaEntity;
 
         return jpaQueryFactory.selectFrom(thinking)
-            .orderBy(thinking.isCloudExist.asc(), thinking.createdAt.asc())
+            .orderBy(thinking.isCloudExist.asc(), thinking.createdAt.desc())
             .where(thinking.userId.eq(userId))
             .fetch();
     }

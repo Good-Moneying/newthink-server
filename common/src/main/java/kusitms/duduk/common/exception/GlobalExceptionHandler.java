@@ -23,6 +23,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             .body(new ErrorResponse(HttpStatus.CONFLICT.value(), exception.getMessage()));
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalException(
+        final IllegalArgumentException exception) {
+        log.error("Illegal Argument Exception : {}", exception.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ErrorResponse(HttpStatus.BAD_REQUEST.value(), exception.getMessage()));
+    }
+
     @ExceptionHandler(NotExistsException.class)
     public ResponseEntity<ErrorResponse> handleDuplicateException(
         final NotExistsException exception) {

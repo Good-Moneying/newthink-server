@@ -19,6 +19,7 @@ public class SummarizeCommentCommand implements SummarizeCommentUseCase {
     public String summarize(Comment comment) {
         OpenAiSummaryCommentRequest request = new OpenAiSummaryCommentRequest(
             comment.getSentence().getValue());
+        log.info("Summarized Comment By Open AI : {}", request.toString());
         return openAiClientPort.chat(request);
     }
 }

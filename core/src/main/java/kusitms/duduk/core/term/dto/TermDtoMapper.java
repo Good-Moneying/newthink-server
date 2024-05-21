@@ -8,7 +8,9 @@ import kusitms.duduk.domain.term.Term;
 import kusitms.duduk.domain.term.vo.Description;
 import kusitms.duduk.domain.term.vo.Name;
 import kusitms.duduk.domain.term.vo.TermCategory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Mapper
 public class TermDtoMapper {
 
@@ -32,12 +34,13 @@ public class TermDtoMapper {
     }
 
     public RetrieveTermResponse toResponse(Term term, boolean isScrapped) {
+        log.info("term category : {} ", term.getCategory());
         return RetrieveTermResponse.builder()
             .termId(term.getId().getValue())
             .englishName(term.getEnglishName().getValue())
             .koreanName(term.getKoreanName().getValue())
             .description(term.getDescription().getValue())
-            .category(term.getCategory().name())
+            .category(term.getCategory().getDescription())
             .isScrapped(isScrapped)
             .build();
     }

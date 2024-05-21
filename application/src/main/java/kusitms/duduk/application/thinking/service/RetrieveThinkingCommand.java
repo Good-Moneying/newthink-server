@@ -32,7 +32,7 @@ public class RetrieveThinkingCommand implements RetrieveThinkingQuery {
         User user = loadUserPort.findByEmail(email)
             .orElseThrow(() -> new NotExistsException("해당 유저를 찾을 수 없습니다."));
 
-        List<RetrieveThinkingDetailResponse> response = loadThinkingPort.findAllOrderByIsExistAscAndCreatedAtAsc(
+        List<RetrieveThinkingDetailResponse> response = loadThinkingPort.findAllOrderByIsExistAscAndCreatedAtDesc(
 	user.getId().getValue())
             .stream()
             .map(thinkingDtoMapper::toDto)

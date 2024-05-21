@@ -8,9 +8,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum Perspective {
-    POSITIVE("긍정"),
-    NEGATIVE("부정"),
-    UNCERTAIN("잘모르겠음");
+    POSITIVE("긍정적이에요"),
+    NEGATIVE("부정적이에요"),
+    UNCERTAIN("잘 모르겠어요");
 
     private final String description;
 

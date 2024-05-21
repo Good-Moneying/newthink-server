@@ -84,7 +84,7 @@ class RetrieveTermCommandTest {
         assertEquals(savedTerm2.getKoreanName().getValue(), response.koreanName());
         assertEquals(savedTerm2.getEnglishName().getValue(), response.englishName());
         assertEquals(savedTerm2.getDescription().getValue(), response.description());
-        assertEquals(savedTerm2.getCategory().name(), response.category());
+        assertEquals(savedTerm2.getCategory().getDescription(), response.category());
         assertEquals(false, response.isScrapped());
     }
 }

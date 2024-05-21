@@ -1,7 +1,10 @@
 package kusitms.duduk.application.newsletter.service;
 
+import static kusitms.duduk.common.exception.ErrorMessage.*;
+
 import java.util.List;
 import kusitms.duduk.application.newsletter.event.RetrieveNewsLetterEvent;
+import kusitms.duduk.common.exception.ErrorMessage;
 import kusitms.duduk.common.exception.custom.NotExistsException;
 import kusitms.duduk.core.comment.port.output.LoadCommentPort;
 import kusitms.duduk.core.newsletter.dto.NewsLetterDtoMapper;
@@ -101,12 +104,12 @@ public class RetrieveNewsLetterCommand implements RetrieveNewsLetterQuery {
 
     private User loadUser(Long userId) {
         return loadUserPort.findById(userId)
-            .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
+            .orElseThrow(() -> new NotExistsException(USER_NOT_FOUND.getMessage()));
     }
 
     public NewsLetterThumbnailResponse retrieveLatestNewsLetter(User user) {
         NewsLetter newsLetter = loadNewsLetterPort.findLatestNewsLetter()
-            .orElseThrow(() -> new IllegalArgumentException("오늘의 뉴스레터를 찾을 수 없습니다."));
+            .orElseThrow(() -> new NotExistsException(NEWS_LETTER_NOT_FOUND.getMessage()));
 
         boolean isScrapped = user.isScrapped(newsLetter);
         return newsLetterDtoMapper.toThumbnailDto(newsLetter, isScrapped);

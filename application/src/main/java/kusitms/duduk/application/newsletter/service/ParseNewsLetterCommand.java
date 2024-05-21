@@ -21,7 +21,7 @@ public class ParseNewsLetterCommand implements ParseNewsLetterUseCase {
     public List<NewsLetterDetailResponse.Block> parseContentToBlocks(NewsLetter newsLetter) {
         List<NewsLetterDetailResponse.Block> blocks = new ArrayList<>();
         String content = newsLetter.getContent().getContent();
-        String[] paragraphs = content.split("\\n\\n");
+        String[] paragraphs = content.split("<br>");
 
         for (String paragraph : paragraphs) {
             Matcher matcher = URL_PATTERN.matcher(paragraph);
