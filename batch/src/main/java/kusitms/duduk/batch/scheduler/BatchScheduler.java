@@ -1,4 +1,4 @@
-package kusitms.duduk.batch;
+package kusitms.duduk.batch.scheduler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,5 +1,4 @@
-package kusitms.duduk.batch.config;
-
+package kusitms.duduk.batch.job;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,13 +18,13 @@ import org.springframework.context.annotation.Configuration;
 public class CrawlingJobConfig {
 
     private final JobRepository jobRepository;
-    private final Step stepConfig;
+    private final Step crwalingNewsStep;
 
     @Bean(name = "generateNewsLetterJob")
     public Job generateNewsLetterJob() {
         return new JobBuilder("generateNewsLetterJob", jobRepository)
-                .start(stepConfig)
-                .incrementer(new RunIdIncrementer())
-                .build();
+            .start(crwalingNewsStep)
+            .incrementer(new RunIdIncrementer())
+            .build();
     }
 }
