@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Component
-public class CreateCommentEventListener {
+public class CommentEventListener {
 
     private final SummarizeCommentUseCase summarizeCommentUseCase;
 
@@ -38,7 +38,7 @@ public class CreateCommentEventListener {
     @EventListener
     @Transactional
     public void handleCreateCommentEvent(CreateCommentEvent event) {
-        Comment comment = findCommentById(event.getId());
+        Comment comment = findCommentById(event.getCommentId());
         String summarizedContent = summarizeComment(comment);
 
         User user = loadUserPort.findById(comment.getUserId().getValue())
@@ -51,14 +51,15 @@ public class CreateCommentEventListener {
 
         createThinkingWithComment(user, newsLetter, comment, summarizedContent);
 
-        // todo : Comment가 SummarizedSentence를 가지고 있을 이유가 있을까?
         updateComment(comment, summarizedContent);
         updateUser(user, comment);
         updateNewsLetter(newsLetter, comment);
     }
 
+    // Comment 작성 시 Thinking 생성
     private void createThinkingWithComment(User user, NewsLetter newsLetter, Comment comment,
         String summarizedContent) {
+
         CreateThinkingRequest request = CreateThinkingRequest.builder()
             .userId(user.getId().getValue())
             .newsLetterId(newsLetter.getId().getValue())

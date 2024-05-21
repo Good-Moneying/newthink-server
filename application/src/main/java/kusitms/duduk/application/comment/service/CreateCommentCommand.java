@@ -44,7 +44,7 @@ public class CreateCommentCommand implements CreateCommentUseCase {
             commentDtoMapper.toDomain(request, user, newsLetter));
 
         applicationEventPublisher.publishEvent(
-            new CreateCommentEvent(this, savedComment.getId().getValue()));
+            new CreateCommentEvent(this, savedComment.getId().getValue(), user.getId().getValue()));
 
         return commentDtoMapper.toDto(savedComment);
     }

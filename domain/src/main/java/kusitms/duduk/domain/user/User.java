@@ -103,4 +103,8 @@ public class User {
     public void addComment(Comment savedComment) {
         this.comments.add(savedComment);
     }
+
+    public void addReward(int rewardAmount) {
+        this.reward.addAmount(rewardAmount);
+    }
 }

@@ -32,4 +32,8 @@ public class Count {
     public void decrease() {
         this.Count--;
     }
+
+    public void addAmount(int amount) {
+        this.Count += amount;
+    }
 }
