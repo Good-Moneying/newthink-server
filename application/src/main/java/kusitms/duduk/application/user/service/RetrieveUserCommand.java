@@ -42,7 +42,7 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
     @Override
     public RetrieveHomeResponse home(String email) {
         User user = loadUserPort.findByEmail(email)
-            .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
+            .orElseThrow(() -> new NotExistsException("해당 유저를 찾을 수 없습니다."));
 
         NewsLetterThumbnailResponse todayNewsLetter = retrieveNewsLetterQuery.retrieveLatestNewsLetter(
             user);
