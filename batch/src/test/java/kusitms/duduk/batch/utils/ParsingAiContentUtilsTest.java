@@ -1,7 +1,7 @@
 package kusitms.duduk.batch.utils;
 
 import kusitms.duduk.core.ai.dto.response.ParsedAiContentResponse;
-import kusitms.duduk.application.ai.service.ParsingAiContent;
+import kusitms.duduk.application.openai.service.ParsingAiContentCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
-@DisplayName("ParsingAiContent 테스트")
+@DisplayName("ParsingAiContentCommand 테스트")
 @ActiveProfiles("test")
 public class ParsingAiContentUtilsTest {
 
     @Autowired
-    private ParsingAiContent parsingAiContent;
+    private ParsingAiContentCommand parsingAiContent;
 
     @Test
     @Transactional

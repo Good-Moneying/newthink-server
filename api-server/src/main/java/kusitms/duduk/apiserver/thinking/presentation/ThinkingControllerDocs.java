@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kusitms.duduk.apiserver.security.infrastructure.CustomUserDetails;
-import kusitms.duduk.core.comment.dto.request.OpenAISummaryRequest;
+import kusitms.duduk.core.openai.dto.request.OpenAiSummaryCommentRequest;
 import kusitms.duduk.core.thinking.dto.request.CreateThinkingCloudRequest;
 import kusitms.duduk.core.thinking.dto.response.RetrieveThinkingDetailResponse;
 import kusitms.duduk.core.thinking.dto.response.RetrieveThinkingHomeResponse;
@@ -56,12 +56,12 @@ public interface ThinkingControllerDocs {
             description = "생각 요약 생성을 위한 필수 정보를 담고 있는 DTO 클래스",
             required = true,
             content = @Content(
-	schema = @Schema(implementation = OpenAISummaryRequest.class)
+	schema = @Schema(implementation = OpenAiSummaryCommentRequest.class)
             )
         )
     )
     ResponseEntity<String> summaryThinking(
-        @RequestBody final OpenAISummaryRequest request
+        @RequestBody final OpenAiSummaryCommentRequest request
     );
 
     @ApiResponses(value = {

@@ -1,8 +1,8 @@
 package kusitms.duduk.application.comment.service;
 
-import kusitms.duduk.core.comment.dto.request.OpenAISummaryRequest;
+import kusitms.duduk.core.openai.dto.request.OpenAiSummaryCommentRequest;
 import kusitms.duduk.core.comment.port.input.SummarizeCommentUseCase;
-import kusitms.duduk.core.openai.port.output.OpenAISummaryClientPort;
+import kusitms.duduk.core.openai.port.output.OpenAiClientPort;
 import kusitms.duduk.domain.comment.Comment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,17 +13,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class SummarizeCommentCommand implements SummarizeCommentUseCase {
 
-    private final OpenAISummaryClientPort summaryClientPort;
+    private final OpenAiClientPort<OpenAiSummaryCommentRequest, String> openAiClientPort;
 
     @Override
     public String summarize(Comment comment) {
-        OpenAISummaryRequest request = createSummaryRequest(comment);
-        return summaryClientPort.summarize(request);
-    }
-
-    private OpenAISummaryRequest createSummaryRequest(Comment comment) {
-        return OpenAISummaryRequest.builder()
-            .comment(comment.getSentence().getValue())
-            .build();
+        OpenAiSummaryCommentRequest request = new OpenAiSummaryCommentRequest(
+            comment.getSentence().getValue());
+        return openAiClientPort.chat(request);
     }
 }

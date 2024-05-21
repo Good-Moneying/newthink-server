@@ -1,8 +1,8 @@
 package kusitms.duduk.apiserver.thinking.presentation;
 
 import kusitms.duduk.apiserver.security.infrastructure.CustomUserDetails;
-import kusitms.duduk.core.comment.dto.request.OpenAISummaryRequest;
-import kusitms.duduk.core.openai.port.output.OpenAISummaryClientPort;
+import kusitms.duduk.core.openai.dto.request.OpenAiSummaryCommentRequest;
+import kusitms.duduk.core.openai.port.output.OpenAiClientPort;
 import kusitms.duduk.core.thinking.dto.request.CreateThinkingCloudRequest;
 import kusitms.duduk.core.thinking.dto.response.RetrieveThinkingDetailResponse;
 import kusitms.duduk.core.thinking.dto.response.RetrieveThinkingHomeResponse;
@@ -26,7 +26,7 @@ public class ThinkingController implements ThinkingControllerDocs {
 
     private final RetrieveThinkingQuery retrieveThinkingQuery;
     private final CreateThinkingUseCase createThinkingUseCase;
-    private final OpenAISummaryClientPort openAISummaryClientPort;
+    private final OpenAiClientPort<OpenAiSummaryCommentRequest, String> openAiClientPort;
 
     @GetMapping("/home")
     public ResponseEntity<RetrieveThinkingHomeResponse> retrieveThinkingHome(
@@ -45,9 +45,9 @@ public class ThinkingController implements ThinkingControllerDocs {
 
     @PostMapping("/summary")
     public ResponseEntity<String> summaryThinking(
-        @RequestBody final OpenAISummaryRequest request
+        @RequestBody final OpenAiSummaryCommentRequest request
     ) {
-        return ResponseEntity.ok(openAISummaryClientPort.summarize(request));
+        return ResponseEntity.ok(openAiClientPort.chat(request));
     }
 
     @PostMapping("/{thinkingId}")
