@@ -37,7 +37,7 @@ public class ArchiveTermCommandTest {
     @Autowired
     private ArchiveTermUseCase archiveTermUseCase;
 
-    private final int WORD_ARCHIVE_INDEX = 4;
+    private final int WORD_ARCHIVE_INDEX = 8;
 
     @AfterEach
     void cleanUp() {

@@ -19,10 +19,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Component
 public class NaverClovaSummaryApiClient implements NaverClovaSummaryClientPort {
 
-    private String clientId = "iboe5ch6oi";
-    private String clientSecret = "35GkUOob92lG6b1uipAf5gUW5JaETGCPTAf7ax9Z";
+    @Value("${naver.client-id}")
+    private String NAVER_CLIENT_ID;
 
-    private static final String NAVER_CLOVA_BASE_URL = "https://naveropenapi.apigw.ntruss.com";
+    @Value("${naver.client-secret}")
+    private String NAVER_CLIENT_SECRET;
+
+    @Value("${naver.base-url}")
+    private String NAVER_CLOVA_BASE_URL;
 
     private WebClient webClient;
 
@@ -31,8 +35,8 @@ public class NaverClovaSummaryApiClient implements NaverClovaSummaryClientPort {
         this.webClient = WebClient.builder()
             .baseUrl(NAVER_CLOVA_BASE_URL)
             .defaultHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
-            .defaultHeader("X-NCP-APIGW-API-KEY-ID", clientId)
-            .defaultHeader("X-NCP-APIGW-API-KEY", clientSecret)
+            .defaultHeader("X-NCP-APIGW-API-KEY-ID", NAVER_CLIENT_ID)
+            .defaultHeader("X-NCP-APIGW-API-KEY", NAVER_CLIENT_SECRET)
             .build();
     }
 

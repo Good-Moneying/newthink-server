@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import kusitms.duduk.application.global.entity.BaseEntity;
+import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.term.vo.TermCategory;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -40,6 +41,6 @@ public class TermJpaEntity extends BaseEntity {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    private TermCategory termCategory;
+    private Category category;
 }
 

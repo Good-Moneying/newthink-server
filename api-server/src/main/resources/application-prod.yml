@@ -1,7 +1,7 @@
-server:
-  port: 8080
-
 spring:
+  config:
+    import: "optional:classpath:secrets.yml"
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://db-good-moneying.c9g0uuc6uk51.ap-northeast-2.rds.amazonaws.com/newthink
@@ -10,6 +10,8 @@ spring:
   sql:
     init:
       platform: mysql
+      # application 시작 시 data.sql에 작성된 코드로 database를 초기화 하도록 지정
+#      mode: always
 
   jpa:
     hibernate:
@@ -49,3 +51,25 @@ jwt:
   refresh:
     expiration: 1209600000 # 2주 (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루) * 14(2주))
     header: Authorization-refresh
+
+
+openai:
+  base-url: ${openai.base-url}
+  api-key: ${openai.api-key}
+
+cloud:
+  aws:
+    s3:
+      bucket: ${cloud.aws.s3.bucket}
+    stack:
+      auto: ${cloud.aws.stack.auto}
+    region:
+      static: ${cloud.aws.region.static}
+    credentials:
+      access-key: ${cloud.aws.credentials.access-key}
+      secret-key: ${cloud.aws.credentials.secret-key}
+
+naver:
+  client-id: ${naver.client-id}
+  client-secret: ${naver.client-secret}
+  base-url: ${naver.base-url}

@@ -8,9 +8,13 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum Category {
+    GLOBAL("글로벌"),
     FINANCE("금융"),
     SECURITIES("증권"),
     REAL_ESTATE("부동산"),
+    COMPANY("기업"),
+    TECH("테크"),
+    LIFE("라이프"),
     POLICY("정책"),
     WORD("단어장"),
     NONE("없음");

@@ -29,5 +29,8 @@ public class Thinking {
         this.thinkingCloud = sentences.stream()
             .map(Sentence::from)
             .toList();
+
+        this.isCloudExist = true;
     }
+
 }

@@ -1,4 +1,7 @@
 spring:
+  config:
+    import: "optional:classpath:secrets.yml"
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://db-good-moneying.c9g0uuc6uk51.ap-northeast-2.rds.amazonaws.com/newthink
@@ -7,6 +10,8 @@ spring:
   sql:
     init:
       platform: mysql
+      # application 시작 시 data.sql에 작성된 코드로 database를 초기화 하도록 지정
+#      mode: always
 
   jpa:
     hibernate:
@@ -16,7 +21,6 @@ spring:
         format_sql: true # SQL 포맷팅
         show_sql: true # SQL 출력
         dialect: org.hibernate.dialect.MySQL8Dialect
-
 
 springdoc:
   swagger-ui:
@@ -49,23 +53,23 @@ jwt:
     header: Authorization-refresh
 
 
-crawling:
-  driver_path: "/Users/kwonminhyeok/Downloads/chromedriver_mac_arm64/chromedriver"
-  target-url: "https://www.hankyung.com/all-news"
-
-open-ai:
-  end-point: "https://api.openai.com/v1/chat/completions"
-  secret-key: "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"
+openai:
+  base-url: ${openai.base-url}
+  api-key: ${openai.api-key}
 
 cloud:
   aws:
     s3:
-      bucket: "goodmoneying"
-    stack.auto: false
-    region.static: ap-northeast-2
+      bucket: ${cloud.aws.s3.bucket}
+    stack:
+      auto: ${cloud.aws.stack.auto}
+    region:
+      static: ${cloud.aws.region.static}
     credentials:
-      accessKey: "AKIAYS2NV5RSG2UYIRSY"
-      secretKey: "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"
+      access-key: ${cloud.aws.credentials.access-key}
+      secret-key: ${cloud.aws.credentials.secret-key}
 
-selenium:
-  url: "http://selenium:4444/wd/hub"
+naver:
+  client-id: ${naver.client-id}
+  client-secret: ${naver.client-secret}
+  base-url: ${naver.base-url}

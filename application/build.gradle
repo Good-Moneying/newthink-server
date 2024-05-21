@@ -39,6 +39,9 @@ dependencies {
     //amazon-s3
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
+    //selenium
+    implementation 'org.seleniumhq.selenium:selenium-java:4.0.0'
+
     // QueryDsl
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"

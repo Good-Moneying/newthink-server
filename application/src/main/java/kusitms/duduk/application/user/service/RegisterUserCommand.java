@@ -2,9 +2,11 @@ package kusitms.duduk.application.user.service;
 
 import kusitms.duduk.core.user.dto.UserDtoMapper;
 import kusitms.duduk.core.user.dto.request.CreateUserRequest;
+import kusitms.duduk.core.user.dto.request.ValidateUserEmailRequest;
+import kusitms.duduk.core.user.dto.request.ValidateUserNicknameRequest;
 import kusitms.duduk.core.user.dto.response.UserResponse;
 import kusitms.duduk.core.user.port.input.RegisterUserUseCase;
-import kusitms.duduk.core.user.port.output.LoadUserPort;
+import kusitms.duduk.core.user.port.input.ValidateDuplicatedUserQuery;
 import kusitms.duduk.core.user.port.output.SaveUserPort;
 import kusitms.duduk.domain.user.User;
 import lombok.RequiredArgsConstructor;
@@ -18,19 +20,22 @@ import org.springframework.transaction.annotation.Transactional;
 public class RegisterUserCommand implements RegisterUserUseCase {
 
     private final SaveUserPort saveUserPort;
-    private final LoadUserPort loadUserPort;
+    private final ValidateDuplicatedUserQuery validateDuplicatedUserQuery;
     private final UserDtoMapper userDtoMapper;
 
     @Override
     @Transactional
     public UserResponse register(CreateUserRequest request) {
-        log.info("register() start\n");
         User user = userDtoMapper.toDomain(request);
 
-        if (loadUserPort.existsUserByEmail(user.getEmail().getValue())) {
-            throw new IllegalArgumentException("중복된 이메일로 회원 가입을 할 수 없습니다.");
-        }
+        validateDuplicatedUserQuery.validateDuplicatedEmail(new ValidateUserEmailRequest(user.getEmail().getValue()));
+        validateDuplicatedUserQuery.validateDuplicatedNickname(new ValidateUserNicknameRequest(user.getNickname().getValue()));
 
-        return userDtoMapper.toDto(saveUserPort.create(user));
+        User savedUser = saveUserPort.create(user);
+        log.info("유저가 성공적으로 저장되었습니다.\n "
+            + "Email : {}\n"
+            + "Nickname : {}", savedUser.getEmail().getValue(), savedUser.getNickname().getValue());
+
+        return userDtoMapper.toDto(savedUser);
     }
 }

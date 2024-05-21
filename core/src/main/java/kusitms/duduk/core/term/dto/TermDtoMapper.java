@@ -3,6 +3,7 @@ package kusitms.duduk.core.term.dto;
 import kusitms.duduk.common.annotation.Mapper;
 import kusitms.duduk.core.term.dto.request.CreateTermRequest;
 import kusitms.duduk.core.term.dto.response.RetrieveTermResponse;
+import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.term.Term;
 import kusitms.duduk.domain.term.vo.Description;
 import kusitms.duduk.domain.term.vo.Name;
@@ -16,7 +17,7 @@ public class TermDtoMapper {
             .englishName(Name.from(request.englishName()))
             .koreanName(Name.from(request.koreanName()))
             .description(Description.from(request.description()))
-            .termCategory(TermCategory.from(request.category()))
+            .category(Category.from(request.category()))
             .build();
     }
 
@@ -26,7 +27,7 @@ public class TermDtoMapper {
             .englishName(term.getEnglishName().getValue())
             .koreanName(term.getKoreanName().getValue())
             .description(term.getDescription().getValue())
-            .category(term.getTermCategory().name())
+            .category(term.getCategory().name())
             .build();
     }
 
@@ -36,7 +37,7 @@ public class TermDtoMapper {
             .englishName(term.getEnglishName().getValue())
             .koreanName(term.getKoreanName().getValue())
             .description(term.getDescription().getValue())
-            .category(term.getTermCategory().name())
+            .category(term.getCategory().name())
             .isScrapped(isScrapped)
             .build();
     }

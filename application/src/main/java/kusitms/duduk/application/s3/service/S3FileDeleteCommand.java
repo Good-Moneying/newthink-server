@@ -15,14 +15,14 @@ public class S3FileDeleteCommand implements S3FileDeletePort {
     private final AmazonS3Client amazonS3Client;
     private String urlHeader;
 
-//    @Value("${cloud.aws.s3.bucket}")
-    private String bucket = "goodmoneying";
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     @Override
     public void deleteImage(String url) {
 
         urlHeader = "https://" + bucket + ".s3.ap-northeast-2.amazonaws.com/";
-        String key = url.replace(urlHeader, ""); //url header 제거
+        String key = url.replace(urlHeader, "");
 
         try {
             this.amazonS3Client.deleteObject(this.bucket, key);

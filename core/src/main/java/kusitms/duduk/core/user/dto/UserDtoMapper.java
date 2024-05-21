@@ -29,7 +29,7 @@ public class UserDtoMapper {
             .refreshToken(RefreshToken.of(request.refreshToken()))
             .gender(Gender.from(request.gender()))
             .birthday(request.birthDay())
-            .reward(Count.initial())
+            .reward(Count.register())
             .role(Role.USER)
             .provider(Provider.from(request.provider()))
             .category(Category.from(request.category()))
@@ -45,7 +45,7 @@ public class UserDtoMapper {
             .email(user.getEmail().getValue())
             .nickname(user.getNickname().getValue())
             .archives(user.getArchives().stream()
-                .map(archive -> archive.getId())
+                .map(archive -> archive.getId().getValue())
                 .collect(Collectors.toList()))
             .build();
     }

@@ -1,4 +1,7 @@
 spring:
+  config:
+    import: "optional:classpath:secrets.yml"
+
   datasource:
     driver-class-name: org.h2.Driver
     username: sa
@@ -24,18 +27,22 @@ jwt:
     expiration: 1209600000 # 2주 (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루) * 14(2주))
     header: Authorization-refresh
 
-
-open-ai:
-  end-point: "https://api.openai.com/v1/chat/completions"
-  secret-key: "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"
-
+openai:
+  base-url: ${openai.base-url}
+  api-key: ${openai.api-key}
 
 cloud:
   aws:
     s3:
-      bucket: "goodmoneying"
-    stack.auto: false
-    region.static: ap-northeast-2
+      bucket: ${cloud.aws.s3.bucket}
+    stack:
+      auto: ${cloud.aws.stack.auto}
+    region:
+      static: ${cloud.aws.region.static}
     credentials:
-      accessKey: "AKIAYS2NV5RSG2UYIRSY"
-      secretKey: "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"
+      access-key: ${cloud.aws.credentials.access-key}
+      secret-key: ${cloud.aws.credentials.secret-key}
+
+naver:
+  client-id: ${naver.client-id}
+  client-secret: ${naver.client-secret}

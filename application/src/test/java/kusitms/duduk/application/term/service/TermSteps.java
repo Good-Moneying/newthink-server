@@ -1,6 +1,7 @@
 package kusitms.duduk.application.term.service;
 
 import kusitms.duduk.core.term.dto.request.CreateTermRequest;
+import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.term.Term;
 import kusitms.duduk.domain.term.vo.Description;
 import kusitms.duduk.domain.term.vo.Name;
@@ -24,7 +25,7 @@ public class TermSteps {
             .koreanName(Name.from(request.koreanName()))
             .englishName(Name.from(request.englishName()))
             .description(Description.from(request.description()))
-            .termCategory(TermCategory.COMPANY)
+            .category(Category.COMPANY)
             .build();
     }
 
@@ -33,7 +34,7 @@ public class TermSteps {
             .koreanName(Name.from("주식"))
             .englishName(Name.from("Stock"))
             .description(Description.from("기업이나 조직이 자본을 조달하기 위해 발행하는 증권의 총칭이에요"))
-            .termCategory(TermCategory.COMPANY)
+            .category(Category.COMPANY)
             .build();
     }
 }
