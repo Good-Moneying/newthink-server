@@ -15,7 +15,7 @@ public class TermJpaMapper {
             .id(term.getId() != null ? term.getId().getValue() : null)
             .englishName(term.getEnglishName().getValue())
             .koreanName(term.getKoreanName().getValue())
-            .termCategory(term.getTermCategory())
+            .category(term.getCategory())
             .description(term.getDescription().getValue())
             .build();
     }
@@ -24,7 +24,7 @@ public class TermJpaMapper {
         return TermJpaEntity.builder()
             .englishName(term.getEnglishName().getValue())
             .koreanName(term.getKoreanName().getValue())
-            .termCategory(term.getTermCategory())
+            .category(term.getCategory())
             .description(term.getDescription().getValue())
             .build();
     }
@@ -34,7 +34,7 @@ public class TermJpaMapper {
             .id(Id.of(termJpaEntity.getId()))
             .englishName(Name.from(termJpaEntity.getEnglishName()))
             .koreanName(Name.from(termJpaEntity.getKoreanName()))
-            .termCategory(termJpaEntity.getTermCategory())
+            .category(termJpaEntity.getCategory())
             .description(Description.from(termJpaEntity.getDescription()))
             .createdAt(termJpaEntity.getCreatedAt())
             .updatedAt(termJpaEntity.getUpdatedAt())

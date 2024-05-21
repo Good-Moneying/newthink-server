@@ -21,6 +21,8 @@ public class QTermJpaEntity extends EntityPathBase<TermJpaEntity> {
 
     public final kusitms.duduk.application.global.entity.QBaseEntity _super = new kusitms.duduk.application.global.entity.QBaseEntity(this);
 
+    public final EnumPath<kusitms.duduk.domain.global.Category> category = createEnum("category", kusitms.duduk.domain.global.Category.class);
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
@@ -31,8 +33,6 @@ public class QTermJpaEntity extends EntityPathBase<TermJpaEntity> {
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath koreanName = createString("koreanName");
-
-    public final EnumPath<kusitms.duduk.domain.term.vo.TermCategory> termCategory = createEnum("termCategory", kusitms.duduk.domain.term.vo.TermCategory.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;

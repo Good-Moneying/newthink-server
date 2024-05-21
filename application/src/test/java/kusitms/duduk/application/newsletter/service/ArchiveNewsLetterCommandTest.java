@@ -37,6 +37,8 @@ public class ArchiveNewsLetterCommandTest {
     @Autowired
     private ArchiveNewsLetterUseCase archiveNewsLetterUseCase;
 
+    private final int FINANCE_ARCHIVE_INDEX = 1;
+
     @AfterEach
     void cleanUp() {
         deleteUserPort.deleteAll();
@@ -56,7 +58,7 @@ public class ArchiveNewsLetterCommandTest {
 
         // then
         User loadUser = loadUserPort.findByEmail(email).get();
-        Assertions.assertThat(loadUser.getArchives().get(0).getNewsLetterIds()).contains(newsLetterId);
+        Assertions.assertThat(loadUser.getArchives().get(FINANCE_ARCHIVE_INDEX).getNewsLetterIds()).contains(newsLetterId);
 
         // todo : LazyInitializationException 발생
         /**
