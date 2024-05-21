@@ -38,10 +38,10 @@ public class InfomaxNewsCrawler implements NewsCrawlingPort {
             String content = webElement.findElement(By.cssSelector("div>p>a")).getText();
 
             return CrawlingNewsResponse.builder()
-                    .title(title)
-                    .content(content)
-                    .thumbnailURL(thumbnailUrl)
-                    .build();
+                .title(title)
+                .content(content)
+                .thumbnailURL(thumbnailUrl)
+                .build();
 
         } catch (MalformedURLException e) {
             log.error(e.getMessage());

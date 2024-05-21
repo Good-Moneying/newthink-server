@@ -1,4 +1,4 @@
-package kusitms.duduk.batch.scheduler;
+package kusitms.duduk.batch;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,9 +25,8 @@ public class BatchScheduler {
     private final Job generateNewsLetterJob;
 
     //@Scheduled(fixedRate = 5000)
-    //@Scheduled(cron = "0 */1 * * *")
-//    @Scheduled(cron = "0 0 1 * * *")
-     @Scheduled(cron = "1 * * * * *")
+    @Scheduled(cron = "0 1 * * * *")
+    //@Scheduled(cron = "1 * * * * *")
     public void scheduledTask()
         throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
         log.info("News letter batch service started");
