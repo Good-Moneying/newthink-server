@@ -38,7 +38,6 @@ public class CreateThinkingCommand implements CreateThinkingUseCase {
             .orElseThrow(() -> new NotExistsException("해당 생각을 찾을 수 없습니다."));
 
         thinking.createThinkingCloud(request.sentences());
-
         saveThinkingPort.save(thinking);
     }
 }

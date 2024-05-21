@@ -32,6 +32,13 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
     }
 
     @Override
+    public String retrieveUserNicknameByEmail(String email) {
+        return loadUserPort.findByEmail(email)
+            .map(user -> user.getNickname().getValue())
+            .orElse(null);
+    }
+
+    @Override
     public RetrieveHomeResponse home(String email) {
         User user = loadUserPort.findByEmail(email)
             .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
