@@ -18,6 +18,21 @@ services:
   server:
     container_name: server
     image: goodmoneying/server
+    environment:
+      - DB_HOSTNAME=${{ secrets.DB_HOSTNAME }}
+      - DB_DATABASE=${{ secrets.DB_DATABASE }}
+      - DB_USERNAME=${{ secrets.DB_USERNAME }}
+      - DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+      - OPENAI_BASE_URL=${{ secrets.OPENAI_BASE_URL }}
+      - OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
+      - CLOUD_AWS_S3_BUCKET=${{ secrets.CLOUD_AWS_S3_BUCKET }}
+      - CLOUD_AWS_STACK_AUTO=${{ secrets.CLOUD_AWS_STACK_AUTO }}
+      - CLOUD_AWS_REGION_STATIC=${{ secrets.CLOUD_AWS_REGION_STATIC }}
+      - CLOUD_AWS_CREDENTIALS_ACCESSKEY=${{ secrets.CLOUD_AWS_CREDENTIALS_ACCESSKEY }}
+      - CLOUD_AWS_CREDENTIALS_SECRETKEY=${{ secrets.CLOUD_AWS_CREDENTIALS_SECRETKEY }}
+      - NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}
+      - NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}
+      - NAVER_BASE_URL=${{ secrets.NAVER_BASE_URL }}
     ports:
       - "8080:8080"
     restart: "always"
@@ -25,6 +40,21 @@ services:
   batch:
     container_name: batch
     image: goodmoneying/batch
+    environment:
+      - DB_HOSTNAME=${{ secrets.DB_HOSTNAME }}
+      - DB_DATABASE=${{ secrets.DB_DATABASE }}
+      - DB_USERNAME=${{ secrets.DB_USERNAME }}
+      - DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+      - OPENAI_BASE_URL=${{ secrets.OPENAI_BASE_URL }}
+      - OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
+      - CLOUD_AWS_S3_BUCKET=${{ secrets.CLOUD_AWS_S3_BUCKET }}
+      - CLOUD_AWS_STACK_AUTO=${{ secrets.CLOUD_AWS_STACK_AUTO }}
+      - CLOUD_AWS_REGION_STATIC=${{ secrets.CLOUD_AWS_REGION_STATIC }}
+      - CLOUD_AWS_CREDENTIALS_ACCESSKEY=${{ secrets.CLOUD_AWS_CREDENTIALS_ACCESSKEY }}
+      - CLOUD_AWS_CREDENTIALS_SECRETKEY=${{ secrets.CLOUD_AWS_CREDENTIALS_SECRETKEY }}
+      - NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}
+      - NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}
+      - NAVER_BASE_URL=${{ secrets.NAVER_BASE_URL }}
     restart: "always"
 
   certbot:

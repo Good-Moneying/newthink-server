@@ -72,7 +72,7 @@ public class OpenAiSummaryNewsLetterApiClient implements OpenAiClientPort<OpenAi
         try {
             return objectMapper.readValue(jsonContent, OpenAiSummaryNewsLetterResponse.class);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to parse OpenAI response content", e);
+            throw new RuntimeException("파싱 하는데 실패하였습니다.", e);
         }
     }
 }
