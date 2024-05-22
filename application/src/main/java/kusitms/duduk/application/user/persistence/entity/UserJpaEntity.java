@@ -70,6 +70,12 @@ public class UserJpaEntity extends BaseEntity {
     @Column
     private int reward;
 
+    @Column
+    private int follower;
+
+    @Column
+    private int followee;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private Role role;

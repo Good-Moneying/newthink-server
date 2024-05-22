@@ -22,6 +22,7 @@ public class UserDtoMapper {
 
     // todo : defaultProfileUrl 추가
     final String defaultUrl = "https://duduk.kusitms.club/images/default-profile.png";
+
     public User toDomain(CreateUserRequest request) {
         return User.builder()
             .email(Email.from(request.email()))
@@ -30,6 +31,8 @@ public class UserDtoMapper {
             .gender(Gender.from(request.gender()))
             .birthday(request.birthDay())
             .reward(Count.register())
+            .follower(Count.initial())
+            .followee(Count.initial())
             .role(Role.USER)
             .provider(Provider.from(request.provider()))
             .category(Category.from(request.category()))
@@ -45,8 +48,8 @@ public class UserDtoMapper {
             .email(user.getEmail().getValue())
             .nickname(user.getNickname().getValue())
             .archives(user.getArchives().stream()
-                .map(archive -> archive.getId().getValue())
-                .collect(Collectors.toList()))
+	.map(archive -> archive.getId().getValue())
+	.collect(Collectors.toList()))
             .build();
     }
 }

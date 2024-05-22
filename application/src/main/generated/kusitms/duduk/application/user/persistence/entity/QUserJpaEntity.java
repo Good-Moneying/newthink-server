@@ -37,6 +37,10 @@ public class QUserJpaEntity extends EntityPathBase<UserJpaEntity> {
 
     public final NumberPath<Integer> experiencePoint = createNumber("experiencePoint", Integer.class);
 
+    public final NumberPath<Integer> followee = createNumber("followee", Integer.class);
+
+    public final NumberPath<Integer> follower = createNumber("follower", Integer.class);
+
     public final EnumPath<kusitms.duduk.domain.user.vo.Gender> gender = createEnum("gender", kusitms.duduk.domain.user.vo.Gender.class);
 
     public final EnumPath<kusitms.duduk.domain.user.vo.Goal> goal = createEnum("goal", kusitms.duduk.domain.user.vo.Goal.class);

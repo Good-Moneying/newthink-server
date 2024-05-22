@@ -42,6 +42,8 @@ public class User {
     private Level level;
     private Goal goal;
     private Count reward;
+    private Count follower;
+    private Count followee;
     private List<Archive> archives;
     private List<Comment> comments;
     private LocalDateTime createdAt;

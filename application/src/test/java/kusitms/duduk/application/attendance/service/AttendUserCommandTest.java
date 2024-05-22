@@ -45,6 +45,6 @@ class AttendUserCommandTest {
         // then
         Assertions.assertNotNull(response);
         assertEquals(7, response.data().size());
-        assertTrue(response.data().stream().anyMatch(a-> a.isAttendant()  && a.getDayOfWeek() == LocalDate.now().getDayOfWeek()));
+        assertTrue(response.data().stream().anyMatch(a-> a.isAttendant()  && a.getDayOfWeekValue() == LocalDate.now().getDayOfWeek().getValue()));
     }
 }

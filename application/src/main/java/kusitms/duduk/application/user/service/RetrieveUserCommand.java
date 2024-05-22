@@ -47,7 +47,8 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
             .orElseThrow(() -> new NotExistsException(USER_NOT_FOUND.getMessage()));
 
         NewsLetterThumbnailResponse todayNewsLetter = retrieveTodayNewsLetter(user);
-        List<NewsLetterThumbnailResponse> realtimeTrendNewsLetter = retrieveRealtimeTrendNewsLetter(user);
+        List<NewsLetterThumbnailResponse> realtimeTrendNewsLetter = retrieveRealtimeTrendNewsLetter(
+            user);
         List<NewsLetterThumbnailResponse> customizeNewsLetter = retrieveCustomizeNewsLetter(user);
         RetrieveTermResponse todayTerm = retrieveTodayTerm(user);
 
@@ -60,19 +61,22 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
     }
 
     private NewsLetterThumbnailResponse retrieveTodayNewsLetter(User user) {
-        NewsLetterThumbnailResponse todayNewsLetter = retrieveNewsLetterQuery.retrieveLatestNewsLetter(user);
+        NewsLetterThumbnailResponse todayNewsLetter = retrieveNewsLetterQuery.retrieveLatestNewsLetter(
+            user);
         log.info("오늘의 뉴스레터를 조회한다 : {}", todayNewsLetter);
         return todayNewsLetter;
     }
 
     private List<NewsLetterThumbnailResponse> retrieveRealtimeTrendNewsLetter(User user) {
-        List<NewsLetterThumbnailResponse> realtimeTrendNewsLetter = retrieveNewsLetterQuery.retrieveRealtimeTrendNewsLetter(user);
+        List<NewsLetterThumbnailResponse> realtimeTrendNewsLetter = retrieveNewsLetterQuery.retrieveRealtimeTrendNewsLetter(
+            user);
         log.info("실시간 트렌드 뉴스레터를 조회한다 : {}", realtimeTrendNewsLetter);
         return realtimeTrendNewsLetter;
     }
 
     private List<NewsLetterThumbnailResponse> retrieveCustomizeNewsLetter(User user) {
-        List<NewsLetterThumbnailResponse> customizeNewsLetter = retrieveNewsLetterQuery.retrieveCustomizeNewsLetter(user);
+        List<NewsLetterThumbnailResponse> customizeNewsLetter = retrieveNewsLetterQuery.retrieveCustomizeNewsLetter(
+            user);
         log.info("추천 뉴스레터를 조회한다 : {}", customizeNewsLetter);
         return customizeNewsLetter;
     }
@@ -91,8 +95,11 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
         List<ArchiveNewsLetterCount> archivesCount = getTop4Archives(user);
 
         return RetrieveMyPageResponse.builder()
+            .profileUrl(user.getLevel().getProfileUrl())
             .nickname(user.getNickname().getValue())
             .reward(user.getReward().getCount())
+            .follower(user.getFollower().getCount())
+            .followee(user.getFollowee().getCount())
             .attendances(attendUserUseCase.calculateAttendance(email))
             .counts(archivesCount)
             .build();
@@ -102,8 +109,8 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
         return user.getArchives().stream()
             .filter(archive -> !archive.getCategory().name().equals("WORD"))
             .map(archive -> new ArchiveNewsLetterCount(
-                archive.getCategory(),
-                archive.getNewsLetterIds().size()))
+	archive.getCategory().getDescription(),
+	archive.getNewsLetterIds().size()))
             .sorted((a, b) -> Integer.compare(b.getCount(), a.getCount()))
             .limit(4)
             .toList();

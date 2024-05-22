@@ -22,7 +22,7 @@ public record WeeklyAttendanceResponse(List<DailyAttendance> data) {
             date -> attendanceMap.put(date.getDayOfWeek(), true));  // 출석한 날짜 업데이트
 
         List<DailyAttendance> dailyAttendances = attendanceMap.entrySet().stream()
-            .map(entry -> new DailyAttendance(entry.getKey(), entry.getValue()))
+            .map(entry -> new DailyAttendance(entry.getKey().getValue(), entry.getValue()))
             .collect(Collectors.toList());
 
         return WeeklyAttendanceResponse.builder()
@@ -35,10 +35,10 @@ public record WeeklyAttendanceResponse(List<DailyAttendance> data) {
     @Getter
     public static class DailyAttendance {
 
-        public DayOfWeek dayOfWeek;
+        public int dayOfWeekValue;
         public boolean isAttendant;
 
-        public static DailyAttendance of(DayOfWeek dayOfWeek, boolean isAttendant) {
+        public static DailyAttendance of(int dayOfWeek, boolean isAttendant) {
             return new DailyAttendance(dayOfWeek, isAttendant);
         }
     }
