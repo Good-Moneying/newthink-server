@@ -37,6 +37,26 @@ jobs:
           echo "NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}" >> $GITHUB_ENV
           echo "NAVER_BASE_URL=${{ secrets.NAVER_BASE_URL }}" >> $GITHUB_ENV
 
+      - name: Generate .env file for Docker
+        run: |
+          echo "DB_HOSTNAME=${{ secrets.DB_HOSTNAME }}" >> .env
+          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          echo "OPENAI_BASE_URL=${{ secrets.OPENAI_BASE_URL }}" >> .env
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
+          echo "CLOUD_AWS_S3_BUCKET=${{ secrets.CLOUD_AWS_S3_BUCKET }}" >> .env
+          echo "CLOUD_AWS_STACK_AUTO=${{ secrets.CLOUD_AWS_STACK_AUTO }}" >> .env
+          echo "CLOUD_AWS_REGION_STATIC=${{ secrets.CLOUD_AWS_REGION_STATIC }}" >> .env
+          echo "CLOUD_AWS_CREDENTIALS_ACCESSKEY=${{ secrets.CLOUD_AWS_CREDENTIALS_ACCESSKEY }}" >> .env
+          echo "CLOUD_AWS_CREDENTIALS_SECRETKEY=${{ secrets.CLOUD_AWS_CREDENTIALS_SECRETKEY }}" >> .env
+          echo "NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}" >> .env
+          echo "NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}" >> .env
+          echo "NAVER_BASE_URL=${{ secrets.NAVER_BASE_URL }}" >> .env
+
+      - name: Verify .env file creation
+        run: cat .env
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
@@ -70,8 +90,8 @@ jobs:
       - name: Copy files to EC2
         run: |
           scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa .env ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/.env
-          scp -o StrictHostKeyChecking-no -i ~/.ssh/id_rsa ./docker-compose.yml ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/docker-compose.yml
-          scp -o StrictHostKeyChecking-no -i ~/.ssh/id_rsa ./deploy.sh ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/deploy.sh
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./docker-compose.yml ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/docker-compose.yml
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./deploy.sh ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/deploy.sh
 
       - name: Docker build and push to Docker Hub
         run: |
