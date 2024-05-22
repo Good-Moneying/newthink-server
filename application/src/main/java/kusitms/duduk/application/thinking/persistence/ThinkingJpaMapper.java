@@ -2,6 +2,7 @@ package kusitms.duduk.application.thinking.persistence;
 
 import kusitms.duduk.application.thinking.persistence.entity.ThinkingJpaEntity;
 import kusitms.duduk.common.annotation.Mapper;
+import kusitms.duduk.domain.newsletter.vo.Keywords;
 import kusitms.duduk.domain.thinking.Thinking;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -24,6 +25,7 @@ public class ThinkingJpaMapper {
             .thumbnail(Thumbnail.from(thinkingJpaEntity.getThumbnail()))
             .comment(Sentence.from(thinkingJpaEntity.getComment()))
             .summarizedComment(Sentence.from(thinkingJpaEntity.getSummarizedComment()))
+            .keywords(Keywords.from(thinkingJpaEntity.getKeywords()))
             .isCloudExist(thinkingJpaEntity.isCloudExist())
             .thinkingCloud(thinkingJpaEntity.getThinkingCloud().stream()
 	.map(Sentence::from)
@@ -47,6 +49,7 @@ public class ThinkingJpaMapper {
 	thinking.getSummarizedComment() != null ? thinking.getSummarizedComment().getValue()
 	    : null)
             .isCloudExist(thinking.isCloudExist())
+            .keywords(thinking.getKeywords() != null ? thinking.getKeywords().toSentence() : null)
             .thinkingCloud(thinking.getThinkingCloud().stream()
 	.map(Sentence::getValue)
 	.collect(Collectors.toCollection(ArrayList::new)))

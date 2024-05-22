@@ -56,7 +56,6 @@ public class CommentEventListener {
         updateNewsLetter(newsLetter, comment);
     }
 
-    // Comment 작성 시 Thinking 생성
     private void createThinkingWithComment(User user, NewsLetter newsLetter, Comment comment,
         String summarizedContent) {
 
@@ -64,6 +63,7 @@ public class CommentEventListener {
             .userId(user.getId().getValue())
             .newsLetterId(newsLetter.getId().getValue())
             .thumbnail(newsLetter.getThumbnail().getUrl())
+            .keywords(newsLetter.getKeywords().toSentence())
             .comment(comment.getSentence().getValue())
             .summarizedComment(summarizedContent)
             .build();

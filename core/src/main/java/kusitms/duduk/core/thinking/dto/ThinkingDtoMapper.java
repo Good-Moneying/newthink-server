@@ -7,6 +7,7 @@ import kusitms.duduk.core.thinking.dto.response.RetrieveThinkingDetailResponse;
 import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.global.Sentence;
 import kusitms.duduk.domain.global.Thumbnail;
+import kusitms.duduk.domain.newsletter.vo.Keywords;
 import kusitms.duduk.domain.thinking.Thinking;
 
 @Mapper
@@ -17,6 +18,7 @@ public class ThinkingDtoMapper {
             .userId(Id.of(request.userId()))
             .newsLetterId(Id.of(request.newsLetterId()))
             .thumbnail(Thumbnail.from(request.thumbnail()))
+            .keywords(Keywords.from(request.keywords()))
             .comment(Sentence.from(request.comment()))
             .summarizedComment(Sentence.from(request.summarizedComment()))
             .isCloudExist(false)
@@ -32,6 +34,7 @@ public class ThinkingDtoMapper {
             .thumbnailUrl(thinking.getThumbnail().getUrl())
             .comment(thinking.getComment().getValue())
             .summarizedComment(thinking.getSummarizedComment().getValue())
+            .keywords(thinking.getKeywords().toSentence())
             .isCloudExist(thinking.isCloudExist())
             .thinkingCloud(thinking.getThinkingCloud().stream()
 	.map(Sentence::getValue)

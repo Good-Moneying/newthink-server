@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public class Keywords {
 
-    List<String> words;
+    private List<String> words;
 
     private Keywords(List<String> words) {
         this.words = words;

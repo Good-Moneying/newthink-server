@@ -65,6 +65,7 @@ public class CreateThinkingCommandTest {
             .userId(savedUser.getId().getValue())
             .newsLetterId(savedNewsLetter.getId().getValue())
             .comment("요약 전 생각")
+            .keywords("금융,경제,글로벌")
             .summarizedComment("요약 후 생각")
             .thumbnail("썸네일 주소")
             .build();
@@ -77,6 +78,7 @@ public class CreateThinkingCommandTest {
         assertThat(thinking.getUserId().getValue()).isEqualTo(request.userId());
         assertThat(thinking.getNewsLetterId().getValue()).isEqualTo(request.newsLetterId());
         assertThat(thinking.getComment().getValue()).isEqualTo(request.comment());
+        assertThat(thinking.getKeywords().getWords().size()).isEqualTo(3);
         assertThat(thinking.getSummarizedComment().getValue()).isEqualTo(
             request.summarizedComment());
     }

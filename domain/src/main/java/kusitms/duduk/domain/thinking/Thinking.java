@@ -5,6 +5,7 @@ import java.util.List;
 import kusitms.duduk.domain.global.Id;
 import kusitms.duduk.domain.global.Sentence;
 import kusitms.duduk.domain.global.Thumbnail;
+import kusitms.duduk.domain.newsletter.vo.Keywords;
 import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Getter;
@@ -19,6 +20,7 @@ public class Thinking {
     private Id newsLetterId;
     private Thumbnail thumbnail;
     private Sentence comment;
+    private Keywords keywords;
     private Sentence summarizedComment;
     private boolean isCloudExist;
     @Default

@@ -95,6 +95,7 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
         List<ArchiveNewsLetterCount> archivesCount = getTop4Archives(user);
 
         return RetrieveMyPageResponse.builder()
+            .level(user.getLevel().name())
             .profileUrl(user.getLevel().getProfileUrl())
             .nickname(user.getNickname().getValue())
             .reward(user.getReward().getCount())

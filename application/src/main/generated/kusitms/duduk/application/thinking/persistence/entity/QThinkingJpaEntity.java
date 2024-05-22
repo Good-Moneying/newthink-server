@@ -31,6 +31,8 @@ public class QThinkingJpaEntity extends EntityPathBase<ThinkingJpaEntity> {
 
     public final BooleanPath isCloudExist = createBoolean("isCloudExist");
 
+    public final StringPath keywords = createString("keywords");
+
     public final NumberPath<Long> newsLetterId = createNumber("newsLetterId", Long.class);
 
     public final StringPath summarizedComment = createString("summarizedComment");

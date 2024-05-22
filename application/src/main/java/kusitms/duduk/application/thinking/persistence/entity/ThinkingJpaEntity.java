@@ -44,6 +44,9 @@ public class ThinkingJpaEntity extends BaseEntity {
     @Column(name = "comment")
     private String comment;
 
+    @Column(name = "keywords")
+    private String keywords;
+
     @Column(name = "thumbnail")
     private String thumbnail;
 

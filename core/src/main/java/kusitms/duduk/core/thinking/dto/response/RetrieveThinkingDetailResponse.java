@@ -9,6 +9,7 @@ public record RetrieveThinkingDetailResponse(
     Long userId,
     Long newsLetterId,
     String thumbnailUrl,
+    String keywords,
     String comment,
     String summarizedComment,
     boolean isCloudExist,

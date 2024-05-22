@@ -8,7 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 
 @Builder(toBuilder = true)
-public record RetrieveMyPageResponse(String profileUrl, String nickname, int reward, int follower, int followee,
+public record RetrieveMyPageResponse(String level, String profileUrl, String nickname, int reward, int follower, int followee,
 		     WeeklyAttendanceResponse attendances,
 		     List<ArchiveNewsLetterCount> counts) {
 
