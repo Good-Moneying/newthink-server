@@ -93,9 +93,9 @@ jobs:
           scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./docker-compose.yml ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/docker-compose.yml
           scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./deploy.sh ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/deploy.sh
 
-      - name: Docker build and push to Docker Hub
+      - name: Docker build and push to Docker Hub and copy docker-compose.yml to server
         run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_ID }}" --password-stdin
+          sudo docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}  
           
           cd ./api-server
           sudo docker buildx build --push --platform linux/amd64 -t ${{ secrets.DOCKER_USERNAME }}/server .
@@ -117,5 +117,6 @@ jobs:
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/server
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/batch
             sudo chmod +x deploy.sh
+            sudo chmod +x docker-compose.yml        
             sudo ./deploy.sh
             sudo docker image prune -f
