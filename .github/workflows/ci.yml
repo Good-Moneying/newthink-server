@@ -39,7 +39,7 @@ jobs:
           echo "naver.client-id=${{ secrets.NAVER_CLIENT_ID }}" >> $GITHUB_ENV
           echo "naver.client-secret=${{ secrets.NAVER_CLIENT_SECRET }}" >> $GITHUB_ENV
           echo "naver.base-url=${{ secrets.NAVER_BASE_URL }}" >> $GITHUB_ENV
-          echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
+          echo "DB_HOSTNAME=${{ secrets.DB_HOSTNAME }}" >> $GITHUB_ENV
           echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> $GITHUB_ENV
           echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> $GITHUB_ENV
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
