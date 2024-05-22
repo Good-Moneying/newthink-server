@@ -27,46 +27,34 @@ else
     echo "Docker-compose is already installed"
 fi
 
-#RUNNING_CONTAINER=$(docker ps | grep blue)
+# Load environment variables
+if [ -f /home/ec2-user/.env ]; then
+    echo "Loading environment variables from .env file..."
+    export $(cat /home/ec2-user/.env | xargs)
+else
+    echo ".env file not found!"
+    exit 1
+fi
+
+# Define container names
 NGINX_CONF="/home/ec2-user/data/nginx/app.conf"
 RUNNING_NGINX=$(docker ps | grep nginx)
 BATCH_CONTAINER="batch"
 SERVER_CONTAINER="server"
 SELENIUM_CONTAINER="selenium"
 
-#if [ -z "$RUNNING_CONTAINER" ]; then
-#    TARGET_SERVICE="blue-api"
-#    OTHER_SERVICE="green-api"
-#    TARGET_PORT="8082"
-#    OTHER_PORT="8081"
-#else
-#    TARGET_SERVICE="green-api"
-#    OTHER_SERVICE="blue-api"
-#    TARGET_PORT="8081"
-#    OTHER_PORT="8082"
-#fi
-
-#echo "$TARGET_SERVICE Deploy..."
+# Start services
+echo "Starting services..."
 docker-compose -f /home/ec2-user/docker-compose.yml up -d $SELENIUM_CONTAINER $SERVER_CONTAINER $BATCH_CONTAINER
 
-# Wait for the target service to be healthy before proceeding
+# Wait for the services to be healthy before proceeding
 sleep 10
 
 if [ -z "$RUNNING_NGINX" ]; then
-    echo "Starting Nginx... Changing port to $TARGET_PORT"
+    echo "Starting Nginx..."
     docker-compose -f /home/ec2-user/docker-compose.yml up -d nginx
 fi
 
-#
-# Update the nginx config and reload
-#sed -i "s/$OTHER_SERVICE/$TARGET_SERVICE/" $NGINX_CONF
-#sed -i "s/$OTHER_PORT/$TARGET_PORT/" $NGINX_CONF
+# Restart nginx and selenium to ensure they're using the latest configuration
 docker-compose -f /home/ec2-user/docker-compose.yml restart nginx
 docker-compose -f /home/ec2-user/docker-compose.yml restart selenium
-
-# Stop the other service
-#docker-compose -f /home/ec2-user/docker-compose.yml stop $OTHER_SERVICE
-
-# docker-compose down & up
-#nohup docker-compose -f /home/ec2-user/docker-compose.yml down > /dev/null 2>&1 &
-#nohup docker-compose -f /home/ec2-user/docker-compose.yml up -d > /dev/null 2>&1 &

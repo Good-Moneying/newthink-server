@@ -22,20 +22,20 @@ jobs:
 
       - name: Set up environment variables
         run: |
-          echo "openai.base-url=${{ secrets.OPENAI_BASE_URL }}" >> $GITHUB_ENV
-          echo "openai.api-key=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
-          echo "cloud.aws.s3.bucket=${{ secrets.CLOUD_AWS_S3_BUCKET }}" >> $GITHUB_ENV
-          echo "cloud.aws.stack.auto=${{ secrets.CLOUD_AWS_STACK_AUTO }}" >> $GITHUB_ENV
-          echo "cloud.aws.region.static=${{ secrets.CLOUD_AWS_REGION_STATIC }}" >> $GITHUB_ENV
-          echo "cloud.aws.credentials.access-key=${{ secrets.CLOUD_AWS_CREDENTIALS_ACCESSKEY }}" >> $GITHUB_ENV
-          echo "cloud.aws.credentials.secret-key=${{ secrets.CLOUD_AWS_CREDENTIALS_SECRETKEY }}" >> $GITHUB_ENV
-          echo "naver.client-id=${{ secrets.NAVER_CLIENT_ID }}" >> $GITHUB_ENV
-          echo "naver.client-secret=${{ secrets.NAVER_CLIENT_SECRET }}" >> $GITHUB_ENV
-          echo "naver.base-url=${{ secrets.NAVER_BASE_URL }}" >> $GITHUB_ENV
-          echo "DB_HOSTNAME=${{ secrets.DB_HOSTNAME }}" >> $GITHUB_ENV
-          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> $GITHUB_ENV
-          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> $GITHUB_ENV
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
+          echo "DB_HOSTNAME=${{ secrets.DB_HOSTNAME }}" >> .env
+          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          echo "OPENAI_BASE_URL=${{ secrets.OPENAI_BASE_URL }}" >> .env
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
+          echo "CLOUD_AWS_S3_BUCKET=${{ secrets.CLOUD_AWS_S3_BUCKET }}" >> .env
+          echo "CLOUD_AWS_STACK_AUTO=${{ secrets.CLOUD_AWS_STACK_AUTO }}" >> .env
+          echo "CLOUD_AWS_REGION_STATIC=${{ secrets.CLOUD_AWS_REGION_STATIC }}" >> .env
+          echo "CLOUD_AWS_CREDENTIALS_ACCESSKEY=${{ secrets.CLOUD_AWS_CREDENTIALS_ACCESSKEY }}" >> .env
+          echo "CLOUD_AWS_CREDENTIALS_SECRETKEY=${{ secrets.CLOUD_AWS_CREDENTIALS_SECRETKEY }}" >> .env
+          echo "NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}" >> .env
+          echo "NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}" >> .env
+          echo "NAVER_BASE_URL=${{ secrets.NAVER_BASE_URL }}" >> .env
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
