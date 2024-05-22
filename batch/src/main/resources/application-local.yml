@@ -1,9 +1,12 @@
 spring:
+  config:
+    import: "optional:classpath:secrets.yml"
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://db-good-moneying.c9g0uuc6uk51.ap-northeast-2.rds.amazonaws.com/newthink
-    username: admin
-    password: good1234
+    url: jdbc:mysql://${DB_HOSTNAME}/${DB_DATABASE}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   sql:
     init:
       platform: mysql
@@ -37,25 +40,22 @@ crawling:
   driver_path: "/Users/kwonminhyeok/Downloads/chromedriver_mac_arm64/chromedriver"
   target-url: "https://www.hankyung.com/all-news"
 
-open-ai:
-  end-point: "https://api.openai.com/v1/chat/completions"
-  secret-key: "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"
-
-
 cloud:
   aws:
     s3:
-      bucket: "goodmoneying"
-    stack.auto: false
-    region.static: ap-northeast-2
+      bucket: ${cloud.aws.s3.bucket}
+    stack:
+      auto: ${cloud.aws.stack.auto}
+    region:
+      static: ${cloud.aws.region.static}
     credentials:
-      accessKey: "AKIAYS2NV5RSG2UYIRSY"
-      secretKey: "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"
+      access-key: ${cloud.aws.credentials.access-key}
+      secret-key: ${cloud.aws.credentials.secret-key}
 
 naver:
-  client-id: iboe5ch6oi
-  client-secret: 35GkUOob92lG6b1uipAf5gUW5JaETGCPTAf7ax9Z
-
+  client-id: ${naver.client-id}
+  client-secret: ${naver.client-secret}
+  base-url: ${naver.base-url}
 
 selenium:
   url: "http://selenium:4444/wd/hub"

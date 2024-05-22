@@ -1,33 +1,50 @@
-name: Backend Server CI  
-  
-on:  
+name: Backend Server CI
+
+on:
   push:
     branches:
       - main
-      
-  pull_request:  
-    branches:  
-      - main  
-      - develop  
 
-    types: [opened, synchronize]
-  
-jobs:  
-  build:  
+  pull_request:
+    branches:
+      - main
+      - develop
+
+    types: [ opened, synchronize ]
+
+jobs:
+  build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
-    steps:  
-      - name: action checkout  
-        uses: actions/checkout@v3  
-  
-      - name: Set up JDK 17  
-        uses: actions/setup-java@v3  
-        with:  
-          java-version: '17'  
-          distribution: 'temurin'  
-  
-      - name: Grant execute permission for gradlew  
+    steps:
+      - name: action checkout
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Set up environment variables
+        run: |
+          echo "openai.base-url=${{ secrets.OPENAI_BASE_URL }}" >> $GITHUB_ENV
+          echo "openai.api-key=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
+          echo "cloud.aws.s3.bucket=${{ secrets.CLOUD_AWS_S3_BUCKET }}" >> $GITHUB_ENV
+          echo "cloud.aws.stack.auto=${{ secrets.CLOUD_AWS_STACK_AUTO }}" >> $GITHUB_ENV
+          echo "cloud.aws.region.static=${{ secrets.CLOUD_AWS_REGION_STATIC }}" >> $GITHUB_ENV
+          echo "cloud.aws.credentials.access-key=${{ secrets.CLOUD_AWS_CREDENTIALS_ACCESSKEY }}" >> $GITHUB_ENV
+          echo "cloud.aws.credentials.secret-key=${{ secrets.CLOUD_AWS_CREDENTIALS_SECRETKEY }}" >> $GITHUB_ENV
+          echo "naver.client-id=${{ secrets.NAVER_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "naver.client-secret=${{ secrets.NAVER_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "naver.base-url=${{ secrets.NAVER_BASE_URL }}" >> $GITHUB_ENV
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
+          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> $GITHUB_ENV
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> $GITHUB_ENV
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
+
+      - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
       - name: Run tests with Gradle

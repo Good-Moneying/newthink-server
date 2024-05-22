@@ -24,7 +24,7 @@ public class BatchScheduler {
     @Qualifier("generateNewsLetterJob")
     private final Job generateNewsLetterJob;
 
-    //@Scheduled(fixedRate = 5000)
+    //@Scheduled(fixedRate = 5000)2
 //    @Scheduled(cron = "1 * * * * *")
     @Scheduled(cron = "0 1 * * * *")
     public void scheduledTask()
