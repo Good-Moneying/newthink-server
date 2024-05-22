@@ -22,48 +22,60 @@ jobs:
 
       - name: Set up environment variables
         run: |
-          echo "DB_HOSTNAME=${{ secrets.DB_HOSTNAME }}" >> .env
-          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
-          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
-          echo "OPENAI_BASE_URL=${{ secrets.OPENAI_BASE_URL }}" >> .env
-          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
-          echo "CLOUD_AWS_S3_BUCKET=${{ secrets.CLOUD_AWS_S3_BUCKET }}" >> .env
-          echo "CLOUD_AWS_STACK_AUTO=${{ secrets.CLOUD_AWS_STACK_AUTO }}" >> .env
-          echo "CLOUD_AWS_REGION_STATIC=${{ secrets.CLOUD_AWS_REGION_STATIC }}" >> .env
-          echo "CLOUD_AWS_CREDENTIALS_ACCESSKEY=${{ secrets.CLOUD_AWS_CREDENTIALS_ACCESSKEY }}" >> .env
-          echo "CLOUD_AWS_CREDENTIALS_SECRETKEY=${{ secrets.CLOUD_AWS_CREDENTIALS_SECRETKEY }}" >> .env
-          echo "NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}" >> .env
-          echo "NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}" >> .env
-          echo "NAVER_BASE_URL=${{ secrets.NAVER_BASE_URL }}" >> .env
+          echo "DB_HOSTNAME=${{ secrets.DB_HOSTNAME }}" >> $GITHUB_ENV
+          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> $GITHUB_ENV
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> $GITHUB_ENV
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
+          echo "OPENAI_BASE_URL=${{ secrets.OPENAI_BASE_URL }}" >> $GITHUB_ENV
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
+          echo "CLOUD_AWS_S3_BUCKET=${{ secrets.CLOUD_AWS_S3_BUCKET }}" >> $GITHUB_ENV
+          echo "CLOUD_AWS_STACK_AUTO=${{ secrets.CLOUD_AWS_STACK_AUTO }}" >> $GITHUB_ENV
+          echo "CLOUD_AWS_REGION_STATIC=${{ secrets.CLOUD_AWS_REGION_STATIC }}" >> $GITHUB_ENV
+          echo "CLOUD_AWS_CREDENTIALS_ACCESSKEY=${{ secrets.CLOUD_AWS_CREDENTIALS_ACCESSKEY }}" >> $GITHUB_ENV
+          echo "CLOUD_AWS_CREDENTIALS_SECRETKEY=${{ secrets.CLOUD_AWS_CREDENTIALS_SECRETKEY }}" >> $GITHUB_ENV
+          echo "NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "NAVER_BASE_URL=${{ secrets.NAVER_BASE_URL }}" >> $GITHUB_ENV
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Execute Gradle build
+      - name: Execute Gradle build and tests
         run: ./gradlew clean build
-
-      - name: List JAR Files
-        run: |
-          ls -la build/libs/
+        env:
+          DB_HOSTNAME: ${{ secrets.DB_HOSTNAME }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          CLOUD_AWS_S3_BUCKET: ${{ secrets.CLOUD_AWS_S3_BUCKET }}
+          CLOUD_AWS_STACK_AUTO: ${{ secrets.CLOUD_AWS_STACK_AUTO }}
+          CLOUD_AWS_REGION_STATIC: ${{ secrets.CLOUD_AWS_REGION_STATIC }}
+          CLOUD_AWS_CREDENTIALS_ACCESSKEY: ${{ secrets.CLOUD_AWS_CREDENTIALS_ACCESSKEY }}
+          CLOUD_AWS_CREDENTIALS_SECRETKEY: ${{ secrets.CLOUD_AWS_CREDENTIALS_SECRETKEY }}
+          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+          NAVER_BASE_URL: ${{ secrets.NAVER_BASE_URL }}
 
       - name: Set up Docker Build
         uses: docker/setup-buildx-action@v2
 
-      - name : Set up SSH Key
+      - name: Set up SSH Key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.EC2_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
-      - name : Copy docker-compose.yml and deploy.sh to EC2
+      - name: Copy files to EC2
         run: |
-          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./docker-compose.yml ec2-user@15.165.161.107:/home/ec2-user
-          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./deploy.sh ec2-user@15.165.161.107:/home/ec2-user
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa .env ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/.env
+          scp -o StrictHostKeyChecking-no -i ~/.ssh/id_rsa ./docker-compose.yml ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/docker-compose.yml
+          scp -o StrictHostKeyChecking-no -i ~/.ssh/id_rsa ./deploy.sh ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/deploy.sh
 
-      - name: Docker build and push to Docker Hub and copy docker-compose.yml to server
+      - name: Docker build and push to Docker Hub
         run: |
-          sudo docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}  
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_ID }}" --password-stdin
           
           cd ./api-server
           sudo docker buildx build --push --platform linux/amd64 -t ${{ secrets.DOCKER_USERNAME }}/server .
@@ -85,6 +97,5 @@ jobs:
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/server
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/batch
             sudo chmod +x deploy.sh
-            sudo chmod +x docker-compose.yml        
             sudo ./deploy.sh
             sudo docker image prune -f
