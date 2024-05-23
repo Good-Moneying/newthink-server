@@ -29,8 +29,8 @@ jobs:
 
       - name: Set up environment variables
         run: |
-          echo "openai.base-url=${{ secrets.OPENAI_BASE_URL }}" >> $GITHUB_ENV
-          echo "openai.api-key=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
+          echo "OPENAI_BASE_URL=${{ secrets.OPENAI_BASE_URL }}" >> $GITHUB_ENV
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
           echo "cloud.aws.s3.bucket=${{ secrets.CLOUD_AWS_S3_BUCKET }}" >> $GITHUB_ENV
           echo "cloud.aws.stack.auto=${{ secrets.CLOUD_AWS_STACK_AUTO }}" >> $GITHUB_ENV
           echo "cloud.aws.region.static=${{ secrets.CLOUD_AWS_REGION_STATIC }}" >> $GITHUB_ENV

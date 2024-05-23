@@ -18,6 +18,7 @@ public record RetrieveMyPageResponse(String level, String profileUrl, String nic
     public static class ArchiveNewsLetterCount {
 
         private String categoryName;
+        private String logoUrl;
         private int count;
     }
 }

@@ -4,7 +4,7 @@ import io.jsonwebtoken.lang.Assert;
 import jakarta.annotation.PostConstruct;
 import kusitms.duduk.core.newsletter.dto.request.NaverClovaSummaryRequest;
 import kusitms.duduk.core.newsletter.dto.response.NaverClovaSummaryResponse;
-import kusitms.duduk.core.newsletter.port.output.NaverClovaSummaryClientPort;
+import kusitms.duduk.core.newsletter.port.output.NaverClovaClientPort;
 import kusitms.duduk.domain.newsletter.NewsLetter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class NaverClovaSummaryApiClient implements NaverClovaSummaryClientPort {
+public class NaverClovaSummaryApiClient implements
+    NaverClovaClientPort<NewsLetter, NaverClovaSummaryResponse> {
 
     @Value("${naver.client-id}")
     private String NAVER_CLIENT_ID;
@@ -40,7 +41,7 @@ public class NaverClovaSummaryApiClient implements NaverClovaSummaryClientPort {
             .build();
     }
 
-    public NaverClovaSummaryResponse summarize(NewsLetter newsLetter) {
+    public NaverClovaSummaryResponse execute(NewsLetter newsLetter) {
         log.debug("Naver Clova Summarize NewsLetter Start : {}", newsLetter.getTitle());
 
         Assert.notNull(newsLetter.getTitle(), "제목은 null 일 수 없습니다.");

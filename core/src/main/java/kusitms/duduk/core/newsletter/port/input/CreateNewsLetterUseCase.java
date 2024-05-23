@@ -7,5 +7,5 @@ public interface CreateNewsLetterUseCase {
 
     NewsLetterResponse create(CreateNewsLetterRequest request);
 
-    NewsLetterResponse create(CreateNewsLetterRequest request, String email);
+    NewsLetterResponse createByEditor(CreateNewsLetterRequest request, String email);
 }

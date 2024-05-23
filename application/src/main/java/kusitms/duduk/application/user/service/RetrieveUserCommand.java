@@ -43,12 +43,10 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
 
     @Override
     public RetrieveHomeResponse home(String email) {
-        User user = loadUserPort.findByEmail(email)
-            .orElseThrow(() -> new NotExistsException(USER_NOT_FOUND.getMessage()));
+        User user = getUserByEmail(email);
 
         NewsLetterThumbnailResponse todayNewsLetter = retrieveTodayNewsLetter(user);
-        List<NewsLetterThumbnailResponse> realtimeTrendNewsLetter = retrieveRealtimeTrendNewsLetter(
-            user);
+        List<NewsLetterThumbnailResponse> realtimeTrendNewsLetter = retrieveRealtimeTrendNewsLetter(user);
         List<NewsLetterThumbnailResponse> customizeNewsLetter = retrieveCustomizeNewsLetter(user);
         RetrieveTermResponse todayTerm = retrieveTodayTerm(user);
 
@@ -60,37 +58,9 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
             .build();
     }
 
-    private NewsLetterThumbnailResponse retrieveTodayNewsLetter(User user) {
-        NewsLetterThumbnailResponse todayNewsLetter = retrieveNewsLetterQuery.retrieveLatestNewsLetter(
-            user);
-        log.info("오늘의 뉴스레터를 조회한다 : {}", todayNewsLetter);
-        return todayNewsLetter;
-    }
-
-    private List<NewsLetterThumbnailResponse> retrieveRealtimeTrendNewsLetter(User user) {
-        List<NewsLetterThumbnailResponse> realtimeTrendNewsLetter = retrieveNewsLetterQuery.retrieveRealtimeTrendNewsLetter(
-            user);
-        log.info("실시간 트렌드 뉴스레터를 조회한다 : {}", realtimeTrendNewsLetter);
-        return realtimeTrendNewsLetter;
-    }
-
-    private List<NewsLetterThumbnailResponse> retrieveCustomizeNewsLetter(User user) {
-        List<NewsLetterThumbnailResponse> customizeNewsLetter = retrieveNewsLetterQuery.retrieveCustomizeNewsLetter(
-            user);
-        log.info("추천 뉴스레터를 조회한다 : {}", customizeNewsLetter);
-        return customizeNewsLetter;
-    }
-
-    private RetrieveTermResponse retrieveTodayTerm(User user) {
-        RetrieveTermResponse todayTerm = retrieveTermQuery.retrieveLatestTerm(user);
-        log.info("오늘의 단어를 조회한다 : {}", todayTerm);
-        return todayTerm;
-    }
-
     @Override
     public RetrieveMyPageResponse mypage(String email) {
-        User user = loadUserPort.findByEmail(email)
-            .orElseThrow(() -> new NotExistsException(USER_NOT_FOUND.getMessage()));
+        User user = getUserByEmail(email);
 
         List<ArchiveNewsLetterCount> archivesCount = getTop4Archives(user);
 
@@ -106,12 +76,42 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
             .build();
     }
 
+    private User getUserByEmail(String email) {
+        return loadUserPort.findByEmail(email)
+            .orElseThrow(() -> new NotExistsException(USER_NOT_FOUND.getMessage()));
+    }
+
+    private NewsLetterThumbnailResponse retrieveTodayNewsLetter(User user) {
+        NewsLetterThumbnailResponse todayNewsLetter = retrieveNewsLetterQuery.retrieveLatestNewsLetter(user);
+        log.info("Retrieved today's newsletter: {}", todayNewsLetter);
+        return todayNewsLetter;
+    }
+
+    private List<NewsLetterThumbnailResponse> retrieveRealtimeTrendNewsLetter(User user) {
+        List<NewsLetterThumbnailResponse> realtimeTrendNewsLetter = retrieveNewsLetterQuery.retrieveRealtimeTrendNewsLetter(user);
+        log.info("Retrieved real-time trend newsletters: {}", realtimeTrendNewsLetter);
+        return realtimeTrendNewsLetter;
+    }
+
+    private List<NewsLetterThumbnailResponse> retrieveCustomizeNewsLetter(User user) {
+        List<NewsLetterThumbnailResponse> customizeNewsLetter = retrieveNewsLetterQuery.retrieveCustomizeNewsLetter(user);
+        log.info("Retrieved customized newsletters: {}", customizeNewsLetter);
+        return customizeNewsLetter;
+    }
+
+    private RetrieveTermResponse retrieveTodayTerm(User user) {
+        RetrieveTermResponse todayTerm = retrieveTermQuery.retrieveLatestTerm(user);
+        log.info("Retrieved today's term: {}", todayTerm);
+        return todayTerm;
+    }
+
     private List<ArchiveNewsLetterCount> getTop4Archives(User user) {
         return user.getArchives().stream()
             .filter(archive -> !archive.getCategory().name().equals("WORD"))
             .map(archive -> new ArchiveNewsLetterCount(
-	archive.getCategory().getDescription(),
-	archive.getNewsLetterIds().size()))
+                archive.getCategory().getDescription(),
+                archive.getCategory().getLogoUrl(),
+                archive.getNewsLetterIds().size()))
             .sorted((a, b) -> Integer.compare(b.getCount(), a.getCount()))
             .limit(4)
             .toList();
