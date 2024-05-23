@@ -28,18 +28,38 @@ public class ArchiveNewsLetterCommand implements ArchiveNewsLetterUseCase {
 
     @Override
     public ArchiveNewsLetterResponse archive(String email, Long newsLetterId) {
-        log.info("Archive email: {}, newsLetterId: {}", email, newsLetterId);
 
-        User user = loadUserPort.findByEmail(email)
-            .orElseThrow(() -> new NotExistsException("User not found"));
+        User user = loadUserByEmail(email);
+        NewsLetter newsLetter = loadNewsLetterById(newsLetterId);
 
-        NewsLetter newsLetter = loadNewsLetterPort.findById(newsLetterId)
-            .orElseThrow(() -> new NotExistsException("NewsLetter not found"));
+        publishEvent(newsLetterId);
 
-        applicationEventPublisher.publishEvent(new ArchiveNewsLetterEvent(this, newsLetterId));
+        archiveNewsLetterForUser(user, newsLetter);
+        updateUser(user);
+        log.info("뉴스레터를 아카이브 합니다 archive at : {} newsLetterId: {}", newsLetter.getCategory().getDescription(), newsLetterId);
 
-        user.archiveNewsLetter(newsLetter);
-        updateUserPort.update(user);
         return new ArchiveNewsLetterResponse(newsLetterId);
+    }
+
+    private User loadUserByEmail(String email) {
+        return loadUserPort.findByEmail(email)
+            .orElseThrow(() -> new NotExistsException("User not found"));
+    }
+
+    private NewsLetter loadNewsLetterById(Long newsLetterId) {
+        return loadNewsLetterPort.findById(newsLetterId)
+            .orElseThrow(() -> new NotExistsException("NewsLetter not found"));
+    }
+
+    private void publishEvent(Long newsLetterId) {
+        applicationEventPublisher.publishEvent(new ArchiveNewsLetterEvent(this, newsLetterId));
+    }
+
+    private void archiveNewsLetterForUser(User user, NewsLetter newsLetter) {
+        user.archiveNewsLetter(newsLetter);
+    }
+
+    private void updateUser(User user) {
+        updateUserPort.update(user);
     }
 }
