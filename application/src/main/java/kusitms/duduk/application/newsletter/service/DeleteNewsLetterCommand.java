@@ -1,5 +1,9 @@
 package kusitms.duduk.application.newsletter.service;
 
+import static kusitms.duduk.common.exception.ErrorMessage.*;
+
+import kusitms.duduk.common.exception.custom.NotExistsException;
+import kusitms.duduk.common.exception.custom.UnauthorizedException;
 import kusitms.duduk.core.newsletter.port.input.DeleteNewsLetterUseCase;
 import kusitms.duduk.core.newsletter.port.output.DeleteNewsLetterPort;
 import kusitms.duduk.core.newsletter.port.output.LoadNewsLetterPort;
@@ -23,17 +27,30 @@ public class DeleteNewsLetterCommand implements DeleteNewsLetterUseCase {
 
     @Override
     public void delete(Long newsLetterId, String email) {
-        log.info("Delete newsLetterId: {}", newsLetterId);
-        NewsLetter newsLetter = loadNewsLetterPort.findById(newsLetterId)
-            .orElseThrow(() -> new IllegalArgumentException("NewsLetter not found"));
+        NewsLetter newsLetter = loadNewsLetterById(newsLetterId);
+        User user = loadUserByEmail(email);
+        validateUserAuthorization(newsLetter, user);
+        deleteNewsLetter(newsLetter.getId().getValue());
+    }
 
-        User user = loadUserPort.findByEmail(email)
-            .orElseThrow(() -> new IllegalArgumentException("User not found"));
+    private NewsLetter loadNewsLetterById(Long newsLetterId) {
+        return loadNewsLetterPort.findById(newsLetterId)
+            .orElseThrow(() -> new NotExistsException(NEWS_LETTER_NOT_FOUND.getMessage()));
+    }
 
-        if (newsLetter.isWrittenBy(user.getId())) {
-            deleteNewsLetterPort.deleteById(newsLetter.getId().getValue());
-        } else {
-            throw new IllegalArgumentException("User is not the author of the newsLetter");
+    private User loadUserByEmail(String email) {
+        return loadUserPort.findByEmail(email)
+            .orElseThrow(() -> new NotExistsException(USER_NOT_FOUND.getMessage()));
+    }
+
+    private void validateUserAuthorization(NewsLetter newsLetter, User user) {
+        if (!newsLetter.isWrittenBy(user.getId())) {
+            throw new UnauthorizedException(UNAUTHORIZE_USER.getMessage());
         }
     }
+
+    private void deleteNewsLetter(Long newsLetterId) {
+        deleteNewsLetterPort.deleteById(newsLetterId);
+    }
+
 }

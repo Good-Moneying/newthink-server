@@ -3,6 +3,7 @@ package kusitms.duduk.application.newsletter.service;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import kusitms.duduk.application.user.service.UserSteps;
+import kusitms.duduk.common.exception.custom.UnauthorizedException;
 import kusitms.duduk.core.newsletter.dto.NewsLetterDtoMapper;
 import kusitms.duduk.core.newsletter.dto.request.CreateNewsLetterRequest;
 import kusitms.duduk.core.newsletter.port.input.DeleteNewsLetterUseCase;
@@ -83,6 +84,6 @@ class DeleteNewsLetterCommandTest {
         // when & then
         assertThatThrownBy(
             () -> deleteNewsLetterUseCase.delete(savedNewsLetter.getId().getValue(),
-	user.getEmail().getValue())).isInstanceOf(IllegalArgumentException.class);
+	user.getEmail().getValue())).isInstanceOf(UnauthorizedException.class);
     }
 }
