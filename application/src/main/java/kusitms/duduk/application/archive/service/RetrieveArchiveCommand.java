@@ -1,7 +1,10 @@
 package kusitms.duduk.application.archive.service;
 
+import static kusitms.duduk.common.exception.ErrorMessage.*;
+
 import java.util.List;
 import java.util.stream.Collectors;
+import kusitms.duduk.common.exception.ErrorMessage;
 import kusitms.duduk.common.exception.custom.NotExistsException;
 import kusitms.duduk.core.archive.dto.response.RetrieveArchivedNewsLetterResponse;
 import kusitms.duduk.core.archive.dto.response.RetrieveArchivedTermResponse;
@@ -30,29 +33,49 @@ public class RetrieveArchiveCommand implements RetrieveArchiveUseCase {
 
     @Override
     public RetrieveArchivedNewsLetterResponse retrieveNewsLetters(String email, Category category) {
-        User user = loadUserPort.findByEmail(email)
-            .orElseThrow(() -> new NotExistsException("User not found"));
-
-        List<NewsLetter> newsLetters = user.getNewsLettersFromArchive(category)
-            .stream()
-            .map(id -> loadNewsLetterPort.findById(id)
-	.orElseThrow(() -> new NotExistsException("NewsLetter not found")))
-            .collect(Collectors.toList());
+        User user = loadUserByEmail(email);
+        List<NewsLetter> newsLetters = getArchivedNewsLetters(user, category);
 
         return RetrieveArchivedNewsLetterResponse.from(newsLetters);
     }
 
     @Override
     public RetrieveArchivedTermResponse retrieveTerms(String email) {
-        User user = loadUserPort.findByEmail(email)
-            .orElseThrow(() -> new NotExistsException("User not found"));
-
-        List<Term> terms = user.getTermsFromArchive()
-            .stream()
-            .map(id -> loadTermPort.findById(id)
-	.orElseThrow(() -> new NotExistsException("Term not found")))
-            .collect(Collectors.toList());
+        User user = loadUserByEmail(email);
+        List<Term> terms = getArchivedTerms(user);
 
         return RetrieveArchivedTermResponse.from(terms);
+    }
+
+    private User loadUserByEmail(String email) {
+        log.info("이메일로 사용자 조회: {}", email);
+        return loadUserPort.findByEmail(email)
+            .orElseThrow(() -> new NotExistsException("사용자를 찾을 수 없습니다."));
+    }
+
+    private List<NewsLetter> getArchivedNewsLetters(User user, Category category) {
+        log.info("카테고리 '{}'에 대한 사용자의 아카이브된 뉴스레터를 조회합니다.", category);
+        return user.getNewsLettersFromArchive(category)
+            .stream()
+            .map(this::loadNewsLetterById)
+            .collect(Collectors.toList());
+    }
+
+    private List<Term> getArchivedTerms(User user) {
+        log.info("사용자의 아카이브된 용어를 조회합니다.");
+        return user.getTermsFromArchive()
+            .stream()
+            .map(this::loadTermById)
+            .collect(Collectors.toList());
+    }
+
+    private NewsLetter loadNewsLetterById(Long id) {
+        return loadNewsLetterPort.findById(id)
+            .orElseThrow(() -> new NotExistsException(NEWS_LETTER_NOT_FOUND.getMessage()));
+    }
+
+    private Term loadTermById(Long id) {
+        return loadTermPort.findById(id)
+            .orElseThrow(() -> new NotExistsException(TERM_NOT_FOUND.getMessage()));
     }
 }
