@@ -10,4 +10,5 @@ public interface LoadCommentPort {
     boolean isExistByNewsLetterIdAndUserId(Long newsLetterId, Long userId);
 
     List<Comment> findByNewsLetterIdOrderByLikeCountDesc(Long newsLetterId);
+    List<Comment> findByNewsLetterIdOrderByCreatedAtAsc(Long newsLetterId);
 }

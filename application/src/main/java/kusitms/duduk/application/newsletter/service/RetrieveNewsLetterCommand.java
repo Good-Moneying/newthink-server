@@ -4,7 +4,6 @@ import static kusitms.duduk.common.exception.ErrorMessage.*;
 
 import java.util.List;
 import kusitms.duduk.application.newsletter.event.RetrieveNewsLetterEvent;
-import kusitms.duduk.common.exception.ErrorMessage;
 import kusitms.duduk.common.exception.custom.NotExistsException;
 import kusitms.duduk.core.comment.port.output.LoadCommentPort;
 import kusitms.duduk.core.newsletter.dto.NewsLetterDtoMapper;

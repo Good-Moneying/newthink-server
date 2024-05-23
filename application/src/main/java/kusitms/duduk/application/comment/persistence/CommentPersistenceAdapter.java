@@ -46,6 +46,14 @@ public class CommentPersistenceAdapter implements SaveCommentPort, DeleteComment
     }
 
     @Override
+    public List<Comment> findByNewsLetterIdOrderByCreatedAtAsc(Long newsLetterId) {
+        return commentRepository.findByNewsLetterIdOrderByCreatedAtAsc(newsLetterId)
+            .stream()
+            .map(commentJpaMapper::toDomain)
+            .toList();
+    }
+
+    @Override
     public Optional<Comment> update(Comment comment) {
         Long commentId = comment.getId().getValue();
 

@@ -9,4 +9,6 @@ public interface CommentRepository extends JpaRepository<CommentJpaEntity, Long>
     boolean existsByNewsLetterIdAndUserId(Long newsLetterId, Long userId);
 
     List<CommentJpaEntity> findByNewsLetterIdOrderByLikeCountDesc(Long newsLetterId);
+
+    List<CommentJpaEntity> findByNewsLetterIdOrderByCreatedAtAsc(Long newsLetterId);
 }
