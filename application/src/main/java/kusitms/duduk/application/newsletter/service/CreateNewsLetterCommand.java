@@ -1,7 +1,10 @@
 package kusitms.duduk.application.newsletter.service;
 
+import static kusitms.duduk.common.exception.ErrorMessage.*;
+
 import kusitms.duduk.application.newsletter.event.CreateSummaryEvent;
 import kusitms.duduk.common.exception.custom.NotExistsException;
+import kusitms.duduk.common.exception.custom.UnauthorizedException;
 import kusitms.duduk.core.newsletter.dto.NewsLetterDtoMapper;
 import kusitms.duduk.core.newsletter.dto.request.CreateNewsLetterRequest;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterResponse;
@@ -21,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 @Transactional
-// todo : @Transactional 여부에 따라 어떻게 LazyInitializationException이 발생하는지 확인할 소요가 있음
 public class CreateNewsLetterCommand implements CreateNewsLetterUseCase {
 
     private final NewsLetterDtoMapper newsLetterDtoMapper;
@@ -32,36 +34,47 @@ public class CreateNewsLetterCommand implements CreateNewsLetterUseCase {
 
     @Override
     public NewsLetterResponse create(CreateNewsLetterRequest request) {
+        log.info("실시간 뉴스레터를 생성합니다. request : {}", request.toString());
         NewsLetter newsLetter = newsLetterDtoMapper.toDomain(request);
-        log.info("Create NewsLetter By AI\n request: {}", request.toString());
-
-        NewsLetter savedNewsLetter = saveNewsLetterPort.create(newsLetterDtoMapper.toDomain(request));
-
-        applicationEventPublisher.publishEvent(new CreateSummaryEvent(this, savedNewsLetter.getId().getValue()));
-
-        NewsLetter loadedNewsLetter = loadNewsLetterPort.findById(savedNewsLetter.getId().getValue())
-            .orElseThrow(() -> new NotExistsException("NewsLetter not found"));
-
-        return newsLetterDtoMapper.toDto(loadedNewsLetter);
+        return processNewsLetter(newsLetter);
     }
 
     @Override
-    public NewsLetterResponse create(CreateNewsLetterRequest request, String email) {
-        User editor = loadUserPort.findByEmail(email)
-            .orElseThrow(() -> new IllegalArgumentException("User not found"));
+    public NewsLetterResponse createByEditor(CreateNewsLetterRequest request, String email) {
+        log.info("에디터 뉴스레터를 생성합니다. request: {}", request.toString());
 
-        if (!editor.isWritable()) {
-            throw new IllegalArgumentException("User is not editor");
-        }
+        User editor = loadEditorByEmail(email);
+        validateEditorAuthorization(editor);
 
-        NewsLetter savedNewsLetter = saveNewsLetterPort.create(newsLetterDtoMapper.toDomain(request, editor.getId()));
-        log.info("Create NewsLetter By Editor\n request: {}", request.toString());
+        NewsLetter newsLetter = newsLetterDtoMapper.toDomain(request, editor.getId());
+        return processNewsLetter(newsLetter);
+    }
 
-        applicationEventPublisher.publishEvent(new CreateSummaryEvent(this, savedNewsLetter.getId().getValue()));
+    private NewsLetterResponse processNewsLetter(NewsLetter newsLetter) {
+        NewsLetter savedNewsLetter = saveNewsLetterPort.create(newsLetter);
+        publishEvent(savedNewsLetter);
 
-        NewsLetter loadedNewsLetter = loadNewsLetterPort.findById(savedNewsLetter.getId().getValue())
-            .orElseThrow(() -> new NotExistsException("NewsLetter not found"));
-
+        NewsLetter loadedNewsLetter = loadNewsLetter(savedNewsLetter.getId().getValue());
         return newsLetterDtoMapper.toDto(loadedNewsLetter);
+    }
+
+    private User loadEditorByEmail(String email) {
+        return loadUserPort.findByEmail(email)
+            .orElseThrow(() -> new NotExistsException(USER_NOT_FOUND.getMessage()));
+    }
+
+    private void validateEditorAuthorization(User editor) {
+        if (!editor.isWritable()) {
+            throw new UnauthorizedException(UNAUTHORIZE_EDITOR_ROLE.getMessage());
+        }
+    }
+
+    private void publishEvent(NewsLetter newsLetter) {
+        applicationEventPublisher.publishEvent(new CreateSummaryEvent(this, newsLetter.getId().getValue()));
+    }
+
+    private NewsLetter loadNewsLetter(Long newsLetterId) {
+        return loadNewsLetterPort.findById(newsLetterId)
+            .orElseThrow(() -> new NotExistsException(NEWS_LETTER_NOT_FOUND.getMessage()));
     }
 }

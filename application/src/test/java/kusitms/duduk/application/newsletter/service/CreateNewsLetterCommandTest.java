@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import kusitms.duduk.application.user.service.UserSteps;
+import kusitms.duduk.common.exception.custom.UnauthorizedException;
 import kusitms.duduk.core.newsletter.dto.request.CreateNewsLetterRequest;
 import kusitms.duduk.core.newsletter.dto.response.NewsLetterResponse;
 import kusitms.duduk.core.newsletter.port.input.CreateNewsLetterUseCase;
@@ -44,7 +45,7 @@ public class CreateNewsLetterCommandTest {
         saveUserPort.create(user);
 
         // when
-        NewsLetterResponse response = createNewsLetterCommand.create(request, user.getEmail().getValue());
+        NewsLetterResponse response = createNewsLetterCommand.createByEditor(request, user.getEmail().getValue());
 
         // then
         assertThat(response).isNotNull();
@@ -60,7 +61,7 @@ public class CreateNewsLetterCommandTest {
         saveUserPort.create(user);
 
         // when & then
-        assertThatThrownBy(() -> createNewsLetterCommand.create(request, user.getEmail().getValue()))
-            .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> createNewsLetterCommand.createByEditor(request, user.getEmail().getValue()))
+            .isInstanceOf(UnauthorizedException.class);
     }
 }
