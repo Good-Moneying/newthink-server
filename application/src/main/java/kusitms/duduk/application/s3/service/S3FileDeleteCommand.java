@@ -26,7 +26,6 @@ public class S3FileDeleteCommand implements S3FileDeletePort {
 
         try {
             this.amazonS3Client.deleteObject(this.bucket, key);
-
         } catch (Exception e) {
             log.error(e.getMessage());
         }

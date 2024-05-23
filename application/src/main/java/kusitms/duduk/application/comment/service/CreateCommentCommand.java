@@ -26,26 +26,39 @@ public class CreateCommentCommand implements CreateCommentUseCase {
 
     private final LoadUserPort loadUserPort;
     private final LoadNewsLetterPort loadNewsLetterPort;
-
     private final SaveCommentPort saveCommentPort;
-
     private final CommentDtoMapper commentDtoMapper;
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @Override
     public CommentResponse create(String email, Long newsLetterId, CreateCommentRequest request) {
-        User user = loadUserPort.findByEmail(email)
-            .orElseThrow(() -> new NotExistsException("해당 이메일로 가입된 유저가 없습니다."));
+        User user = loadUserByEmail(email);
+        NewsLetter newsLetter = loadNewsLetterById(newsLetterId);
 
-        NewsLetter newsLetter = loadNewsLetterPort.findById(newsLetterId)
-            .orElseThrow(() -> new NotExistsException("해당 뉴스레터가 없습니다."));
-
-        Comment savedComment = saveCommentPort.save(
-            commentDtoMapper.toDomain(request, user, newsLetter));
-
-        applicationEventPublisher.publishEvent(
-            new CreateCommentEvent(this, savedComment.getId().getValue(), user.getId().getValue()));
+        Comment savedComment = saveComment(request, user, newsLetter);
+        publishEvent(savedComment, user);
 
         return commentDtoMapper.toDto(savedComment);
+    }
+
+    private User loadUserByEmail(String email) {
+        return loadUserPort.findByEmail(email)
+            .orElseThrow(() -> new NotExistsException("해당 이메일로 가입된 유저가 없습니다."));
+    }
+
+    private NewsLetter loadNewsLetterById(Long newsLetterId) {
+        return loadNewsLetterPort.findById(newsLetterId)
+            .orElseThrow(() -> new NotExistsException("해당 뉴스레터가 없습니다."));
+    }
+
+    private Comment saveComment(CreateCommentRequest request, User user, NewsLetter newsLetter) {
+        Comment comment = commentDtoMapper.toDomain(request, user, newsLetter);
+        return saveCommentPort.save(comment);
+    }
+
+    private void publishEvent(Comment savedComment, User user) {
+        log.info("댓글 생성 이벤트 발행: commentId={}, userId={}", savedComment.getId().getValue(), user.getId().getValue());
+        applicationEventPublisher.publishEvent(
+            new CreateCommentEvent(this, savedComment.getId().getValue(), user.getId().getValue()));
     }
 }

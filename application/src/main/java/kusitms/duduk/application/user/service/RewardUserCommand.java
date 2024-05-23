@@ -22,10 +22,15 @@ public class RewardUserCommand implements RewardUserUseCase {
 
     @Override
     public void reward(Long userId, int rewardAmount) {
-        User user = loadUserPort.findById(userId)
-            .orElseThrow(() -> new NotExistsException(USER_NOT_FOUND.getMessage() + userId));
+        User user = loadUserById(userId);
 
         user.addReward(rewardAmount);
         updateUserPort.update(user);
+    }
+
+    private User loadUserById(Long userId) {
+        User user = loadUserPort.findById(userId)
+            .orElseThrow(() -> new NotExistsException(USER_NOT_FOUND.getMessage() + userId));
+        return user;
     }
 }

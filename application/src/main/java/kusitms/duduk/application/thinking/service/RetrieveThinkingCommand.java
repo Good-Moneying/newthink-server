@@ -1,7 +1,10 @@
 package kusitms.duduk.application.thinking.service;
 
+import static kusitms.duduk.common.exception.ErrorMessage.*;
+
 import java.util.List;
 import java.util.stream.Collectors;
+import kusitms.duduk.common.exception.ErrorMessage;
 import kusitms.duduk.common.exception.custom.NotExistsException;
 import kusitms.duduk.core.thinking.dto.ThinkingDtoMapper;
 import kusitms.duduk.core.thinking.dto.response.RetrieveThinkingDetailResponse;
@@ -16,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -29,28 +31,36 @@ public class RetrieveThinkingCommand implements RetrieveThinkingQuery {
 
     @Override
     public RetrieveThinkingHomeResponse retrieveThinkingHome(String email) {
-        User user = loadUserPort.findByEmail(email)
-            .orElseThrow(() -> new NotExistsException("해당 유저를 찾을 수 없습니다."));
+        User user = loadUserByEmail(email);
+        List<RetrieveThinkingDetailResponse> thinkingDetails = getThinkingDetails(user);
 
-        List<RetrieveThinkingDetailResponse> response = loadThinkingPort.findAllOrderByIsExistAscAndCreatedAtDesc(
-	user.getId().getValue())
+        return RetrieveThinkingHomeResponse.builder()
+            .thinkingDetails(thinkingDetails)
+            .build();
+    }
+
+    private User loadUserByEmail(String email) {
+        return loadUserPort.findByEmail(email)
+            .orElseThrow(() -> new NotExistsException(USER_NOT_FOUND.getMessage()));
+    }
+
+    private Thinking loadThinkingById(Long thinkingId) {
+        return loadThinkingPort.findById(thinkingId)
+            .orElseThrow(() -> new NotExistsException(THINKING_NOT_FOUND.getMessage()));
+    }
+
+    private List<RetrieveThinkingDetailResponse> getThinkingDetails(User user) {
+        log.info("사용자 {}의 생각 리스트 조회", user.getId().getValue());
+        return loadThinkingPort.findAllOrderByIsExistAscAndCreatedAtDesc(user.getId().getValue())
             .stream()
             .map(thinkingDtoMapper::toDto)
             .collect(Collectors.toList());
-
-        return RetrieveThinkingHomeResponse
-            .builder()
-            .thinkingDetails(response)
-            .build();
     }
 
     @Override
     public RetrieveThinkingDetailResponse retrieveThinkingDetail(Long thinkingId) {
-        log.info("RetrieveThinkingDetailRequest: {}", thinkingId);
-        Thinking thinking = loadThinkingPort.findById(thinkingId)
-            .orElseThrow(() -> new NotExistsException("해당 생각을 찾을 수 없습니다."));
+        Thinking thinking = loadThinkingById(thinkingId);
 
-        log.info("RetrieveThinkingDetailResponse: {}", thinking.toString());
         return thinkingDtoMapper.toDto(thinking);
     }
 }

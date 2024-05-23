@@ -28,7 +28,7 @@ public class CreateThinkingCommand implements CreateThinkingUseCase {
 
     @Override
     public Thinking create(CreateThinkingRequest request) {
-        log.info("CreateThinkingCommand#create() start");
+        log.info("생각 생성 : {}", request);
         Thinking thinking = thinkingDtoMapper.create(request);
 
         return saveThinkingPort.save(thinking);
@@ -36,16 +36,26 @@ public class CreateThinkingCommand implements CreateThinkingUseCase {
 
     @Override
     public void createThinkingCloud(Long thinkingId, CreateThinkingCloudRequest request) {
-        log.info("CreateThinkingCommand#createThinkingCloud() start");
-        Thinking thinking = loadThinkingPort.findById(thinkingId)
-            .orElseThrow(() -> new NotExistsException("해당 생각을 찾을 수 없습니다."));
+        log.info("생각 구름 생성 : thinkingId={}, request={}", thinkingId, request);
+        Thinking thinking = loadThinkingById(thinkingId);
 
         thinking.createThinkingCloud(request.sentences());
+        publishEvent(thinking);
+
+        saveThinkingPort.save(thinking);
+    }
+
+    private Thinking loadThinkingById(Long thinkingId) {
+        return loadThinkingPort.findById(thinkingId)
+            .orElseThrow(() -> new NotExistsException("해당 생각을 찾을 수 없습니다."));
+    }
+
+    private void publishEvent(Thinking thinking) {
+        log.info("Create Thinking Event 발행 : thinkingId={}, userId={}", thinking.getId().getValue(),
+            thinking.getUserId().getValue());
 
         applicationEventPublisher.publishEvent(
             new CreateThinkingEvent(this, thinking.getId().getValue(),
 	thinking.getUserId().getValue()));
-
-        saveThinkingPort.save(thinking);
     }
 }
