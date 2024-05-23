@@ -30,9 +30,7 @@ public class UserJpaMapper {
     private final ArchiveJpaMapper archiveJpaMapper;
     private final CommentJpaMapper commentJpaMapper;
 
-
-    // todo : 추가된 컬럼들 추가
-    public UserJpaEntity toJpaEntity(User user) {
+    public UserJpaEntity create(User user) {
         // 빌더 패턴을 사용하여 UserJpaEntity 인스턴스 생성
         UserJpaEntity userEntity = UserJpaEntity.builder()
             .id(user.getId() != null ? user.getId().getValue() : null)
@@ -54,6 +52,31 @@ public class UserJpaMapper {
             .build();
 
         addDefaultArchives(userEntity);
+        return userEntity;
+    }
+
+
+    public UserJpaEntity toJpaEntity(User user) {
+        // 빌더 패턴을 사용하여 UserJpaEntity 인스턴스 생성
+        UserJpaEntity userEntity = UserJpaEntity.builder()
+            .id(user.getId() != null ? user.getId().getValue() : null)
+            .email(user.getEmail().getValue())
+            .nickname(user.getNickname().getValue())
+            .refreshToken(user.getRefreshToken().getValue())
+            .reward(user.getReward().getCount())
+            .gender(user.getGender())
+            .birthday(user.getBirthday())
+            .followee(user.getFollowee().getCount())
+            .follower(user.getFollower().getCount())
+            .role(user.getRole())
+            .provider(user.getProvider())
+            .category(user.getCategory())
+            .experiencePoint(user.getExperiencePoint().initial().getValue())
+            .archives(user.getArchives() == null ? new ArrayList<>() : getArchiveJpaEntities(user))
+            .comments(user.getComments() == null ? new ArrayList<>() : getCommentJpaEntities(user))
+            .goal(user.getGoal())
+            .build();
+
         return userEntity;
     }
 

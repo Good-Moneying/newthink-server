@@ -64,6 +64,13 @@ public class User {
             .ifPresent(archive -> archive.addNewsLetter(newsLetter.getId()));
     }
 
+    public void archiveNewsLetterWithCategory(NewsLetter newsLetter, String category) {
+        this.archives.stream()
+            .filter(archive -> archive.getCategory().name().equalsIgnoreCase(category))
+            .findFirst()
+            .ifPresent(archive -> archive.addNewsLetter(newsLetter.getId()));
+    }
+
     public void archiveTerm(Term term) {
         this.archives.stream()
             .filter(archive -> archive.getCategory().equals(Category.WORD))
@@ -105,6 +112,7 @@ public class User {
     public void addComment(Comment savedComment) {
         this.comments.add(savedComment);
     }
+
 
     public void addReward(int rewardAmount) {
         this.reward.addAmount(rewardAmount);

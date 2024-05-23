@@ -7,6 +7,7 @@ import kusitms.duduk.core.newsletter.port.input.ArchiveNewsLetterUseCase;
 import kusitms.duduk.core.newsletter.port.output.LoadNewsLetterPort;
 import kusitms.duduk.core.user.port.output.LoadUserPort;
 import kusitms.duduk.core.user.port.output.UpdateUserPort;
+import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.newsletter.NewsLetter;
 import kusitms.duduk.domain.user.User;
 import lombok.RequiredArgsConstructor;
@@ -28,15 +29,27 @@ public class ArchiveNewsLetterCommand implements ArchiveNewsLetterUseCase {
 
     @Override
     public ArchiveNewsLetterResponse archive(String email, Long newsLetterId) {
-
         User user = loadUserByEmail(email);
         NewsLetter newsLetter = loadNewsLetterById(newsLetterId);
 
         publishEvent(newsLetterId);
 
-        archiveNewsLetterForUser(user, newsLetter);
+        user.archiveNewsLetter(newsLetter);
         updateUser(user);
         log.info("뉴스레터를 아카이브 합니다 archive at : {} newsLetterId: {}", newsLetter.getCategory().getDescription(), newsLetterId);
+
+        return new ArchiveNewsLetterResponse(newsLetterId);
+    }
+
+    public ArchiveNewsLetterResponse archiveWithCategory(String email, Long newsLetterId, String category) {
+        User user = loadUserByEmail(email);
+        NewsLetter newsLetter = loadNewsLetterById(newsLetterId);
+
+        publishEvent(newsLetterId);
+
+        user.archiveNewsLetterWithCategory(newsLetter, category);
+        updateUser(user);
+        log.info("뉴스레터를 지정된 카테고리에 아카이브 합니다 archive at : {} newsLetterId: {} user email : {}", category, newsLetterId, email);
 
         return new ArchiveNewsLetterResponse(newsLetterId);
     }
@@ -53,10 +66,6 @@ public class ArchiveNewsLetterCommand implements ArchiveNewsLetterUseCase {
 
     private void publishEvent(Long newsLetterId) {
         applicationEventPublisher.publishEvent(new ArchiveNewsLetterEvent(this, newsLetterId));
-    }
-
-    private void archiveNewsLetterForUser(User user, NewsLetter newsLetter) {
-        user.archiveNewsLetter(newsLetter);
     }
 
     private void updateUser(User user) {

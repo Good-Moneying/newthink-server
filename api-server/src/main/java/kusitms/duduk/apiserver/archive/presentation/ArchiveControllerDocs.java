@@ -12,9 +12,11 @@ import kusitms.duduk.core.archive.dto.response.RetrieveArchivedNewsLetterRespons
 import kusitms.duduk.core.archive.dto.response.RetrieveArchivedTermResponse;
 import kusitms.duduk.core.newsletter.dto.response.ArchiveNewsLetterResponse;
 import kusitms.duduk.core.term.dto.response.ArchiveTermResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Tag(name = "Archive", description = "아카이브 API")
 public interface ArchiveControllerDocs {
@@ -55,6 +57,19 @@ public interface ArchiveControllerDocs {
         @AuthenticationPrincipal final CustomUserDetails customUserDetails,
         @PathVariable final Long newsLetterId
     );
+
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "OK"),
+        @ApiResponse(responseCode = "400", description = "BAD REQUEST",
+            content = {@Content(schema = @Schema(implementation = ErrorResponse.class))}),
+        @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR",
+            content = {@Content(schema = @Schema(implementation = ErrorResponse.class))})
+    })
+    @Operation(summary = "뉴스레터 카테고리 아카이브", description = "지정된 카테고리에 뉴스레터를 아카이브 합니다.")
+    ResponseEntity<ArchiveNewsLetterResponse> archiveNewsLetterWithCategory(
+        @AuthenticationPrincipal CustomUserDetails customUserDetails,
+        @PathVariable(name = "newsLetterId") Long newsLetterId,
+        @PathVariable(name = "category") String category);
 
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "OK"),
