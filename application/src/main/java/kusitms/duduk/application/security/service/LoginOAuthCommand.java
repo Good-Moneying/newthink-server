@@ -13,9 +13,11 @@ import kusitms.duduk.domain.user.vo.Provider;
 import kusitms.duduk.core.user.port.input.RetrieveUserQuery;
 import kusitms.duduk.core.user.port.input.UpdateUserUseCase;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class LoginOAuthCommand implements LoginOAuthUseCase {
@@ -33,6 +35,8 @@ public class LoginOAuthCommand implements LoginOAuthUseCase {
 
         boolean isRegistered = isRegistered(response, jwtTokenInfo);
         String nickname = retrieveUserQuery.retrieveUserNicknameByEmail(response.email());
+
+        log.info("OAuthLoginCommand process() end {}, {}, {}", isRegistered, response.email(), accessToken);
 
         return new OAuthLoginResponse(
             jwtTokenInfo.accessToken(),

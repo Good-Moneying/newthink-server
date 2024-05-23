@@ -63,7 +63,7 @@ public class SecurityConfig {
 	.requestMatchers(RESOURCE_LIST).permitAll()
 	.requestMatchers(AUTH_WHITELIST).permitAll()
 	.requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-	.anyRequest().authenticated())
+	.anyRequest().permitAll())
             .addFilterBefore(
 	new JwtAuthenticationFilter(jwtTokenProvider, loadUserPort, saveUserPort, authenticationService),
 	UsernamePasswordAuthenticationFilter.class);
