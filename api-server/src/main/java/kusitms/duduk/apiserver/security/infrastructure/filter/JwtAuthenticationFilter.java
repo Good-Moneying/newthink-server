@@ -82,9 +82,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	verifyAccessTokenAndSaveAuthentication(request, response, filterChain);
 	return;
             }
-        } catch (Exception e) {
-            log.info("RefreshToken is not valid");
-        }
+        } catch (Exception e) {}
         filterChain.doFilter(request, response);
     }
 
@@ -110,9 +108,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     public void verifyAccessTokenAndSaveAuthentication(HttpServletRequest request,
         HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
-        log.info("verifyAccessTokenAndSaveAuthentication() start\n");
         Optional<String> accessToken = extractAccessToken(request);
-        log.info("accessToken : {}\n", accessToken);
+        log.info("추출한 AccessToken : {}\n", accessToken);
 
         if (accessToken == null || accessToken.isEmpty()) {
             filterChain.doFilter(request, response);
@@ -125,7 +122,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
          * 현재 경우에는 accessToken에 담겨 있는 email, Authorities 정보로 Authentication 객체를 생성합니다.
          */
         if (jwtTokenProvider.isTokenValid(accessToken.get())) {
-            log.info("AccessToken is valid\n");
             jwtTokenProvider.getSubject(accessToken.get())
 	.ifPresent(authenticationService::verifyAndAuthenticate);
         }
@@ -135,7 +131,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private Optional<String> extractAccessToken(HttpServletRequest request) {
         String header = request.getHeader(accessTokenHeader);
-        log.info("AccessTokenHeader extracted from request : {}\n", header);
 
         if (!StringUtils.hasText(header) || !header.startsWith(BEARER_PREFIX)) {
             return Optional.empty(); // 유효하지 않은 헤더를 즉시 처리

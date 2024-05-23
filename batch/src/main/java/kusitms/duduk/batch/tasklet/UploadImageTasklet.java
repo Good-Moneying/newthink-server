@@ -31,7 +31,7 @@ public class UploadImageTasklet implements Tasklet {
 
         chunkContext.getStepContext().getStepExecution().getJobExecution()
             .getExecutionContext().put("imageUrls", imageUrls);
-        log.info("Uploaded {} images to S3", imageUrls.size());
+        log.info("이미지 {} 를 S3에 업로드", imageUrls.size());
         return RepeatStatus.FINISHED;
     }
 }

@@ -1,5 +1,6 @@
 package kusitms.duduk.batch;
 
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -29,7 +30,7 @@ public class BatchScheduler {
     @Scheduled(cron = "0 1 * * * *")
     public void scheduledTask()
         throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
-        log.info("News letter batch service started");
+        log.info("뉴스레터 배치 애플리케이션을 시작 : {}", LocalDateTime.now());
 
         JobParameters jobParameters = new JobParametersBuilder()
             .addLong("time", System.currentTimeMillis())

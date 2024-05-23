@@ -33,7 +33,7 @@ public class SummarizeNewsTasklet implements Tasklet {
 
         chunkContext.getStepContext().getStepExecution().getJobExecution()
             .getExecutionContext().put("aiResponses", aiResponses);
-        log.info("Parsed content for {} news articles", aiResponses.size());
+        log.info("뉴스 기사로 부터 파싱 : ", aiResponses.size());
         return RepeatStatus.FINISHED;
     }
 }

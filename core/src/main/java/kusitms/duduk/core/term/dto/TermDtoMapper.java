@@ -34,7 +34,6 @@ public class TermDtoMapper {
     }
 
     public RetrieveTermResponse toResponse(Term term, boolean isScrapped) {
-        log.info("term category : {} ", term.getCategory());
         return RetrieveTermResponse.builder()
             .termId(term.getId().getValue())
             .englishName(term.getEnglishName().getValue())

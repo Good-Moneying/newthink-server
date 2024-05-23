@@ -40,8 +40,6 @@ public class OpenAISummaryCommentApiClient implements
 
     @Override
     public String chat(OpenAiSummaryCommentRequest request) {
-        log.info("Requesting OpenAI to summarize comment: {}", request.comment());
-
         return webClient.post()
             .bodyValue(new OpenAiRequest(PROMPT + request.comment()))
             .retrieve()

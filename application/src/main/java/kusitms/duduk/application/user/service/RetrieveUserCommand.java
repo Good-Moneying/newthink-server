@@ -83,25 +83,25 @@ public class RetrieveUserCommand implements RetrieveUserQuery {
 
     private NewsLetterThumbnailResponse retrieveTodayNewsLetter(User user) {
         NewsLetterThumbnailResponse todayNewsLetter = retrieveNewsLetterQuery.retrieveLatestNewsLetter(user);
-        log.info("Retrieved today's newsletter: {}", todayNewsLetter);
+        log.info("오늘의 뉴스레터: {}\n", todayNewsLetter);
         return todayNewsLetter;
     }
 
     private List<NewsLetterThumbnailResponse> retrieveRealtimeTrendNewsLetter(User user) {
         List<NewsLetterThumbnailResponse> realtimeTrendNewsLetter = retrieveNewsLetterQuery.retrieveRealtimeTrendNewsLetter(user);
-        log.info("Retrieved real-time trend newsletters: {}", realtimeTrendNewsLetter);
+        log.info("실시간 뉴스레터: {}\n", realtimeTrendNewsLetter);
         return realtimeTrendNewsLetter;
     }
 
     private List<NewsLetterThumbnailResponse> retrieveCustomizeNewsLetter(User user) {
         List<NewsLetterThumbnailResponse> customizeNewsLetter = retrieveNewsLetterQuery.retrieveCustomizeNewsLetter(user);
-        log.info("Retrieved customized newsletters: {}", customizeNewsLetter);
+        log.info("사용자 관심사 뉴스레터 : {}\n", customizeNewsLetter);
         return customizeNewsLetter;
     }
 
     private RetrieveTermResponse retrieveTodayTerm(User user) {
         RetrieveTermResponse todayTerm = retrieveTermQuery.retrieveLatestTerm(user);
-        log.info("Retrieved today's term: {}", todayTerm);
+        log.info("오늘의 단어 : {}\n", todayTerm);
         return todayTerm;
     }
 

@@ -50,7 +50,6 @@ public class ThinkingController implements ThinkingControllerDocs {
         @RequestBody final OpenAiSummaryCommentRequest request
     ) {
         String summary = openAiClientPort.chat(request);
-        log.info("summaryThinking() summary: {}\n", summary);
         return ResponseEntity.ok(summary);
     }
 

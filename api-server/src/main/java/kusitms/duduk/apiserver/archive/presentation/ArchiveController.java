@@ -34,12 +34,6 @@ public class ArchiveController implements ArchiveControllerDocs {
     private final ArchiveNewsLetterUseCase archiveNewsLetterUseCase;
     private final ArchiveTermUseCase archiveTermUseCase;
 
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        log.info("ArchiveController#test() start");
-        return new ResponseEntity<>("Test endpoint is working", HttpStatus.OK);
-    }
-
     @GetMapping("/newsletters/{category}")
     public ResponseEntity<RetrieveArchivedNewsLetterResponse> retrieveArchivedNewsLetters(
         @AuthenticationPrincipal final CustomUserDetails customUserDetails,
@@ -71,7 +65,6 @@ public class ArchiveController implements ArchiveControllerDocs {
     public ResponseEntity<ArchiveTermResponse> archiveTerm(
         @AuthenticationPrincipal CustomUserDetails customUserDetails,
         @PathVariable(name = "termId") Long termId) {
-        log.info("ArchiveController#archiveTerm() start\n");
         return new ResponseEntity<>(
             archiveTermUseCase.archive(customUserDetails.getEmail(), termId), HttpStatus.OK);
     }

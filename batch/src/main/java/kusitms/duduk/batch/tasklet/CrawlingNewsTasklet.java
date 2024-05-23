@@ -33,7 +33,7 @@ public class CrawlingNewsTasklet implements Tasklet {
         }
         chunkContext.getStepContext().getStepExecution().getJobExecution()
             .getExecutionContext().put("crawlingNewsResponses", crawlingNewsResponses);
-        log.info("Crawled {} news articles", crawlingNewsResponses.size());
+        log.info("크롤링한 뉴스 기사 {}", crawlingNewsResponses.size());
         return RepeatStatus.FINISHED;
     }
 }
