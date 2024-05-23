@@ -23,11 +23,13 @@ public class OpenAISummaryCommentApiClient implements
     private String OPENAI_API_KEY;
 
     private WebClient webClient;
-    private static final String PROMPT = "다음으로 주어지는 댓글을 12자 이내의 짧은 단어로 요약 해줘. "
-        + "미국이 금리를 인하하지 않으면 한국의 금리도 쉽게 인하되지 않을 것 같네... -> 미국과 한국의 금리 등. "
-        + "미국은 경제 호황이라 괜찮지만, 지속적인 금리 인상은 한국 경제에 큰 타격이 있을 것 같아 -> 미 금리 인상과 한국 경제 타격"
-        + "앞으로도 계속 금리가 인상된다면 소비가 심하게 위축되어서 경기 침체가 될거야 -> 소비 위축과 경기 침체"
-        + "String 값을 반환 하면 돼. 쉼표는 쓰지 말고 와나 과로 연결 해줘";
+    private static final String PROMPT = "다음으로 주어지는 댓글을 10자 이내의 짧은 단어로 요약 해줘."
+        + "샘플은 다음과 같아. "
+        + "1. 미국과 한국의 금리 등."
+        + "2. 미 금리 인상과 한국 경제 타격,"
+        + "3. 소비 위축과 경기 침체"
+        + "쉼표 (comma) 쓰지마"
+        + "String 값으로 반환해";
 
     @PostConstruct
     private void init() {

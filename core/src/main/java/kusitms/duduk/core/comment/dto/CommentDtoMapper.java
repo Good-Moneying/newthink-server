@@ -28,8 +28,9 @@ public class CommentDtoMapper {
             .userId(comment.getUserId().getValue())
             .newsLetterId(comment.getNewsLetterId().getValue())
             .content(comment.getSentence().getValue())
+            .summarizedContent(comment.getSummarizedSentence().getValue())
             .isPrivate(comment.isPrivate())
-            .perspective(comment.getPerspective().name())
+            .perspective(comment.getPerspective().getDescription())
             .build();
     }
 }

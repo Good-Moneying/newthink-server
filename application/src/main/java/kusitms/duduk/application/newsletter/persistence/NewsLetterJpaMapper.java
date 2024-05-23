@@ -17,9 +17,11 @@ import kusitms.duduk.domain.newsletter.vo.Summary;
 import kusitms.duduk.domain.global.Thumbnail;
 import kusitms.duduk.domain.newsletter.vo.Title;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Mapper
+@Slf4j
 public class NewsLetterJpaMapper {
 
     private final CommentJpaMapper commentJpaMapper;
@@ -33,7 +35,6 @@ public class NewsLetterJpaMapper {
             .id(newsLetter.getId() != null ? newsLetter.getId().getValue()
 	: null)
             .editorId(newsLetter.getEditorId() != null ? newsLetter.getEditorId().getValue() : null)
-            // todo: 썸네일이 Null 이라면 대체 이미지를 집어넣어야함
             .thumbnail(
 	newsLetter.getThumbnail() != null ? newsLetter.getThumbnail().getUrl() : null)
             .title(newsLetter.getTitle().getTitle())

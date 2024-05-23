@@ -12,9 +12,11 @@ import kusitms.duduk.core.newsletter.port.output.UpdateNewsLetterPort;
 import kusitms.duduk.domain.global.Category;
 import kusitms.duduk.domain.newsletter.NewsLetter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Adapter
+@Slf4j
 public class NewsLetterPersistenceAdapter implements LoadNewsLetterPort, DeleteNewsLetterPort,
     SaveNewsLetterPort, UpdateNewsLetterPort {
 
@@ -83,7 +85,9 @@ public class NewsLetterPersistenceAdapter implements LoadNewsLetterPort, DeleteN
         Long newsLetterId = newsLetter.getId().getValue();
 
         return newsLetterRepository.findById(newsLetterId)
-            .map(persistedNewsLetterData -> newsLetterJpaMapper.toJpaEntity(newsLetter, persistedNewsLetterData))
+            .map(persistedNewsLetterData -> newsLetterJpaMapper.toJpaEntity(newsLetter,
+	persistedNewsLetterData))
+            // todo : 이거 중복으로 저장되는거 같다
             .map(newsLetterRepository::save)
             .map(newsLetterJpaMapper::toDomain);
     }

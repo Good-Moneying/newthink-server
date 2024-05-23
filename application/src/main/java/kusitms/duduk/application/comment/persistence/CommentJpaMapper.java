@@ -17,7 +17,7 @@ public class CommentJpaMapper {
             .newsLetterId(comment.getNewsLetterId().getValue())
             .content(comment.getSentence().getValue())
             .perspective(comment.getPerspective())
-            .summarizedContent(null)
+            .summarizedContent(comment.getSummarizedSentence().getValue())
             .likeCount(Count.initial().getCount())
             .build();
     }

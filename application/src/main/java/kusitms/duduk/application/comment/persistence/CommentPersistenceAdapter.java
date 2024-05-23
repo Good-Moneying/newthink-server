@@ -55,6 +55,4 @@ public class CommentPersistenceAdapter implements SaveCommentPort, DeleteComment
             .map(commentRepository::save)
             .map(commentJpaMapper::toDomain);
     }
-
-
 }

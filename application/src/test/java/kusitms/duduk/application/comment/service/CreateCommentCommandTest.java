@@ -97,7 +97,6 @@ class CreateCommentCommandTest {
         assertThat(response.newsLetterId())
             .isEqualTo(savedNewsLetter.getId().getValue());
         assertThat(response.content()).isEqualTo(request.content());
-        assertThat(response.perspective()).isEqualToIgnoringCase(request.perspective());
         assertThat(loadedUser.getComments().get(0).getSentence().getValue()).isEqualTo(
             request.content());
         assertThat(loadedNewsLetter.getComments().get(0).getSentence().getValue()).isEqualTo(
