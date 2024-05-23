@@ -8,18 +8,19 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum Category {
-    GLOBAL("글로벌"),
-    FINANCE("금융"),
-    SECURITIES("증권"),
-    REAL_ESTATE("부동산"),
-    COMPANY("기업"),
-    TECH("테크"),
-    LIFE("라이프"),
-    POLICY("정책"),
-    WORD("단어장"),
-    NONE("없음");
+    GLOBAL("글로벌" , "https://goodmoneying.s3.ap-northeast-2.amazonaws.com/category_logo/global.png"),
+    FINANCE("금융", "https://goodmoneying.s3.ap-northeast-2.amazonaws.com/category_logo/finance.png"),
+    SECURITIES("증권", "https://goodmoneying.s3.ap-northeast-2.amazonaws.com/category_logo/securities.png"),
+    REAL_ESTATE("부동산" , "https://goodmoneying.s3.ap-northeast-2.amazonaws.com/category_logo/real_estate.png"),
+    COMPANY("기업" , "https://goodmoneying.s3.ap-northeast-2.amazonaws.com/category_logo/company.png"),
+    TECH("테크" , "https://goodmoneying.s3.ap-northeast-2.amazonaws.com/category_logo/tech.png"),
+    LIFE("라이프" , "https://goodmoneying.s3.ap-northeast-2.amazonaws.com/category_logo/life.png"),
+    POLICY("정책" , "https://goodmoneying.s3.ap-northeast-2.amazonaws.com/category_logo/policy.png"),
+    WORD("단어장" , "NONE"),
+    NONE("없음", "NONE");
 
     private final String description;
+    private final String logoUrl;
 
     public static Category from(String name) {
         return Arrays.stream(Category.values())

@@ -18,8 +18,8 @@ spring:
       ddl-auto: update # create-drop, update, validate, none
     properties:
       hibernate:
-        format_sql: true # SQL 포맷팅
-        show_sql: true # SQL 출력
+        format_sql: false # SQL 포맷팅
+        show_sql: false # SQL 출력
         dialect: org.hibernate.dialect.MySQL8Dialect
 
 springdoc:
