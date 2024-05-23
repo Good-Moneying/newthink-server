@@ -62,10 +62,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
 	.requestMatchers(RESOURCE_LIST).permitAll()
 	.requestMatchers(AUTH_WHITELIST).permitAll()
-	// 회원가입 API는 인증 없이 접근 가능합니다.
 	.requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-	// todo : 개발 완료 후 수정 예정
-	.anyRequest().permitAll())
+	.anyRequest().authenticated())
             .addFilterBefore(
 	new JwtAuthenticationFilter(jwtTokenProvider, loadUserPort, saveUserPort, authenticationService),
 	UsernamePasswordAuthenticationFilter.class);
