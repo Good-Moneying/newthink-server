@@ -17,6 +17,7 @@ import kusitms.duduk.core.user.dto.response.UserResponse;
 import kusitms.duduk.core.user.port.input.RegisterUserUseCase;
 import kusitms.duduk.core.user.port.input.RetrieveUserQuery;
 import kusitms.duduk.core.user.port.input.ValidateDuplicatedUserQuery;
+import kusitms.duduk.core.user.port.input.WithdrawUserUseCase;
 import kusitms.duduk.domain.global.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,7 @@ public class UserController implements UserControllerDocs {
 
     private final RegisterUserUseCase registerUserUseCase;
     private final RetrieveUserQuery retrieveUserQuery;
+    private final WithdrawUserUseCase withdrawUserUseCase;
     private final ValidateDuplicatedUserQuery validateDuplicatedUserQuery;
 
     @PostMapping
@@ -59,6 +61,12 @@ public class UserController implements UserControllerDocs {
     public ResponseEntity<RetrieveHomeResponse> home(CustomUserDetails customUserDetails) {
         return new ResponseEntity<>(retrieveUserQuery.home(customUserDetails.getEmail()),
             HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Void> withdraw(CustomUserDetails customUserDetails) {
+        withdrawUserUseCase.withdraw(customUserDetails.getEmail());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/mypage")

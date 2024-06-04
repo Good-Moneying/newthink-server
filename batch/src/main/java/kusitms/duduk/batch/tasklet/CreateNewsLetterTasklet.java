@@ -1,5 +1,6 @@
 package kusitms.duduk.batch.tasklet;
 
+import java.time.LocalDate;
 import java.util.List;
 import kusitms.duduk.core.newsletter.dto.request.CreateNewsLetterRequest;
 import kusitms.duduk.core.newsletter.port.input.CreateNewsLetterUseCase;

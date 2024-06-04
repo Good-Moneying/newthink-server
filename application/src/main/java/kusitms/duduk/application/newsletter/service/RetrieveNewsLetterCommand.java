@@ -44,6 +44,7 @@ public class RetrieveNewsLetterCommand implements RetrieveNewsLetterQuery {
         NewsLetter newsLetter = loadNewsLetterById(newsLetterId);
         User editor = loadEditor(newsLetter);
         List<Comment> comments = getCommentsByNewsLetterId(newsLetterId);
+        
         boolean isCommented = isUserCommented(newsLetterId, user);
 
         return buildNewsLetterDetailResponse(user, newsLetter, editor, comments, isCommented);

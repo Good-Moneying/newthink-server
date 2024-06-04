@@ -78,4 +78,16 @@ public interface UserControllerDocs {
     ResponseEntity<RetrieveHomeResponse> home(
         @AuthenticationPrincipal final CustomUserDetails customUserDetails
     );
+
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "OK"),
+        @ApiResponse(responseCode = "400", description = "BAD REQUEST",
+            content = {@Content(schema = @Schema(implementation = ErrorResponse.class))}),
+        @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR",
+            content = {@Content(schema = @Schema(implementation = ErrorResponse.class))})
+    })
+    @Operation(summary = "회원 탈퇴", description = "회원을 타로티합니다.")
+    ResponseEntity<Void> withdraw(
+        @AuthenticationPrincipal final CustomUserDetails customUserDetails
+    );
 }

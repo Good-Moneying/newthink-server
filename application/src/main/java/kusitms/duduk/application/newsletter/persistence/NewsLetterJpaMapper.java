@@ -62,6 +62,7 @@ public class NewsLetterJpaMapper {
             return null;
         }
 
+
         return persistedNewsLetter.toBuilder()
             .thumbnail(newsLetter.getThumbnail().getUrl())
             .title(newsLetter.getTitle().getTitle())
