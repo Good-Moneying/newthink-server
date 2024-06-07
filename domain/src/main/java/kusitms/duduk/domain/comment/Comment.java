@@ -15,6 +15,7 @@ public class Comment {
     private Id id;
     private Id userId;
     private Id newsLetterId;
+    private Id surveyId;
     boolean isPrivate;
     private Sentence sentence;
     private Sentence summarizedSentence;

@@ -14,7 +14,9 @@ public class CommentJpaMapper {
         return CommentJpaEntity.builder()
             .id(comment.getId() != null ? comment.getId().getValue() : null)
             .userId(comment.getUserId().getValue())
-            .newsLetterId(comment.getNewsLetterId().getValue())
+            .newsLetterId(
+	comment.getNewsLetterId() != null ? comment.getNewsLetterId().getValue() : null)
+            .surveyId(comment.getSurveyId() != null ? comment.getSurveyId().getValue() : null)
             .content(comment.getSentence().getValue())
             .perspective(comment.getPerspective())
             .summarizedContent(comment.getSummarizedSentence().getValue())
@@ -34,7 +36,14 @@ public class CommentJpaMapper {
         return Comment.builder()
             .id(Id.of(commentJpaEntity.getId()))
             .userId(Id.of(commentJpaEntity.getUserId()))
-            .newsLetterId(Id.of(commentJpaEntity.getNewsLetterId()))
+            .newsLetterId(
+	commentJpaEntity.getNewsLetterId() == null ? null :
+	    Id.of(commentJpaEntity.getNewsLetterId()))
+            .surveyId(
+	commentJpaEntity.getSurveyId() == null ?
+	    null :
+	    Id.of(commentJpaEntity.getSurveyId())
+            )
             .sentence(Sentence.from(commentJpaEntity.getContent()))
             .summarizedSentence(Sentence.from(commentJpaEntity.getSummarizedContent()))
             .perspective(commentJpaEntity.getPerspective())

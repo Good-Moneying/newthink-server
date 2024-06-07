@@ -35,6 +35,9 @@ public class CommentJpaEntity extends BaseEntity {
     @Column(name = "user_id")
     private Long userId;
 
+    @Column(name = "survey_id")
+    private Long surveyId;
+
     @Column(name = "content", nullable = false)
     private String content;
 

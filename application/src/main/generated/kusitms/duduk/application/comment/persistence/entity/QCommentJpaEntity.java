@@ -38,6 +38,8 @@ public class QCommentJpaEntity extends EntityPathBase<CommentJpaEntity> {
 
     public final StringPath summarizedContent = createString("summarizedContent");
 
+    public final NumberPath<Long> surveyId = createNumber("surveyId", Long.class);
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
